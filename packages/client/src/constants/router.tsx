@@ -8,42 +8,43 @@ import NotFound from '../pages/NotFound';
 import Profile from '../pages/Profile';
 import Registration from '../pages/Registration';
 import Topic from '../pages/Topic';
+import links from './links';
 
 const router = createBrowserRouter([
   {
-    path: '*',
+    path: links.notfound,
     element: <NotFound />,
   },
   {
-    path: '/',
+    path: links.home,
     element: <Home />,
   },
   {
-    path: '/login',
+    path: links.login,
     element: <Login />,
   },
   {
-    path: '/registration',
+    path: links.registration,
     element: <Registration />,
   },
   {
-    path: '/game',
+    path: links.game,
     element: <Game />,
   },
   {
-    path: '/profile',
+    path: links.profile,
     element: <Profile />,
   },
   {
-    path: '/leaderboard',
+    path: links.leaderboard,
     element: <LeaderBoard />,
   },
   {
-    path: '/forum',
+    path: links.forum,
     element: <Forum />,
   },
   {
-    path: '/topic/:id',
+    path: links.topic,
     element: <Topic />,
   },
 ]);
