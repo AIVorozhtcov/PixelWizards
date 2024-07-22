@@ -8,43 +8,43 @@ import NotFound from '../pages/NotFound';
 import Profile from '../pages/Profile';
 import Registration from '../pages/Registration';
 import Topic from '../pages/Topic';
-import links from './links';
+import LINKS from './links';
 
 const router = createBrowserRouter([
   {
-    path: links.notfound,
+    path: LINKS.notfound,
     element: <NotFound />,
   },
   {
-    path: links.home,
+    path: LINKS.home,
     element: <Home />,
   },
   {
-    path: links.login,
+    path: LINKS.login,
     element: <Login />,
   },
   {
-    path: links.registration,
+    path: LINKS.registration,
     element: <Registration />,
   },
   {
-    path: links.game,
+    path: LINKS.game,
     element: <Game />,
   },
   {
-    path: links.profile,
+    path: LINKS.profile,
     element: <Profile />,
   },
   {
-    path: links.leaderboard,
+    path: LINKS.leaderboard,
     element: <LeaderBoard />,
   },
   {
-    path: links.forum,
+    path: LINKS.forum,
     element: <Forum />,
   },
   {
-    path: links.topic,
+    path: LINKS.topic,
     element: <Topic />,
   },
 ]);
