@@ -1,4 +1,4 @@
-import ErrorBoundaryDefault from '../common/ErrorBoundary';
+import ErrorBoundaryDefault from '../templates/ErrorBoundary';
 import TestComponent from './components/TestComponent';
 
 export default function Test() {
