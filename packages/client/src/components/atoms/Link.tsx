@@ -8,6 +8,9 @@ const linkVariants = cva('', {
       withIcon: 'flex items-center justify-center',
       default:
         'text-sm font-medium hover:underline underline-offset-4 text-[#f1f5f9]',
+      custom: '',
+      acent:
+        'inline-flex h-10 items-center justify-center rounded-md bg-[#ffc107] px-8 text-sm font-medium text-[#0c1b2a] shadow transition-colors hover:bg-[#ffdd5c] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
     },
   },
   defaultVariants: {
@@ -29,7 +32,7 @@ export default function Link({
   ...props
 }: LinkPropsCustom) {
   return (
-    <LinkCustom className={cn(linkVariants({ variant }))} {...props}>
+    <LinkCustom className={cn(linkVariants({ variant, className }))} {...props}>
       {children}
     </LinkCustom>
   );
