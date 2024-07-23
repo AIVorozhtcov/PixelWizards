@@ -13,7 +13,7 @@ export default function AuthProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<string | null>('fake');
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       {children}

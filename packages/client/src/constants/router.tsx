@@ -35,14 +35,7 @@ const router = createBrowserRouter([
         path: LINKS.home,
         element: <Home />,
       },
-      {
-        path: LINKS.login,
-        element: <Login />,
-      },
-      {
-        path: LINKS.registration,
-        element: <Registration />,
-      },
+
       {
         path: LINKS.game,
         element: <Game />,
@@ -63,11 +56,15 @@ const router = createBrowserRouter([
         path: LINKS.topic,
         element: <Topic />,
       },
-      {
-        path: LINKS.serverErrorPage,
-        element: <ServerErrorPage />,
-      },
     ],
+  },
+  {
+    path: LINKS.login,
+    element: <Login />,
+  },
+  {
+    path: LINKS.registration,
+    element: <Registration />,
   },
 ]);
 
