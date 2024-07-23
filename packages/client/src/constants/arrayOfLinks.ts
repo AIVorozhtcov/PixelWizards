@@ -18,10 +18,6 @@ const arrayOfLinks: ArrayOfLinks[] = [
     name: 'Таблица лидеров',
     href: '/leaderboard',
   },
-  {
-    name: 'Играть',
-    href: '/game',
-  },
 ];
 
 export default arrayOfLinks;

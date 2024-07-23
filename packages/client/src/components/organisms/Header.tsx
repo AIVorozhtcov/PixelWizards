@@ -7,7 +7,7 @@ export default function Header() {
     <header className="px-4 lg:px-6 h-14 flex items-center">
       <Link to="#" variant="withIcon">
         <RocketIcon className="size-6 text-[#ffc107]" />
-        <span>Capybara Crusaders</span>
+        <span className="text-white">Capybara Crusaders</span>
       </Link>
       <Navbar />
     </header>
