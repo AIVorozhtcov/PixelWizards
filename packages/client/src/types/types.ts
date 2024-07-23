@@ -1,3 +1,5 @@
+import { PROFILE_MODE } from '../constants/profilePageData';
+
 export type RegistrationFormData = {
   first_name: string;
   second_name: string;
@@ -6,4 +8,13 @@ export type RegistrationFormData = {
   password: string;
   confirmPassword: string;
   phone: string;
+}
+
+type ModeKeys = keyof typeof PROFILE_MODE;
+export type ProfileModeType = typeof PROFILE_MODE[ModeKeys];
+
+export type ProfileDataType = {
+  title: string;
+  name: string;
+  type: string;
 };
