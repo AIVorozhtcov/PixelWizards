@@ -8,6 +8,7 @@ const LINKS = {
   leaderboard: '/leaderboard',
   forum: '/forum',
   topic: '/topic/:id',
+  serverErrorPage: '/500',
 } as const;
 
 export default LINKS;

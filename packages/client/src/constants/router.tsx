@@ -1,51 +1,73 @@
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import Forum from '../pages/Forum';
-import Game from '../pages/Game';
-import Home from '../pages/Home';
-import LeaderBoard from '../pages/LeaderBoard';
-import Login from '../pages/Login';
-import NotFound from '../pages/NotFound';
-import Profile from '../pages/Profile';
-import Registration from '../pages/Registration';
-import Topic from '../pages/Topic';
+import Layout from '../templates/Layout';
 import LINKS from './links';
+
+const NotFound = lazy(() => import('../pages/NotFound'));
+const Home = lazy(() => import('../pages/Home'));
+const Forum = lazy(() => import('../pages/Forum'));
+const Game = lazy(() => import('../pages/Game'));
+const LeaderBoard = lazy(() => import('../pages/LeaderBoard'));
+const Login = lazy(() => import('../pages/Login'));
+const Profile = lazy(() => import('../pages/Profile'));
+const Registration = lazy(() => import('../pages/Registration'));
+const Topic = lazy(() => import('../pages/Topic'));
+const ServerErrorPage = lazy(() => import('../pages/505'));
 
 const router = createBrowserRouter([
   {
-    path: LINKS.notfound,
-    element: <NotFound />,
-  },
-  {
-    path: LINKS.home,
-    element: <Home />,
-  },
-  {
-    path: LINKS.login,
-    element: <Login />,
-  },
-  {
-    path: LINKS.registration,
-    element: <Registration />,
-  },
-  {
-    path: LINKS.game,
-    element: <Game />,
-  },
-  {
-    path: LINKS.profile,
-    element: <Profile />,
-  },
-  {
-    path: LINKS.leaderboard,
-    element: <LeaderBoard />,
-  },
-  {
-    path: LINKS.forum,
-    element: <Forum />,
-  },
-  {
-    path: LINKS.topic,
-    element: <Topic />,
+    element: <Layout />,
+    errorElement: <ServerErrorPage />,
+    children: [
+      {
+        path: LINKS.home,
+        element: <Home />,
+      },
+      {
+        path: LINKS.profile,
+        element: <Profile />,
+      },
+      {
+        path: LINKS.notfound,
+        element: <NotFound />,
+      },
+      {
+        path: LINKS.home,
+        element: <Home />,
+      },
+      {
+        path: LINKS.login,
+        element: <Login />,
+      },
+      {
+        path: LINKS.registration,
+        element: <Registration />,
+      },
+      {
+        path: LINKS.game,
+        element: <Game />,
+      },
+      {
+        path: LINKS.profile,
+        element: <Profile />,
+      },
+      {
+        path: LINKS.leaderboard,
+        element: <LeaderBoard />,
+      },
+      {
+        path: LINKS.forum,
+        element: <Forum />,
+      },
+      {
+        path: LINKS.topic,
+        element: <Topic />,
+      },
+      {
+        path: LINKS.serverErrorPage,
+        element: <ServerErrorPage />,
+      },
+    ],
   },
 ]);
 

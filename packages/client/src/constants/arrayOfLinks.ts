@@ -7,6 +7,10 @@ interface ArrayOfLinks {
 
 const arrayOfLinks: ArrayOfLinks[] = [
   {
+    name: 'Главная',
+    href: '/',
+  },
+  {
     name: 'Профиль',
     href: '/profile',
   },
