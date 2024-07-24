@@ -26,7 +26,7 @@ interface ButtonProps
 
 const Button = ({ children, variant, className, ...props }: ButtonProps) => {
   return (
-    <button className={cn(buttonVariants({ variant, className }))} {...props}>
+    <button className={buttonVariants({ variant, className })} {...props}>
       {children}
     </button>
   );

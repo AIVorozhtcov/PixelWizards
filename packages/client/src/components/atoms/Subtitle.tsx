@@ -30,7 +30,7 @@ export default function Subtitle({
 }: SubtitleProps) {
   const Slot = as;
   return (
-    <Slot className={cn(subTitleVariants({ variant, className }))} {...props}>
+    <Slot className={subTitleVariants({ variant, className })} {...props}>
       {children}
     </Slot>
   );

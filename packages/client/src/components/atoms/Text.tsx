@@ -27,7 +27,7 @@ export default function Text({
   ...props
 }: TextPropsCustom) {
   return (
-    <p className={cn(textVariants({ variant, className }))} {...props}>
+    <p className={textVariants({ variant, className })} {...props}>
       {children}
     </p>
   );

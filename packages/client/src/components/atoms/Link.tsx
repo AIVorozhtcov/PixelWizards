@@ -38,7 +38,7 @@ export default function Link({
   const isActiveVariant = isActive ? 'active' : variant;
   return (
     <LinkCustom
-      className={cn(linkVariants({ variant: isActiveVariant, className }))}
+      className={linkVariants({ variant: isActiveVariant, className })}
       {...props}>
       {children}
     </LinkCustom>
