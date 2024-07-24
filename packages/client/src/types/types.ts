@@ -1,3 +1,4 @@
+import FORM_INPUT_NAMES from '../constants/formInputNames';
 import { PROFILE_MODE } from '../constants/profilePageData';
 
 export type RegistrationFormData = {
@@ -18,3 +19,5 @@ export type ProfileDataType = {
   name: string;
   type: string;
 };
+
+export type FormType = typeof FORM_INPUT_NAMES;
