@@ -26,9 +26,14 @@ const ProfileModManager = ({ mode, setMode }: ProfileModeManagerProps) => {
         </>
       );
     case PROFILE_MODE.editData:
-      return <ProfileForm profileFormData={PROFILE_INPUTS_DATA} />;
+      return <ProfileForm profileFormData={PROFILE_INPUTS_DATA} mode={mode} />;
     case PROFILE_MODE.editPassword:
-      return <ProfileForm profileFormData={PROFILE_CHANGE_PASSWORD_INPUTS} />;
+      return (
+        <ProfileForm
+          profileFormData={PROFILE_CHANGE_PASSWORD_INPUTS}
+          mode={mode}
+        />
+      );
     default:
       return (
         <>

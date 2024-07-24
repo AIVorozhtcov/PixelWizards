@@ -1,18 +1,20 @@
 import ProfileFormItem from '../molecules/ProfileFormItem';
-import { FormType, ProfileDataType } from '../../types/types';
+import { FormType, ProfileDataType, ProfileModeType } from '../../types/types';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import Button from '../atoms/Button';
+import { updateUserData } from '../../api/userApi';
 
 type ProfileFormProps = {
   profileFormData: ProfileDataType[];
+  mode: ProfileModeType;
 } & React.FormHTMLAttributes<HTMLFormElement>;
 
-const ProfileForm = ({ profileFormData }: ProfileFormProps) => {
+const ProfileForm = ({ profileFormData, mode }: ProfileFormProps) => {
   const formMethods = useForm<FormType>({
     mode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<FormType> = data => console.log(data);
+  const onSubmit: SubmitHandler<FormType> = data => updateUserData(data, mode);
 
   return (
     <FormProvider {...formMethods}>
