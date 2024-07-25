@@ -11,6 +11,8 @@
     "test": "jest ./"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "dotenv": "^16.0.2",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.7.1",
@@ -19,6 +21,7 @@
     "react-error-boundary": "^4.0.13",
     "react-hook-form": "^7.52.1",
     "react-router-dom": "^6.25.1",
+    "tailwind-merge": "^2.4.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
