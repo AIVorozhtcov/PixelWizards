@@ -1,4 +1,3 @@
-import Button from '../atoms/Button';
 import {
   PROFILE_BUTTONS,
   PROFILE_CHANGE_PASSWORD_INPUTS,

@@ -8,8 +8,8 @@ type ProfileListItemProps = {
 const ProfileListItem = ({ title, data }: ProfileListItemProps) => {
   return (
     <div className="flex flex-row justify-between border-b pt-1 pb-1 pr-2">
-      <Span className="">{title}</Span>
-      <Span className="">{data}</Span>
+      <Span>{title}</Span>
+      <Span>{data}</Span>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import ProfileContainer from '../components/tempates/ProfileContainer';
+import ProfileContainer from '../components/templates/ProfileContainer';
 
 export default function Profile() {
   return (
