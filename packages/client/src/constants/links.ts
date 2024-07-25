@@ -1,4 +1,4 @@
-const links = {
+const LINKS = {
   notfound: '*',
   home: '/',
   login: '/login',
@@ -8,6 +8,7 @@ const links = {
   leaderboard: '/leaderboard',
   forum: '/forum',
   topic: '/topic/:id',
-};
+  serverErrorPage: '/500',
+} as const;
 
-export default links;
+export default LINKS;
