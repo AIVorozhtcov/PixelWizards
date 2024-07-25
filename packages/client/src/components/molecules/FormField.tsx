@@ -1,27 +1,34 @@
 import React from 'react';
 import Input from '../atoms/Input';
 import { useFormContext } from 'react-hook-form';
+import { cn } from '../../lib/utils';
 
 interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
   name: string;
+  labelClass?: string;
+  inputVariant?: 'default' | 'basic';
 }
 
 const FormField: React.FC<FormFieldProps> = ({
   label,
   error,
   name,
+  labelClass,
+  inputVariant,
   ...props
 }) => {
-  const { register } = useFormContext();
+  const { register, trigger } = useFormContext();
   return (
     <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      <label className={labelClass}>{label}</label>
       <Input
-        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        variant={inputVariant}
         {...props}
-        {...register(name)}></Input>
+        {...register(name, {
+          onBlur: () => trigger(name),
+        })}></Input>
       {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
     </div>
   );

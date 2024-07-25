@@ -1,53 +1,62 @@
-import React from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import {
+  useForm,
+  FormProvider,
+  SubmitHandler,
+  FieldValues,
+} from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z, ZodSchema } from 'zod';
 import FormField from '../molecules/FormField';
 import Button from '../atoms/Button';
 
-interface FormProps {
-  schema: ZodSchema;
-  onSubmit: (data: any) => void;
+interface FormProps<T extends FieldValues> {
+  zodSchema: ZodSchema;
+  onSubmit: SubmitHandler<T>;
   defaultValues?: any;
+  buttonVariant?: 'acent' | 'default' | 'acentNotTransparent';
+  buttonClass?: string;
+  labelClass?: string;
+  inputVariant?: 'default' | 'basic';
   fields: {
-    name: string;
+    name: keyof T;
     label: string;
     type?: string;
+    className?: string;
   }[];
 }
 
-const Form: React.FC<FormProps> = ({
-  schema,
+const Form = <T extends FieldValues>({
+  zodSchema,
   onSubmit,
   defaultValues,
   fields,
-}) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(schema),
-    defaultValues,
-  });
-  const methods = useForm({
-    resolver: zodResolver(schema),
+  buttonVariant,
+  buttonClass,
+  labelClass,
+  inputVariant,
+}: FormProps<T>) => {
+  const methods = useForm<T>({
+    resolver: zodResolver(zodSchema),
     defaultValues,
   });
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} noValidate>
         {fields.map(field => (
           <FormField
-            key={field.name}
-            name={field.name}
+            key={String(field.name)}
+            name={String(field.name)}
             label={field.label}
             type={field.type}
-            error={errors[field.name]?.message as string}
+            error={methods.formState.errors[field.name]?.message as string}
+            labelClass={labelClass}
+            inputVariant={inputVariant}
           />
         ))}
-        <Button type="submit">Submit</Button>
+        <Button variant={buttonVariant} className={buttonClass} type="submit">
+          Submit
+        </Button>
       </form>
     </FormProvider>
   );
