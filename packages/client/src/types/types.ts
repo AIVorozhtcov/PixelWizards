@@ -21,3 +21,7 @@ export type ProfileDataType = {
 };
 
 export type FormType = typeof FORM_INPUT_NAMES;
+
+export type FormAvatarType = {
+  avatar: File[];
+};

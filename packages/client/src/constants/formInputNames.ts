@@ -9,6 +9,7 @@ const FORM_INPUT_NAMES = {
   firstName: 'first_name',
   secondName: 'second_name',
   displayName: 'display_name',
+  avatar: 'avatar',
 };
 
 export default FORM_INPUT_NAMES;

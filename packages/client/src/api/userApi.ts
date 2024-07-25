@@ -1,6 +1,7 @@
+import { RefObject } from 'react';
 import { HEADERS, URLS, USER_PATHS } from '../constants/apiConstants';
 import { PROFILE_MODE } from '../constants/profilePageData';
-import { FormType, ProfileModeType } from '../types/types';
+import { FormAvatarType, FormType, ProfileModeType } from '../types/types';
 
 export const updateUserData = (data: FormType, mode: ProfileModeType) => {
   if (mode === PROFILE_MODE.editData) {
@@ -12,7 +13,7 @@ export const updateUserData = (data: FormType, mode: ProfileModeType) => {
   }
 };
 
-const updateUserProfile = async (data: FormType) => {
+export const updateUserProfile = async (data: FormType) => {
   await fetch(`${URLS.base}${USER_PATHS.updateProfile}`, {
     method: 'PUT',
     body: JSON.stringify(data),
@@ -25,7 +26,7 @@ const updateUserProfile = async (data: FormType) => {
     .catch(error => console.log(error));
 };
 
-const updatePassword = async (data: FormType) => {
+export const updatePassword = async (data: FormType) => {
   const preparedData = {
     oldPassword: data.oldPassword,
     newPassword: data.newPassword,
@@ -38,6 +39,19 @@ const updatePassword = async (data: FormType) => {
       ...HEADERS.CT_APPLICATION_JSON,
       ...HEADERS.ACCEPT,
     },
+  })
+    .then(response => response.json())
+    .catch(error => console.log(error));
+};
+
+export const updateUserAvatar = async (data: FormAvatarType) => {
+  const formData = new FormData();
+  formData.append('avatar', data.avatar[0]);
+
+  await fetch(`${URLS.base}${USER_PATHS.updateAvatar}`, {
+    method: 'PUT',
+    body: formData,
+    headers: {},
   })
     .then(response => response.json())
     .catch(error => console.log(error));
