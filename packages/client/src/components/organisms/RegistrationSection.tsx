@@ -3,6 +3,8 @@ import Form from './Form';
 import Subtitle from '../atoms/Subtitle';
 import { RegistrationFormData } from '../../types/types';
 import { RegistrationValidationSchema } from '../../types/validationSchemas';
+import registrationCapibara from '../../../public/registrationCapibara.webp';
+import registrationCapibara2 from '../../../public/registrationCapibara2.webp';
 
 const RegistrationSection: React.FC = () => {
   const handleRegister = (data: RegistrationFormData) => {
@@ -34,6 +36,18 @@ const RegistrationSection: React.FC = () => {
           },
           { name: 'phone', label: 'Телефонный номер', type: 'tel' },
         ]}
+      />
+      <img
+        src={registrationCapibara}
+        width="225"
+        alt="Космическая капибара!"
+        className="mx-auto aspect-square overflow-hidden rounded-xl object-cover absolute top-0 right-0 opacity-50"
+      />
+      <img
+        src={registrationCapibara2}
+        width="225"
+        alt="Космическая капибара!"
+        className="absolute top-10 left-0 opacity-50"
       />
     </div>
   );
