@@ -1,12 +1,11 @@
 import React from 'react';
 import Form from './Form';
-import { z } from 'zod';
 import Subtitle from '../atoms/Subtitle';
 import { RegistrationFormData } from '../../types/types';
 import { RegistrationValidationSchema } from '../../types/validationSchemas';
 
 const RegistrationSection: React.FC = () => {
-  const handleRegister = (data: any) => {
+  const handleRegister = (data: RegistrationFormData) => {
     console.log('Register Data:', data);
   };
 

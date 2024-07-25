@@ -3,16 +3,17 @@ import {
   FormProvider,
   SubmitHandler,
   FieldValues,
+  DefaultValues,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z, ZodSchema } from 'zod';
+import { ZodSchema } from 'zod';
 import FormField from '../molecules/FormField';
 import Button from '../atoms/Button';
 
 interface FormProps<T extends FieldValues> {
   zodSchema: ZodSchema;
   onSubmit: SubmitHandler<T>;
-  defaultValues?: any;
+  defaultValues?: DefaultValues<T>;
   buttonVariant?: 'acent' | 'default' | 'acentNotTransparent';
   buttonClass?: string;
   labelClass?: string;
