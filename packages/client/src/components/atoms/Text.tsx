@@ -1,5 +1,4 @@
 import { VariantProps, cva } from 'class-variance-authority';
-import { cn } from '../../lib/utils';
 
 const textVariants = cva('text-[#94a3b8]', {
   variants: {
