@@ -73,3 +73,11 @@ export const PROFILE_BUTTONS = [
     mode: PROFILE_MODE.base,
   },
 ];
+
+export const PROFILE_POPUP = {
+  popupTitle: 'Загрузите файл',
+  buttonText: 'Поменять',
+  inputType: 'file',
+  inputName: FORM_INPUT_NAMES.avatar,
+  inputAccept: 'image/*',
+};
