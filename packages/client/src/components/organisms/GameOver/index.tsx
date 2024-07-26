@@ -21,7 +21,7 @@ export default function GameOverScreen() {
         background.src = '/endGame.webp';
         background.onload = () => {
           ctx.drawImage(background, 0, 0, width, height);
-          renderText(ctx, text, width, height);
+          renderText({ ctx, text, width, height });
           animate();
         };
 

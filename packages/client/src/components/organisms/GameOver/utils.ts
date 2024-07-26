@@ -7,12 +7,12 @@ export const getRandomColor = () => {
   return color;
 };
 
-export const renderText = (
-  ctx: CanvasRenderingContext2D,
-  text: string,
-  width: number,
-  height: number
-) => {
+export const renderText = ({
+  ctx,
+  text,
+  width,
+  height,
+}: Omit<GlitchProps, 'fontSize' | 'background'>) => {
   ctx.fillStyle = getRandomColor();
   ctx.fillText(text, width / 2, height / 2);
 };
@@ -36,7 +36,7 @@ export const applyGlitch = ({
 }: GlitchProps) => {
   ctx.clearRect(0, height / 2 - fontSize, width, fontSize * 1.2);
   ctx.drawImage(background, 0, 0, width, height);
-  renderText(ctx, text, width, height);
+  renderText({ ctx, text, width, height });
 
   for (let i = 0; i < 10; i++) {
     const x = Math.floor(Math.random() * width);
