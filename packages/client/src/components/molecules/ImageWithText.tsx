@@ -1,5 +1,6 @@
 import { VariantProps, cva } from 'class-variance-authority';
 import InfoBox from './InfoBox';
+import { cn } from './../../lib/utils';
 
 const imageWithTextVariants = cva('flex gap-1', {
   variants: {
@@ -38,7 +39,7 @@ export default function ImageWithText({
   className,
 }: ImageWithTextProps) {
   return (
-    <div className={imageWithTextVariants({ variant, className })}>
+    <div className={cn(imageWithTextVariants({ variant }), className)}>
       <img
         src={imgSrc}
         width="300"

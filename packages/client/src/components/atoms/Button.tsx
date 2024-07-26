@@ -1,4 +1,5 @@
 import { VariantProps, cva } from 'class-variance-authority';
+import { cn } from './../../lib/utils';
 
 const buttonVariants = cva('', {
   variants: {
@@ -21,7 +22,7 @@ interface ButtonProps
 
 const Button = ({ children, variant, className, ...props }: ButtonProps) => {
   return (
-    <button className={buttonVariants({ variant, className })} {...props}>
+    <button className={cn(buttonVariants({ variant }), className)} {...props}>
       {children}
     </button>
   );

@@ -1,5 +1,6 @@
 import { VariantProps, cva } from 'class-variance-authority';
 import { Link as LinkCustom, LinkProps } from 'react-router-dom';
+import { cn } from './../../lib/utils';
 
 const linkVariants = cva('', {
   variants: {
@@ -37,7 +38,7 @@ export default function Link({
   const isActiveVariant = isActive ? 'active' : variant;
   return (
     <LinkCustom
-      className={linkVariants({ variant: isActiveVariant, className })}
+      className={cn(linkVariants({ variant: isActiveVariant }), className)}
       {...props}>
       {children}
     </LinkCustom>
