@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Button from '../../atoms/Button';
+import { applyGlitch, renderText } from './utils';
 
 export default function GameOverScreen() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -20,7 +21,7 @@ export default function GameOverScreen() {
         background.src = '/endGame.webp';
         background.onload = () => {
           ctx.drawImage(background, 0, 0, width, height);
-          renderText();
+          renderText(ctx, text, width, height);
           animate();
         };
 
@@ -28,46 +29,16 @@ export default function GameOverScreen() {
         ctx.textAlign = 'center';
         ctx.lineWidth = 2;
 
-        const getRandomColor = () => {
-          const letters = '0123456789ABCDEF';
-          let color = '#';
-          for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-          }
-          return color;
-        };
-
-        const renderText = () => {
-          ctx.fillStyle = getRandomColor();
-          ctx.fillText(text, width / 2, height / 2);
-        };
-
-        const applyGlitch = () => {
-          ctx.clearRect(0, height / 2 - fontSize, width, fontSize * 1.2);
-          ctx.drawImage(background, 0, 0, width, height);
-          renderText();
-
-          for (let i = 0; i < 10; i++) {
-            const x = Math.floor(Math.random() * width);
-            const y = Math.floor(Math.random() * fontSize * 1.2);
-            const spliceWidth = width - x;
-            const spliceHeight = Math.floor(Math.random() * 10 + 1);
-            ctx.putImageData(
-              ctx.getImageData(
-                x,
-                height / 2 - fontSize + y,
-                spliceWidth,
-                spliceHeight
-              ),
-              x + Math.floor(Math.random() * 20 - 10),
-              height / 2 - fontSize + y
-            );
-          }
-        };
-
         const animate = () => {
           animationTimeout.current = setTimeout(() => {
-            applyGlitch();
+            applyGlitch({
+              ctx,
+              background,
+              fontSize,
+              height,
+              text,
+              width,
+            });
             requestAnimationFrame(animate);
           }, 1000 / 30);
         };
