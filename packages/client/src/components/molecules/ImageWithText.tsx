@@ -23,6 +23,7 @@ export interface ImageWithTextPropsCustom {
   text: string;
 }
 
+
 interface ImageWithTextProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     ImageWithTextPropsCustom,
