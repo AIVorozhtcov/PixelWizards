@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
-import Bg from '../../public/endGame.webp';
-import Button from '../components/atoms/Button';
+import Button from '../../atoms/Button';
 
 export default function GameOverScreen() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -18,7 +17,7 @@ export default function GameOverScreen() {
         const fontSize = 50;
 
         const background = new Image();
-        background.src = Bg;
+        background.src = '/endGame.webp';
         background.onload = () => {
           ctx.drawImage(background, 0, 0, width, height);
           renderText();
@@ -84,11 +83,21 @@ export default function GameOverScreen() {
 
   return (
     <div className="relative">
-      <canvas ref={canvasRef} width={800} height={600} />
-      <Button variant="acent" className="bg-red-600">
+      <canvas className="m-auto" ref={canvasRef} width={1000} height={800} />
+      <Button
+        onClick={() => {
+          alert('Переход на начало игры');
+        }}
+        variant="acent"
+        className="bg-red-600 absolute bottom-[32%] left-1/2 transform -translate-x-1/2">
         Начать заново
       </Button>
-      <Button variant="acent" className="bg-red-600">
+      <Button
+        onClick={() => {
+          alert('Переход в главное меню');
+        }}
+        variant="acent"
+        className="bg-red-600 absolute bottom-1/4 left-1/2 transform -translate-x-1/2">
         В главное меню
       </Button>
     </div>
