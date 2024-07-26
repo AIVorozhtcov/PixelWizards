@@ -1,8 +1,8 @@
 import Subtitle from '../atoms/Subtitle';
 import Text from '../atoms/Text';
-import { ImageWithTextProps } from './ImageWithText';
+import { ImageWithTextPropsCustom } from './ImageWithText';
 
-export type InfoBoxProps = Pick<ImageWithTextProps, 'subtitle' | 'text'>;
+export type InfoBoxProps = Pick<ImageWithTextPropsCustom, 'subtitle' | 'text'>;
 
 export default function InfoBox({ subtitle, text }: InfoBoxProps) {
   return (

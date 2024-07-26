@@ -1,5 +1,5 @@
 import { VariantProps, cva } from 'class-variance-authority';
-import { cn } from '../../lib/utils';
+import { cn } from './../../lib/utils';
 
 const subTitleVariants = cva('text-[#f1f5f9] font-bold', {
   variants: {
@@ -30,7 +30,7 @@ export default function Subtitle({
 }: SubtitleProps) {
   const Slot = as;
   return (
-    <Slot className={subTitleVariants({ variant, className })} {...props}>
+    <Slot className={cn(subTitleVariants({ variant }), className)} {...props}>
       {children}
     </Slot>
   );
