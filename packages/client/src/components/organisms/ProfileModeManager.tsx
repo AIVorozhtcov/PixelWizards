@@ -5,9 +5,9 @@ import {
   PROFILE_MODE,
 } from '../../constants/profilePageData';
 import { ProfileModeType } from '../../types/types';
-import ProfileList from '../organisms/ProfileList';
-import ProfileButtonsList from '../organisms/ProfileButtonsList';
-import ProfileForm from '../organisms/ProfileForm';
+import ProfileList from './ProfileList';
+import ProfileButtonsList from './ProfileButtonsList';
+import ProfileForm from './ProfileForm';
 import { Dispatch, SetStateAction } from 'react';
 
 type ProfileModeManagerProps = {

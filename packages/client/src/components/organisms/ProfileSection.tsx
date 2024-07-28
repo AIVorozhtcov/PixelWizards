@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import links from '../../constants/links';
 import Popup from '../molecules/Popup';
 
-const ProfileContainer = () => {
+const ProfileSection = () => {
   const [mode, setMode] = useState<ProfileModeType>('base');
   const [isPopupDisplay, setPopupDisplay] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -44,4 +44,4 @@ const ProfileContainer = () => {
   );
 };
 
-export default ProfileContainer;
+export default ProfileSection;
