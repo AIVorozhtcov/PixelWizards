@@ -68,10 +68,6 @@ export const PROFILE_BUTTONS = [
     text: 'Изменить пароль',
     mode: PROFILE_MODE.editPassword,
   },
-  {
-    text: 'Выйти',
-    mode: PROFILE_MODE.base,
-  },
 ];
 
 export const PROFILE_POPUP = {
