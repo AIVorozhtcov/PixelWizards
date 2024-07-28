@@ -6,7 +6,7 @@ import {
 } from '../../constants/profilePageData';
 import { ProfileModeType } from '../../types/types';
 import ProfileList from './ProfileList';
-import ProfileButtonsList from './ProfileButtonsList';
+import ProfileButtonsList from '../molecules/ProfileButtonsList';
 import ProfileForm from './ProfileForm';
 import { Dispatch, SetStateAction } from 'react';
 
