@@ -9,7 +9,7 @@ const ProfileList = (props: ProfileListProps) => {
   const { profileData } = props;
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       {profileData.map((item, idx) => (
         <ProfileListItem
           title={item.title}

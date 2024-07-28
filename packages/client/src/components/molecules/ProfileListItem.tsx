@@ -7,9 +7,9 @@ type ProfileListItemProps = {
 
 const ProfileListItem = ({ title, data }: ProfileListItemProps) => {
   return (
-    <div className="flex flex-row justify-between border-b pt-1 pb-1 pr-2">
-      <Span>{title}</Span>
-      <Span>{data}</Span>
+    <div className="flex flex-row justify-between border-2 rounded-md border-[#2f4154] py-1 px-2">
+      <Span className="text-white">{title}</Span>
+      <Span className="text-[#ffc107]">{data}</Span>
     </div>
   );
 };
