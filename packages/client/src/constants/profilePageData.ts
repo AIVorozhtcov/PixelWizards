@@ -51,7 +51,7 @@ export const PROFILE_CHANGE_PASSWORD_INPUTS = [
   },
 ];
 
-export const MOCK_AVATAR_PATH = '/images/mock-profile-avatar.png';
+export const MOCK_AVATAR_PATH = '/capCapibara.webp';
 
 export const PROFILE_MODE = {
   base: 'base',

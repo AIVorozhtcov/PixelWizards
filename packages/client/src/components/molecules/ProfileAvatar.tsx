@@ -10,9 +10,13 @@ type ProfileAvatarProps = {
 const ProfileAvatar = ({ handleClick }: ProfileAvatarProps) => {
   return (
     <div
-      className="w-[130px] h-[130px] relative rounded-full overflow-hidden hover:cursor-pointer hover:filter()"
+      className="group w-44 h-44 relative rounded-full overflow-hidden border-2"
       onClick={handleClick}>
-      <Span className="absolute w-full h-full hover:bg-black hover:opacity-20 hover:cursor-pointer"></Span>
+      <Span className="absolute w-full h-full group-hover:bg-black opacity-40 cursor-pointer" />
+      <Span className="absolute w-full h-full my-20 mx-6 text-white hidden group-hover:block cursor-pointer">
+        Поменять аватар
+      </Span>
+
       <Image
         src={MOCK_AVATAR_PATH}
         alt="Аватар пользователя"
