@@ -1,4 +1,3 @@
-import FORM_INPUT_NAMES from '../constants/formInputNames';
 import { PROFILE_MODE } from '../constants/profilePageData';
 
 export type RegistrationFormData = {
@@ -17,7 +16,7 @@ export type ProfileFormData = {
   login: string;
   email: string;
   display_name: string;
-  phonr: string;
+  phone: string;
 };
 
 export type ProfilePasswordFormData = {
@@ -30,12 +29,10 @@ type ModeKeys = keyof typeof PROFILE_MODE;
 export type ProfileModeType = typeof PROFILE_MODE[ModeKeys];
 
 export type ProfileDataType = {
-  title: string;
+  label: string;
   name: string;
   type: string;
 };
-
-export type FormType = typeof FORM_INPUT_NAMES;
 
 export type FormAvatarType = {
   avatar: File[];

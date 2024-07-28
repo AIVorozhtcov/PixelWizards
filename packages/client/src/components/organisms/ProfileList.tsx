@@ -1,5 +1,6 @@
 import ProfileListItem from '../molecules/ProfileListItem';
-import { ProfileDataType } from '../../types/types';
+import { ProfileDataType, ProfileFormData } from '../../types/types';
+import { MOCK_FORM_DEFAULT_VALUES } from '../../constants/mockProfileFormDefaultValues';
 
 type ProfileListProps = {
   profileData: ProfileDataType[];
@@ -12,8 +13,8 @@ const ProfileList = (props: ProfileListProps) => {
     <div className="flex flex-col gap-2">
       {profileData.map((item, idx) => (
         <ProfileListItem
-          title={item.title}
-          data="Данные пользователя"
+          label={item.label}
+          data={MOCK_FORM_DEFAULT_VALUES[item.name as keyof ProfileFormData]}
           key={idx}
         />
       ))}

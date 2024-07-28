@@ -9,15 +9,20 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodSchema } from 'zod';
 import FormField from '../molecules/FormField';
 import Button from '../atoms/Button';
+import { ProfileModeType } from '../../types/types';
 
 interface FormProps<T extends FieldValues> {
   zodSchema: ZodSchema;
   onSubmit: SubmitHandler<T>;
+  buttonText: string;
   defaultValues?: DefaultValues<T>;
-  buttonVariant?: 'acent' | 'default' | 'acentNotTransparent';
+  buttonVariant?: 'acent' | 'default' | 'acentNotTransparent' | 'yellow';
   buttonClass?: string;
   labelClass?: string;
-  inputVariant?: 'default' | 'basic';
+  formFieldClass?: string;
+  labelVariant?: 'default' | 'basic' | 'profile';
+  inputVariant?: 'default' | 'basic' | 'profile';
+  profileMode?: ProfileModeType;
   fields: {
     name: keyof T;
     label: string;
@@ -31,9 +36,12 @@ const Form = <T extends FieldValues>({
   onSubmit,
   defaultValues,
   fields,
+  buttonText,
   buttonVariant,
+  formFieldClass,
   buttonClass,
   labelClass,
+  labelVariant,
   inputVariant,
 }: FormProps<T>) => {
   const methods = useForm<T>({
@@ -51,12 +59,14 @@ const Form = <T extends FieldValues>({
             label={field.label}
             type={field.type}
             error={methods.formState.errors[field.name]?.message as string}
+            formFieldClass={formFieldClass}
             labelClass={labelClass}
+            labelVariant={labelVariant}
             inputVariant={inputVariant}
           />
         ))}
         <Button variant={buttonVariant} className={buttonClass} type="submit">
-          Submit
+          {buttonText}
         </Button>
       </form>
     </FormProvider>

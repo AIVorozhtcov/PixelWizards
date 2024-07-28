@@ -20,9 +20,11 @@ const RegistrationSection: React.FC = () => {
       <Form<RegistrationFormData>
         zodSchema={RegistrationValidationSchema}
         onSubmit={handleRegister}
+        buttonText="Submit"
         buttonVariant="acentNotTransparent"
         buttonClass="bg-[#ffc107]"
-        labelClass="block text-sm font-medium text-[#ffc107]"
+        formFieldClass="mb-4 "
+        labelVariant="basic"
         inputVariant="basic"
         fields={[
           { name: FORM_INPUT_NAMES.firstName, label: 'Имя' },

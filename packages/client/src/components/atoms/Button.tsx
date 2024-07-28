@@ -12,6 +12,7 @@ const buttonVariants = cva('', {
         'inline-flex items-center justify-center rounded-md border border-red-600 p-2 text-sm font-medium text-white shadow transition-colors hover:bg-red-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
       yellow:
         'block bg-[#ffc107] rounded-md p-1 hover:cursor-pointer hover:bg-[#ae8305] transition-colors',
+      red: 'block bg-red-600 text-white rounded-md p-2 hover:cursor-pointer hover:bg-red-800 hover:text-gray-300 transition-colors',
     },
   },
   defaultVariants: {

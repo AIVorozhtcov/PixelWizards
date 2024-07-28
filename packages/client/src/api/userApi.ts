@@ -1,19 +1,11 @@
-import { RefObject } from 'react';
 import { HEADERS, URLS, USER_PATHS } from '../constants/apiConstants';
-import { PROFILE_MODE } from '../constants/profilePageData';
-import { FormAvatarType, FormType, ProfileModeType } from '../types/types';
+import {
+  FormAvatarType,
+  ProfileFormData,
+  ProfilePasswordFormData,
+} from '../types/types';
 
-export const updateUserData = (data: FormType, mode: ProfileModeType) => {
-  if (mode === PROFILE_MODE.editData) {
-    updateUserProfile(data);
-  }
-
-  if (mode === PROFILE_MODE.editPassword) {
-    updatePassword(data);
-  }
-};
-
-export const updateUserProfile = async (data: FormType) => {
+export const updateUserProfile = async (data: ProfileFormData) => {
   await fetch(`${URLS.base}${USER_PATHS.updateProfile}`, {
     method: 'PUT',
     body: JSON.stringify(data),
@@ -26,7 +18,7 @@ export const updateUserProfile = async (data: FormType) => {
     .catch(error => console.log(error));
 };
 
-export const updatePassword = async (data: FormType) => {
+export const updatePassword = async (data: ProfilePasswordFormData) => {
   const preparedData = {
     oldPassword: data.oldPassword,
     newPassword: data.newPassword,
