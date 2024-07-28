@@ -1,8 +1,8 @@
 const FORM_INPUT_NAMES = {
   login: 'login',
   password: 'password',
-  passwordAgain: 'password_again',
-  oldPassword: 'old_password',
+  passwordAgain: 'passwordAgain',
+  oldPassword: 'oldPassword',
   newPassword: 'newPassword',
   email: 'email',
   phone: 'phone',
@@ -10,6 +10,6 @@ const FORM_INPUT_NAMES = {
   secondName: 'second_name',
   displayName: 'display_name',
   avatar: 'avatar',
-};
+} as const;
 
 export default FORM_INPUT_NAMES;

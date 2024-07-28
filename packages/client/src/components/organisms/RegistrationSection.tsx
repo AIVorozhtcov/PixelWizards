@@ -5,6 +5,7 @@ import { RegistrationFormData } from '../../types/types';
 import { RegistrationValidationSchema } from '../../types/validationSchemas';
 import registrationCapibara from '../../../public/registrationCapibara.webp';
 import registrationCapibara2 from '../../../public/registrationCapibara2.webp';
+import FORM_INPUT_NAMES from '../../constants/formInputNames';
 
 const RegistrationSection: React.FC = () => {
   const handleRegister = (data: RegistrationFormData) => {
@@ -24,17 +25,29 @@ const RegistrationSection: React.FC = () => {
         labelClass="block text-sm font-medium text-[#ffc107]"
         inputVariant="basic"
         fields={[
-          { name: 'first_name', label: 'Имя' },
-          { name: 'second_name', label: 'Фамилия' },
-          { name: 'login', label: 'Логин' },
-          { name: 'email', label: 'Адрес электронной почты', type: 'email' },
-          { name: 'password', label: 'Пароль', type: 'password' },
+          { name: FORM_INPUT_NAMES.firstName, label: 'Имя' },
+          { name: FORM_INPUT_NAMES.secondName, label: 'Фамилия' },
+          { name: FORM_INPUT_NAMES.login, label: 'Логин' },
           {
-            name: 'confirmPassword',
+            name: FORM_INPUT_NAMES.email,
+            label: 'Адрес электронной почты',
+            type: 'email',
+          },
+          {
+            name: FORM_INPUT_NAMES.password,
+            label: 'Пароль',
+            type: 'password',
+          },
+          {
+            name: FORM_INPUT_NAMES.passwordAgain,
             label: 'Повторите пароль',
             type: 'password',
           },
-          { name: 'phone', label: 'Телефонный номер', type: 'tel' },
+          {
+            name: FORM_INPUT_NAMES.phone,
+            label: 'Телефонный номер',
+            type: 'tel',
+          },
         ]}
       />
       <img

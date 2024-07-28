@@ -31,7 +31,7 @@ export const RegistrationValidationSchema: ZodType<RegistrationFormData> = z
         passwordRegex,
         'Пароль должен содержать хотя бы одну заглавную букву и одну цифру'
       ),
-    confirmPassword: z
+    passwordAgain: z
       .string()
       .min(8, 'Пароль не может быть короче 8 символов')
       .max(40, 'Пароль не может быть длиннее 40 символов'),
@@ -39,7 +39,7 @@ export const RegistrationValidationSchema: ZodType<RegistrationFormData> = z
       .string()
       .regex(phoneRegex, 'Номер телефона не соответствует требованиям'),
   })
-  .refine(data => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.passwordAgain, {
     message: 'Пароли не совпадают',
     path: ['confirmPassword'],
   });
