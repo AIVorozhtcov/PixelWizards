@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Button from '../../atoms/Button';
-import { applyGlitch, renderText } from './utils';
+import { applyGlitch, renderTextOnCanvas } from './utils';
 
 export default function GameOverScreen() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -21,7 +21,7 @@ export default function GameOverScreen() {
         background.src = '/endGame.webp';
         background.onload = () => {
           ctx.drawImage(background, 0, 0, width, height);
-          renderText({ ctx, text, width, height });
+          renderTextOnCanvas({ ctx, text, width, height });
           animate();
         };
 
