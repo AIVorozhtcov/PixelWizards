@@ -6,9 +6,7 @@ type ProfileListProps = {
   profileData: ProfileDataType[];
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const ProfileList = (props: ProfileListProps) => {
-  const { profileData } = props;
-
+const ProfileList = ({ profileData }: ProfileListProps) => {
   return (
     <div className="flex flex-col gap-2">
       {profileData.map((item, idx) => (

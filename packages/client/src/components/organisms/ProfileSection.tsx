@@ -32,7 +32,7 @@ const ProfileSection = () => {
           Закрыть
         </Button>
       )}
-      <div className="flex flex-col items-center gap-6 max-w-[500px] min-w-80 my-0 mx-auto">
+      <div className="flex flex-col items-center gap-6 max-w-lg min-w-80 my-0 mx-auto">
         <ProfileAvatar handleClick={() => setPopupDisplay(true)} />
         <div className="w-full flex flex-col gap-10">
           <ProfileModeManager mode={mode} setMode={setMode} />

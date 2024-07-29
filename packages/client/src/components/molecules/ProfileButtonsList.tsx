@@ -12,9 +12,7 @@ type ProfileListProps = {
   setMode: Dispatch<SetStateAction<string>>;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const ProfileButtonsList = (props: ProfileListProps) => {
-  const { buttons, setMode } = props;
-
+const ProfileButtonsList = ({ buttons, setMode }: ProfileListProps) => {
   return (
     <div className="w-full flex flex-col gap-2">
       {buttons.map((button, idx) => (
