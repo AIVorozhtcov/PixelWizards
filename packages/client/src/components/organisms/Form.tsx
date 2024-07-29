@@ -9,7 +9,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodSchema } from 'zod';
 import FormField from '../molecules/FormField';
 import Button from '../atoms/Button';
-import { ProfileModeType } from '../../types/types';
 
 interface FormProps<T extends FieldValues> {
   zodSchema: ZodSchema;
@@ -23,7 +22,6 @@ interface FormProps<T extends FieldValues> {
   labelVariant?: 'default' | 'basic' | 'profile';
   inputVariant?: 'default' | 'basic' | 'profile' | 'typeFile';
   inputAcept?: string;
-  profileMode?: ProfileModeType;
   fields: {
     name: keyof T;
     label: string;

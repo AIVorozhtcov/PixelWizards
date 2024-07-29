@@ -47,7 +47,6 @@ const ProfileModeManager = ({ mode, setMode }: ProfileModeManagerProps) => {
           inputVariant="profile"
           defaultValues={MOCK_FORM_DEFAULT_VALUES}
           fields={PROFILE_INPUTS_DATA}
-          profileMode={mode}
         />
       );
     case PROFILE_MODE.editPassword:
@@ -62,7 +61,6 @@ const ProfileModeManager = ({ mode, setMode }: ProfileModeManagerProps) => {
           labelVariant="profile"
           inputVariant="profile"
           fields={PROFILE_CHANGE_PASSWORD_INPUTS}
-          profileMode={mode}
         />
       );
     default:
