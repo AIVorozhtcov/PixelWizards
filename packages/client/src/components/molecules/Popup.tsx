@@ -3,7 +3,7 @@ import Span from '../atoms/Span';
 import { SubmitHandler, FieldValues } from 'react-hook-form';
 import Subtitle from '../atoms/Subtitle';
 import Form from '../organisms/Form';
-import { ProfileUpdateAvatarSchema } from '../../types/validationSchemas';
+import { ZodSchema } from 'zod';
 
 type PopupProps<T> = {
   popupTitle: string;
@@ -15,6 +15,7 @@ type PopupProps<T> = {
 
 interface Popup<T extends FieldValues> {
   popup: PopupProps<T>;
+  zodSchema: ZodSchema;
   onSubmit: SubmitHandler<T>;
   handleClick: MouseEventHandler<HTMLDivElement>;
 }
@@ -23,6 +24,7 @@ const Popup = <T extends FieldValues>({
   handleClick,
   onSubmit,
   popup,
+  zodSchema,
 }: Popup<T>) => {
   return (
     <div className="absolute top-0 left-0 z-[20] w-full h-full bg-black bg-opacity-50">
@@ -46,7 +48,7 @@ const Popup = <T extends FieldValues>({
           {popup.popupTitle}
         </Subtitle>
         <Form<T>
-          zodSchema={ProfileUpdateAvatarSchema}
+          zodSchema={zodSchema}
           onSubmit={onSubmit}
           buttonText={popup.buttonText}
           buttonVariant="yellow"

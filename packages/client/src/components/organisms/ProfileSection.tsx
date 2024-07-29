@@ -6,6 +6,7 @@ import Button from '../atoms/Button';
 import { PROFILE_MODE, PROFILE_POPUP } from '../../constants/profilePageData';
 import Popup from '../molecules/Popup';
 import { updateUserAvatar } from '../../api/userApi';
+import { ProfileUpdateAvatarSchema } from '../../types/validationSchemas';
 
 const ProfileSection = () => {
   const [mode, setMode] = useState<ProfileModeType>('base');
@@ -19,6 +20,7 @@ const ProfileSection = () => {
         <Popup<FormAvatarType>
           handleClick={() => setPopupDisplay(false)}
           onSubmit={(data: FormAvatarType) => updateUserAvatar(data)}
+          zodSchema={ProfileUpdateAvatarSchema}
           popup={PROFILE_POPUP}
         />
       )}
