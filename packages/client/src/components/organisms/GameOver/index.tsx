@@ -4,7 +4,7 @@ import { applyGlitch, fillAndRenderTextOnCanvas } from './utils';
 
 export default function GameOverScreen() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const animationTimeout = useRef<NodeJS.Timeout | null>(null);
+  const animationFrame = useRef<number | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -30,24 +30,22 @@ export default function GameOverScreen() {
         ctx.lineWidth = 2;
 
         const animate = () => {
-          animationTimeout.current = setTimeout(() => {
-            applyGlitch({
-              ctx,
-              background,
-              fontSize,
-              height,
-              text,
-              width,
-            });
-            requestAnimationFrame(animate);
-          }, 1000 / 30);
+          applyGlitch({
+            ctx,
+            background,
+            fontSize,
+            height,
+            text,
+            width,
+          });
+          animationFrame.current = requestAnimationFrame(animate);
         };
       }
     }
 
     return () => {
-      if (animationTimeout.current) {
-        clearTimeout(animationTimeout.current);
+      if (animationFrame.current) {
+        window.cancelAnimationFrame(animationFrame.current);
       }
     };
   }, []);
