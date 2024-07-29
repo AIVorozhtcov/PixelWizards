@@ -35,5 +35,5 @@ export type ProfileDataType = {
 };
 
 export type FormAvatarType = {
-  avatar: File[];
+  avatar: FileList;
 };

@@ -1,59 +1,66 @@
-import { MouseEventHandler, useRef } from 'react';
-import Button from '../atoms/Button';
-import Input from '../atoms/Input';
+import { MouseEventHandler } from 'react';
 import Span from '../atoms/Span';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { updateUserAvatar } from '../../api/userApi';
-import { FormAvatarType } from '../../types/types';
+import { SubmitHandler, FieldValues } from 'react-hook-form';
+import Subtitle from '../atoms/Subtitle';
+import Form from '../organisms/Form';
+import { ProfileUpdateAvatarSchema } from '../../types/validationSchemas';
 
-type PopupType = {
+type PopupProps<T> = {
   popupTitle: string;
   buttonText: string;
   inputType: string;
-  inputName: string;
+  inputName: keyof T;
   inputAccept: string;
 };
 
-type PopupProps = {
-  popup: PopupType;
+interface Popup<T extends FieldValues> {
+  popup: PopupProps<T>;
+  onSubmit: SubmitHandler<T>;
   handleClick: MouseEventHandler<HTMLDivElement>;
-};
+}
 
-const Popup = ({ handleClick, popup }: PopupProps) => {
-  const { register, handleSubmit } = useForm<FormAvatarType>({
-    mode: 'onChange',
-  });
-
-  const onSubmit: SubmitHandler<FormAvatarType> = data =>
-    updateUserAvatar(data);
-
+const Popup = <T extends FieldValues>({
+  handleClick,
+  onSubmit,
+  popup,
+}: Popup<T>) => {
   return (
-    <div className="absolute top-0 left-0 z-[100] w-full h-full bg-black bg-opacity-50">
+    <div className="absolute top-0 left-0 z-[20] w-full h-full bg-black bg-opacity-50">
       <div
         className="
-        absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
-        max-w-96 flex flex-col items-stretch text-center bg-white
-        rounded-lg pt-10 pb-6 pl-3 pr-3
+        absolute top-1/3 left-1/2 -translate-y-1/3 -translate-x-1/2
+        max-w-96 flex flex-col items-stretch text-center bg-[#152f48]
+        rounded-lg pt-10 pb-6 pl-3 pr-3 shadow-[0_0_10px_2px] shadow-[#0b1016]
       ">
         <Span
           className="
           relative block hover:cursor-pointer
-          before:content-[''] before:absolute before:left-0 before:-top-5 before:bg-gray-400 
-          before:rounded-sm before:rotate-45 before:w-6 before:h-1 before:hover:bg-gray-300
-          after:content-[''] after:absolute after:left-0 after:-top-5 after:bg-gray-400 
-          after:rounded-sm after:-rotate-45 after:w-6 after:h-1 after:hover:bg-gray-300
+          before:content-[''] before:absolute before:left-0 before:-top-5 before:bg-[#ffc107] 
+          before:rounded-sm before:rotate-45 before:w-6 before:h-1 before:hover:bg-[#ae8305]
+          after:content-[''] after:absolute after:left-0 after:-top-5 after:bg-[#ffc107] 
+          after:rounded-sm after:-rotate-45 after:w-6 after:h-1 after:hover:bg-[#ae8305]
         "
           onClick={handleClick}
         />
-        <h1 className="mb-8">{popup.popupTitle}</h1>
-        <form className="flex flex-col gap-9" onSubmit={handleSubmit(onSubmit)}>
-          <Input type={popup.inputType} {...register('avatar')} />
-          <Button
-            className="block w-full hover:cursor-pointer hover:bg-gray-300 bg-gray-200 rounded-md p-1"
-            type="submit">
-            {popup.buttonText}
-          </Button>
-        </form>
+        <Subtitle as="h2" className="mb-10">
+          {popup.popupTitle}
+        </Subtitle>
+        <Form<T>
+          zodSchema={ProfileUpdateAvatarSchema}
+          onSubmit={onSubmit}
+          buttonText={popup.buttonText}
+          buttonVariant="yellow"
+          buttonClass="w-full mt-10"
+          inputVariant="typeFile"
+          inputAcept={popup.inputAccept}
+          fields={[
+            {
+              name: popup.inputName,
+              type: popup.inputType,
+              label: '',
+            },
+          ]}
+        />
       </div>
     </div>
   );

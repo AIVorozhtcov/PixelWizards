@@ -10,7 +10,8 @@ interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   labelClass?: string;
   formFieldClass?: string;
   labelVariant?: 'default' | 'basic' | 'profile';
-  inputVariant?: 'default' | 'basic' | 'profile';
+  inputVariant?: 'default' | 'basic' | 'profile' | 'typeFile';
+  inputAcept?: string;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -21,6 +22,7 @@ const FormField: React.FC<FormFieldProps> = ({
   labelClass,
   labelVariant,
   inputVariant,
+  inputAcept,
   ...props
 }) => {
   const { register, trigger } = useFormContext();
@@ -30,6 +32,7 @@ const FormField: React.FC<FormFieldProps> = ({
         {label}
         <Input
           variant={inputVariant}
+          accept={inputAcept}
           {...props}
           {...register(name, {
             onBlur: () => trigger(name),

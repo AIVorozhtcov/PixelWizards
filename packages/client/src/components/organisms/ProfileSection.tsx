@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import ProfileAvatar from '../molecules/ProfileAvatar';
-import { ProfileModeType } from '../../types/types';
+import { FormAvatarType, ProfileModeType } from '../../types/types';
 import ProfileModeManager from './ProfileModeManager';
 import Button from '../atoms/Button';
 import { PROFILE_MODE, PROFILE_POPUP } from '../../constants/profilePageData';
 import Popup from '../molecules/Popup';
+import { updateUserAvatar } from '../../api/userApi';
 
 const ProfileSection = () => {
   const [mode, setMode] = useState<ProfileModeType>('base');
@@ -15,8 +16,9 @@ const ProfileSection = () => {
   return (
     <>
       {isPopupDisplay && (
-        <Popup
+        <Popup<FormAvatarType>
           handleClick={() => setPopupDisplay(false)}
+          onSubmit={(data: FormAvatarType) => updateUserAvatar(data)}
           popup={PROFILE_POPUP}
         />
       )}

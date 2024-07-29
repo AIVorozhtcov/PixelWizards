@@ -1,5 +1,7 @@
 import { z, ZodType } from 'zod';
+
 import {
+  FormAvatarType,
   ProfileFormData,
   ProfilePasswordFormData,
   RegistrationFormData,
@@ -10,6 +12,12 @@ const loginRegex = /^(?=.*[A-Za-z])[-\w]{3,20}$/;
 const passwordRegex =
   /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@!#$%^&*()_+[\]{}<>?]{8,40}$/;
 const phoneRegex = /^\+?\d{10,15}$/;
+const acceptedImageTypes = [
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+];
 
 export const RegistrationValidationSchema: ZodType<RegistrationFormData> = z
   .object({
@@ -99,3 +107,16 @@ export const ProfileUpdatePasswordSchema: ZodType<ProfilePasswordFormData> = z
     message: 'Пароли не совпадают',
     path: ['passwordAgain'],
   });
+
+export const ProfileUpdateAvatarSchema: ZodType<FormAvatarType> = z.object({
+  avatar: z
+    .instanceof(FileList)
+    .refine(
+      avatar => acceptedImageTypes.includes(avatar[0]?.type),
+      'Разрешены форматы изображения: .jpg, .jpeg, .png и .webp'
+    )
+    .refine(
+      avatar => avatar[0]?.size < 3 * 1024 * 1024,
+      'Размер файла должен быть меньше 3MB'
+    ),
+});

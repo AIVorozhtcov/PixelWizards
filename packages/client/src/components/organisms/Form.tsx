@@ -21,7 +21,8 @@ interface FormProps<T extends FieldValues> {
   labelClass?: string;
   formFieldClass?: string;
   labelVariant?: 'default' | 'basic' | 'profile';
-  inputVariant?: 'default' | 'basic' | 'profile';
+  inputVariant?: 'default' | 'basic' | 'profile' | 'typeFile';
+  inputAcept?: string;
   profileMode?: ProfileModeType;
   fields: {
     name: keyof T;
@@ -43,6 +44,7 @@ const Form = <T extends FieldValues>({
   labelClass,
   labelVariant,
   inputVariant,
+  inputAcept,
 }: FormProps<T>) => {
   const methods = useForm<T>({
     resolver: zodResolver(zodSchema),
@@ -63,6 +65,7 @@ const Form = <T extends FieldValues>({
             labelClass={labelClass}
             labelVariant={labelVariant}
             inputVariant={inputVariant}
+            inputAcept={inputAcept}
           />
         ))}
         <Button variant={buttonVariant} className={buttonClass} type="submit">
