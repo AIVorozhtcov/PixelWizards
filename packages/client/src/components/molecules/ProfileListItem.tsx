@@ -7,7 +7,7 @@ type ProfileListItemProps = {
 
 const ProfileListItem = ({ label, data }: ProfileListItemProps) => {
   return (
-    <div className="flex flex-row justify-between border-2 rounded-md border-[#2f4154] py-1 px-2">
+    <div className="flex flex-row justify-between border-2 rounded-md border-[#2c435c] py-1 px-2">
       <Span className="text-white">{label}</Span>
       <Span className="text-[#ffc107]">{data}</Span>
     </div>

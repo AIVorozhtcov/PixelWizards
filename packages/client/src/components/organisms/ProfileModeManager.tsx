@@ -42,7 +42,7 @@ const ProfileModeManager = ({ mode, setMode }: ProfileModeManagerProps) => {
           buttonText="Сохранить"
           buttonVariant="yellow"
           buttonClass="w-full mt-10"
-          formFieldClass="mb-2"
+          formFieldClass="mb-2 hover:bg-[#2c435c] rounded-md"
           labelVariant="profile"
           inputVariant="profile"
           defaultValues={MOCK_FORM_DEFAULT_VALUES}
@@ -57,7 +57,7 @@ const ProfileModeManager = ({ mode, setMode }: ProfileModeManagerProps) => {
           buttonText="Сохранить"
           buttonVariant="yellow"
           buttonClass="w-full mt-10"
-          formFieldClass="mb-2"
+          formFieldClass="mb-2 hover:bg-[#2c435c] rounded-md"
           labelVariant="profile"
           inputVariant="profile"
           fields={PROFILE_CHANGE_PASSWORD_INPUTS}

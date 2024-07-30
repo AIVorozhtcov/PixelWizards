@@ -7,7 +7,7 @@ const labelVariants = cva('', {
       default: '',
       basic: 'block text-sm font-medium text-[#ffc107]',
       profile:
-        'flex flex-row justify-between gap-2 border-2 rounded-md border-[#2f4154] py-1 pl-2 pr-1 whitespace-nowrap text-white',
+        'flex flex-row justify-between gap-2 border-2 rounded-md border-[#2c435c] py-1 pl-2 pr-1 whitespace-nowrap text-white',
     },
   },
   defaultVariants: {
