@@ -13,7 +13,7 @@ const Example2 = '3. [REFACTOR]: Some text';
 function main() {
   const rootDir = process.cwd();
   const commitFilePath = path.join(rootDir, '.git', 'COMMIT_EDITMSG');
-  const commitMessage = fs.readFileSync(commitFilePath, 'utf8');
+  const commitMessage = fs.readFileSync(commitFilePath, 'utf8')
 
   const regExp = /^\[(FIX|FEAT|REFACTOR)\]:?\s*/;
 
