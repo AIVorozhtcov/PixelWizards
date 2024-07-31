@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
+import { cn } from '../../lib/utils';
 
 const labelVariants = cva('', {
   variants: {
@@ -21,7 +22,7 @@ interface LabelProps
 
 const Label: FC<LabelProps> = ({ variant, className, children, ...props }) => {
   return (
-    <label {...props} className={labelVariants({ variant, className })}>
+    <label {...props} className={cn(labelVariants({ variant }), className)}>
       {children}
     </label>
   );
