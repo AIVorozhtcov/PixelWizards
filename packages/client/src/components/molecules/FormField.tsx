@@ -1,4 +1,3 @@
-import React from 'react';
 import Input from '../atoms/Input';
 import { useFormContext } from 'react-hook-form';
 
@@ -10,14 +9,14 @@ interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   inputVariant?: 'default' | 'basic';
 }
 
-const FormField: React.FC<FormFieldProps> = ({
+const FormField = ({
   label,
   error,
   name,
   labelClass,
   inputVariant,
   ...props
-}) => {
+}: FormFieldProps) => {
   const { register, trigger } = useFormContext();
   return (
     <div className="mb-4">

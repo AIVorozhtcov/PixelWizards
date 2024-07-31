@@ -1,4 +1,3 @@
-import React from 'react';
 import Form from './Form';
 import Subtitle from '../atoms/Subtitle';
 import { RegistrationFormData } from '../../types/types';
@@ -6,7 +5,7 @@ import { RegistrationValidationSchema } from '../../types/validationSchemas';
 import registrationCapibara from '../../../public/registrationCapibara.webp';
 import registrationCapibara2 from '../../../public/registrationCapibara2.webp';
 
-const RegistrationSection: React.FC = () => {
+const RegistrationSection = () => {
   const handleRegister = (data: RegistrationFormData) => {
     console.log('Register Data:', data);
   };
