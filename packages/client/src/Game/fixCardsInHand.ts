@@ -1,10 +1,28 @@
-export const fixCardsInHand = [
+type ActionType = 'attack' | 'block' | 'heal';
+
+export interface CardInHand {
+  name: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  action: {
+    type: ActionType;
+    points: number;
+  };
+}
+
+export const fixCardsInHand: CardInHand[] = [
   {
     name: 'Атака',
     x: 300,
     y: 600,
     width: 120,
     height: 190,
+    action: {
+      type: 'attack',
+      points: 3,
+    },
   },
   {
     name: 'Блок',
@@ -12,6 +30,10 @@ export const fixCardsInHand = [
     y: 600,
     width: 120,
     height: 190,
+    action: {
+      type: 'block',
+      points: 1,
+    },
   },
   {
     name: 'Супер-атака',
@@ -19,5 +41,9 @@ export const fixCardsInHand = [
     y: 600,
     width: 120,
     height: 190,
+    action: {
+      type: 'attack',
+      points: 5,
+    },
   },
 ];
