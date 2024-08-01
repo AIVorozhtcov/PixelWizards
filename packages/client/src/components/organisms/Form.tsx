@@ -13,11 +13,15 @@ import Button from '../atoms/Button';
 interface FormProps<T extends FieldValues> {
   zodSchema: ZodSchema;
   onSubmit: SubmitHandler<T>;
+  buttonText: string;
   defaultValues?: DefaultValues<T>;
-  buttonVariant?: 'acent' | 'default' | 'acentNotTransparent';
+  buttonVariant?: 'acent' | 'default' | 'acentNotTransparent' | 'yellow';
   buttonClass?: string;
   labelClass?: string;
-  inputVariant?: 'default' | 'basic';
+  formFieldClass?: string;
+  labelVariant?: 'default' | 'basic' | 'profile';
+  inputVariant?: 'default' | 'basic' | 'profile' | 'typeFile';
+  inputAcept?: string;
   fields: {
     name: keyof T;
     label: string;
@@ -31,10 +35,14 @@ const Form = <T extends FieldValues>({
   onSubmit,
   defaultValues,
   fields,
+  buttonText,
   buttonVariant,
+  formFieldClass,
   buttonClass,
   labelClass,
+  labelVariant,
   inputVariant,
+  inputAcept,
 }: FormProps<T>) => {
   const methods = useForm<T>({
     resolver: zodResolver(zodSchema),
@@ -51,12 +59,15 @@ const Form = <T extends FieldValues>({
             label={field.label}
             type={field.type}
             error={methods.formState.errors[field.name]?.message as string}
+            formFieldClass={formFieldClass}
             labelClass={labelClass}
+            labelVariant={labelVariant}
             inputVariant={inputVariant}
+            inputAcept={inputAcept}
           />
         ))}
         <Button variant={buttonVariant} className={buttonClass} type="submit">
-          Submit
+          {buttonText}
         </Button>
       </form>
     </FormProvider>
