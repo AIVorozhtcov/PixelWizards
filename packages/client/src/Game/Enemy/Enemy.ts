@@ -44,15 +44,22 @@ export class Enemy {
   }
 
   beginTurn() {
-    const randomIndex = Math.floor(Math.random() * this.cardsInHand.length);
-    const randomCard = this.cardsInHand[randomIndex];
-
     this.game.startAnimation();
     this.animateAttack(() => {
-      while (this.actionPoints >= randomCard.actionValue) {
-        this.game.dealDamage('player', randomCard.action.points);
-
-        this.actionPoints -= randomCard.actionValue;
+      while (this.actionPoints) {
+        const randomIndex = Math.floor(Math.random() * this.cardsInHand.length);
+        const randomCard = this.cardsInHand[randomIndex];
+        // Бред, нужно что-то придумать, чтобы правильно выходить из цикла
+        // Ибо если сейчас рандомно возьмется карта стоимостью 3,
+        // а у него доступно только 2 - сразу скипнется ход
+        if (this.actionPoints >= randomCard.actionValue) {
+          this.game.dealDamage('player', randomCard.action.points);
+          this.actionPoints -= randomCard.actionValue;
+          this.cardsInHand = this.cardsInHand.filter(
+            card => card !== randomCard
+          );
+        }
+        break;
       }
 
       this.game.stopAnimation();
