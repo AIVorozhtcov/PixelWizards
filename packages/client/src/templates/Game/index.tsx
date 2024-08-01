@@ -18,7 +18,7 @@ export default function Gameplay() {
           if (gameRef.current) {
             gameRef.current.drawCharacters(ctx);
             gameRef.current.drawCardInHand(ctx);
-            gameRef.current.update();
+            // gameRef.current.update();
           }
           requestAnimationFrame(animate);
         };
@@ -41,7 +41,7 @@ export default function Gameplay() {
       />
       <Button
         onClick={() => {
-          gameRef.current?.endPlayerTurn();
+          gameRef.current?.endTurn();
         }}
         className="text-white bg-red-400 w-full h-20">
         Закончить ход

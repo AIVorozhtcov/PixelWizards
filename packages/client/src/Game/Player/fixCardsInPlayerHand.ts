@@ -10,9 +10,10 @@ export interface CardInHand {
     type: ActionType;
     points: number;
   };
+  actionValue: number;
 }
 
-export const fixCardsInHand: CardInHand[] = [
+export const fixCardsInPlayerHand: CardInHand[] = [
   {
     name: 'Атака',
     x: 300,
@@ -23,6 +24,7 @@ export const fixCardsInHand: CardInHand[] = [
       type: 'attack',
       points: 3,
     },
+    actionValue: 1,
   },
   {
     name: 'Блок',
@@ -34,6 +36,7 @@ export const fixCardsInHand: CardInHand[] = [
       type: 'block',
       points: 1,
     },
+    actionValue: 1,
   },
   {
     name: 'Супер-атака',
@@ -45,5 +48,6 @@ export const fixCardsInHand: CardInHand[] = [
       type: 'attack',
       points: 5,
     },
+    actionValue: 2,
   },
 ];

@@ -1,6 +1,6 @@
-import { Enemy } from './Enemy';
-import { CardInHand } from './fixCardsInHand';
-import { Player } from './Player';
+import { Enemy } from './Enemy/Enemy';
+import { CardInHand } from './Player/fixCardsInPlayerHand';
+import { Player } from './Player/Player';
 
 export class Game {
   width: number;
@@ -8,6 +8,8 @@ export class Game {
   player: Player;
   enemy: Enemy;
   context: CanvasRenderingContext2D;
+  whosTurn: 'player' | 'enemy' = 'player';
+  animating = false;
 
   constructor(width: number, height: number, ctx: CanvasRenderingContext2D) {
     this.width = width;
@@ -19,8 +21,10 @@ export class Game {
     this.enemy = new Enemy(this);
   }
 
-  update() {
-    return;
+  updateAfterTurn(actionPoints: number) {
+    if (actionPoints <= 0) {
+      this.endTurn();
+    }
   }
 
   draw(context: CanvasRenderingContext2D) {
@@ -51,7 +55,37 @@ export class Game {
     }
   }
 
+  endTurn() {
+    if (this.whosTurn === 'player') {
+      this.endPlayerTurn();
+      this.player.refreshActionPoints();
+      this.whosTurn = 'enemy';
+      this.enemy.beginTurn();
+    } else {
+      this.enemy.refreshCardsInHand();
+      this.enemy.refreshActionPoints();
+      this.whosTurn = 'player';
+    }
+  }
+
   endPlayerTurn() {
     this.player.refreshCardsInHand();
+  }
+
+  startAnimation() {
+    this.animating = true;
+    requestAnimationFrame(this.animate.bind(this));
+  }
+
+  animate() {
+    this.draw(this.context);
+    if (this.animating) {
+      requestAnimationFrame(this.animate.bind(this));
+    }
+  }
+
+  stopAnimation() {
+    this.animating = false;
+    this.draw(this.context);
   }
 }

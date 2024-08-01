@@ -1,5 +1,14 @@
-import { Game } from '.';
-import { CardInHand, fixCardsInHand } from './fixCardsInHand';
+import { Game } from '..';
+import { CardInHand, fixCardsInPlayerHand } from './fixCardsInPlayerHand';
+
+interface Particales {
+  x: number;
+  y: number;
+  size: number;
+  alpha: number;
+  velocityX: number;
+  velocityY: number;
+}
 
 export class Player {
   game: Game;
@@ -7,7 +16,7 @@ export class Player {
   height: number;
   x: number;
   y: number;
-  cardInHand = fixCardsInHand;
+  cardInHand = fixCardsInPlayerHand;
   draggingCard: CardInHand | null = null;
   startX = 0;
   startY = 0;
@@ -16,7 +25,9 @@ export class Player {
   hitPoints = 100;
   tempResist = 0; //Временный резист - сюда прокидываю блок
   resist = 0; // Постоянный резист - сюда можно будет кидать бафы от шмоток и тд
-  particles: any[] = []; // Часты карточки, когда она разыгрывается
+  particles: Particales[] = []; // Часты карточки, когда она разыгрывается
+  initialActionPoints = 2; // Фиксированное количество доступных действий
+  actionPoints = 2; // Количество доступных действий
 
   constructor(game: Game) {
     this.game = game;
@@ -50,7 +61,7 @@ export class Player {
 
   refreshCardsInHand() {
     this.cardInHand = Array.from(
-      new Set(this.cardInHand.concat(fixCardsInHand))
+      new Set(this.cardInHand.concat(fixCardsInPlayerHand))
     );
   }
 
@@ -81,22 +92,26 @@ export class Player {
   }
 
   onMouseDown(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
-    const { offsetX, offsetY } = event.nativeEvent;
+    if (this.game.whosTurn === 'player') {
+      const { offsetX, offsetY } = event.nativeEvent;
 
-    this.cardInHand.forEach(card => {
-      if (
-        offsetX >= card.x &&
-        offsetX <= card.x + card.width &&
-        offsetY >= card.y &&
-        offsetY <= card.y + card.height
-      ) {
-        this.draggingCard = card;
-        this.startX = offsetX - card.x;
-        this.startY = offsetY - card.y;
-        this.initialX = card.x;
-        this.initialY = card.y;
-      }
-    });
+      this.cardInHand.forEach(card => {
+        if (
+          offsetX >= card.x &&
+          offsetX <= card.x + card.width &&
+          offsetY >= card.y &&
+          offsetY <= card.y + card.height
+        ) {
+          if (this.actionPoints >= card.actionValue) {
+            this.draggingCard = card;
+            this.startX = offsetX - card.x;
+            this.startY = offsetY - card.y;
+            this.initialX = card.x;
+            this.initialY = card.y;
+          }
+        }
+      });
+    }
   }
 
   onMouseMove(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
@@ -109,31 +124,38 @@ export class Player {
   }
 
   onMouseUp() {
-    if (this.draggingCard) {
-      this.createParticles(
-        this.draggingCard,
-        this.draggingCard.x,
-        this.draggingCard.y
-      );
+    if (this.game.whosTurn === 'player') {
+      if (this.draggingCard) {
+        this.createParticles(
+          this.draggingCard,
+          this.draggingCard.x,
+          this.draggingCard.y
+        );
 
-      this.draggingCard.x = this.initialX;
-      this.draggingCard.y = this.initialY;
+        this.draggingCard.x = this.initialX;
+        this.draggingCard.y = this.initialY;
 
-      const actionType = this.draggingCard.action.type;
-      if (actionType === 'attack') {
-        this.game.dealDamage('enemy', this.draggingCard.action.points);
+        const actionType = this.draggingCard.action.type;
+
+        if (actionType === 'attack') {
+          this.game.dealDamage('enemy', this.draggingCard.action.points);
+        }
+
+        if (actionType === 'block') {
+          this.tempResist += this.draggingCard.action.points;
+        }
+
+        this.animateParticles();
+        this.cardInHand = this.cardInHand.filter(
+          card => card !== this.draggingCard
+        );
+
+        this.actionPoints -= this.draggingCard.actionValue;
+
+        this.draggingCard = null;
+        this.game.draw(this.game.context);
+        this.game.updateAfterTurn(this.actionPoints);
       }
-
-      if (actionType === 'block') {
-        this.tempResist += this.draggingCard.action.points;
-      }
-
-      this.animateParticles();
-      this.cardInHand = this.cardInHand.filter(
-        card => card !== this.draggingCard
-      );
-      this.draggingCard = null;
-      this.game.draw(this.game.context);
     }
   }
 
@@ -143,6 +165,10 @@ export class Player {
 
   getHeal(heal: number) {
     this.hitPoints += heal;
+  }
+
+  refreshActionPoints() {
+    this.actionPoints = this.initialActionPoints;
   }
 
   drawParticles(context: CanvasRenderingContext2D) {
