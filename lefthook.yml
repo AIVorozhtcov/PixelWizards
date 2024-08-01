@@ -8,3 +8,9 @@ pre-commit:
       glob: '*.{ts,tsx,css}'
       run: yarn prettier -w {staged_files}
       stage_fixed: true
+
+commit-msg:
+  parallel: true
+  commands:
+    validate_commit:
+      run: node scripts/validate-commit-msg.js
