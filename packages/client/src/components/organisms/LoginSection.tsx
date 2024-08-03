@@ -1,12 +1,12 @@
 import React from 'react';
-import Form from './Form';
-import Subtitle from '../atoms/Subtitle';
-import { LoginFormData } from '../../types/types';
-import { LoginValidationSchema } from '../../types/validationSchemas';
 import registrationCapibara from '../../../public/registrationCapibara.webp';
 import registrationCapibara2 from '../../../public/registrationCapibara2.webp';
 import FORM_INPUT_NAMES from '../../constants/formInputNames';
+import { LoginFormData } from '../../types/types';
+import { LoginValidationSchema } from '../../types/validationSchemas';
 import Link from '../atoms/Link';
+import Subtitle from '../atoms/Subtitle';
+import Form from './Form';
 
 const LoginSection: React.FC = () => {
   const handleLogin = (data: LoginFormData) => {
