@@ -1,4 +1,4 @@
-import Gameover from './Animation/Gameover';
+import Gameover from './Gameover/Gameover';
 import { CharacterInitProps } from './Character/types';
 import { cardsInEnemyHand } from './Enemy/cardsInEnemyHand';
 import { Enemy } from './Enemy/Enemy';
@@ -15,6 +15,7 @@ export class Game {
   isGameEnd = false;
   gameAnimation: number | undefined = undefined;
   changeGameStateFunc: () => void;
+  background = new Image();
 
   constructor(
     width: number,
@@ -28,7 +29,11 @@ export class Game {
 
     this.context = ctx;
 
-    this.beginGame();
+    this.background.src = '/backgroundGame.webp';
+
+    this.background.onload = () => {
+      this.beginGame();
+    };
   }
 
   createEnemy(props: CharacterInitProps) {
@@ -58,8 +63,8 @@ export class Game {
   draw(context: CanvasRenderingContext2D) {
     if (!this.isGameEnd) {
       context.clearRect(0, 0, this.width, this.height);
-      this.drawCharacters(context);
-      this.drawCardInHand(context);
+
+      this.drawEverything(context);
     }
   }
 
@@ -74,6 +79,16 @@ export class Game {
     if (!this.isGameEnd) {
       this.player.displayAwailableCards(context);
     }
+  }
+
+  drawBackground(context: CanvasRenderingContext2D) {
+    context.drawImage(this.background, 0, 0, this.width, this.height);
+  }
+
+  drawEverything(context: CanvasRenderingContext2D) {
+    this.drawBackground(context);
+    this.drawCharacters(context);
+    this.drawCardInHand(context);
   }
 
   dealDamage(toWhom: 'player' | 'enemy', damageSize: number) {
@@ -106,17 +121,19 @@ export class Game {
 
     this.changeGameStateFunc();
 
-    new Gameover(this, isWin ? 'YOU WIN!!!!' : 'GAME OVER', 50);
+    new Gameover(this, isWin, 50);
   }
 
   beginGame() {
+    this.isGameEnd = false;
+
     if (this.gameAnimation) {
       window.cancelAnimationFrame(this.gameAnimation);
       this.gameAnimation = undefined;
       this.changeGameStateFunc();
     }
+
     this.context.clearRect(0, 0, this.width, this.height);
-    this.isGameEnd = false;
 
     this.player = new Player({
       cardInHand: fixCardsInPlayerHand,
@@ -149,8 +166,8 @@ export class Game {
   private initialDraw() {
     if (!this.isGameEnd) {
       this.context.clearRect(0, 0, this.width, this.height);
-      this.drawCharacters(this.context);
-      this.drawCardInHand(this.context);
+
+      this.drawEverything(this.context);
 
       this.gameAnimation = window.requestAnimationFrame(
         this.initialDraw.bind(this)

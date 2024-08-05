@@ -5,9 +5,9 @@ export default class Gameover {
   text: string;
   fontSize: number;
 
-  constructor(game: Game, text: string, fontSize: number) {
+  constructor(game: Game, isWin: boolean, fontSize: number) {
     this.game = game;
-    this.text = text;
+    this.text = isWin ? 'YOU WIN!' : 'GAME OVER';
     this.fontSize = fontSize;
 
     const background = new Image();
@@ -23,13 +23,19 @@ export default class Gameover {
       );
       this.fillAndRenderTextOnCanvas();
 
-      const animate = () => {
-        this.applyGlitch(background);
-        this.game.gameAnimation = requestAnimationFrame(animate);
-      };
-
-      animate();
+      this.game.gameAnimation = requestAnimationFrame(
+        this.animation.bind(this, background)
+      );
     };
+  }
+
+  animation(background: HTMLImageElement) {
+    if (this.game.isGameEnd) {
+      this.applyGlitch(background);
+      this.game.gameAnimation = requestAnimationFrame(
+        this.animation.bind(this, background)
+      );
+    }
   }
 
   getRandomColor() {
