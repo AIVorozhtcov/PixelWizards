@@ -1,6 +1,10 @@
+import { CharacterInitProps } from './Character/types';
+import { cardsInEnemyHand } from './Enemy/cardsInEnemyHand';
 import { Enemy } from './Enemy/Enemy';
-import { CardInHand } from './Player/fixCardsInPlayerHand';
+import { fixCardsInPlayerHand } from './Player/fixCardsInPlayerHand';
 import { Player } from './Player/Player';
+import CharacterPNG from '../../public/character.png';
+import EnemyPNG from '../../public/enemy.png';
 
 export class Game {
   width: number;
@@ -17,8 +21,33 @@ export class Game {
 
     this.context = ctx;
 
-    this.player = new Player(this);
-    this.enemy = new Enemy(this);
+    this.player = new Player({
+      game: this,
+      cardInHand: fixCardsInPlayerHand,
+      x: 20,
+      y: 100,
+      width: 120,
+      height: 190,
+      hitPoints: 100,
+      initialActionPoints: 2,
+      characterSkin: CharacterPNG,
+    });
+
+    this.enemy = this.createEnemy({
+      game: this,
+      cardInHand: cardsInEnemyHand,
+      x: 860,
+      y: 100,
+      width: 120,
+      height: 190,
+      hitPoints: 100,
+      initialActionPoints: 2,
+      characterSkin: EnemyPNG,
+    });
+  }
+
+  createEnemy(props: CharacterInitProps) {
+    return new Enemy(props);
   }
 
   updateAfterTurn(actionPoints: number) {
@@ -42,11 +71,6 @@ export class Game {
     this.player.displayAwailableCards(context);
   }
 
-  addCardInHand(card: CardInHand) {
-    this.player.addCardInHand(card);
-    this.player.displayAwailableCards(this.context);
-  }
-
   dealDamage(toWhom: 'player' | 'enemy', damageSize: number) {
     if (toWhom === 'player') {
       this.player.getDamage(damageSize);
@@ -57,7 +81,7 @@ export class Game {
 
   endTurn() {
     if (this.whosTurn === 'player') {
-      this.endPlayerTurn();
+      this.player.refreshCardsInHand();
       this.player.refreshActionPoints();
       this.whosTurn = 'enemy';
       this.enemy.beginTurn();
@@ -66,10 +90,6 @@ export class Game {
       this.enemy.refreshActionPoints();
       this.whosTurn = 'player';
     }
-  }
-
-  endPlayerTurn() {
-    this.player.refreshCardsInHand();
   }
 
   startAnimation() {

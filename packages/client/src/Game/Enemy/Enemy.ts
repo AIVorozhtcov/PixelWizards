@@ -1,28 +1,34 @@
-import { Game } from '..';
-import { cardsInEnemyHand } from './cardsInEnemyHand';
+import Character from '../Character/Charachter';
+import { CharacterInitProps } from '../Character/types';
 
-export class Enemy {
-  game: Game;
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-  hitPoints = 100;
-  cardsInHand = cardsInEnemyHand;
-  actionPoints = 2;
-  initialActionPoints = 2;
+export class Enemy extends Character {
   targetX: number; // местоположение игрока по Х
   targetY: number; // местоположение игрока по Y
   originalX: number; // местоположение врага
   originalY: number; // местоположение врага
 
-  constructor(game: Game) {
-    this.game = game;
-    this.width = 120;
-    this.height = 190;
-
-    this.x = 860;
-    this.y = 100;
+  constructor({
+    game,
+    initialActionPoints,
+    characterSkin,
+    hitPoints,
+    cardInHand,
+    width,
+    height,
+    x,
+    y,
+  }: CharacterInitProps) {
+    super({
+      game,
+      initialActionPoints,
+      characterSkin,
+      hitPoints,
+      cardInHand,
+      width,
+      height,
+      x,
+      y,
+    });
 
     this.targetX = game.player.x;
     this.targetY = game.player.y;
@@ -30,34 +36,19 @@ export class Enemy {
     this.originalY = this.y;
   }
 
-  draw(context: CanvasRenderingContext2D) {
-    context.fillStyle = 'red';
-    context.fillRect(this.x, this.y, this.width, this.height);
-
-    context.fillStyle = 'yellow';
-    context.fillRect(this.x, this.y * 3, this.width, 20);
-
-    context.fillStyle = 'black';
-    context.font = '18px Arial';
-
-    context.fillText(String(this.hitPoints), this.x, this.y * 3 + 15);
-  }
-
   beginTurn() {
     this.game.startAnimation();
     this.animateAttack(() => {
       while (this.actionPoints) {
-        const randomIndex = Math.floor(Math.random() * this.cardsInHand.length);
-        const randomCard = this.cardsInHand[randomIndex];
+        const randomIndex = Math.floor(Math.random() * this.cardInHand.length);
+        const randomCard = this.cardInHand[randomIndex];
         // Бред, нужно что-то придумать, чтобы правильно выходить из цикла
         // Ибо если сейчас рандомно возьмется карта стоимостью 3,
         // а у него доступно только 2 - сразу скипнется ход
         if (this.actionPoints >= randomCard.actionValue) {
           this.game.dealDamage('player', randomCard.action.points);
           this.actionPoints -= randomCard.actionValue;
-          this.cardsInHand = this.cardsInHand.filter(
-            card => card !== randomCard
-          );
+          this.cardInHand = this.cardInHand.filter(card => card !== randomCard);
         }
         break;
       }
@@ -106,19 +97,5 @@ export class Enemy {
     };
 
     animate();
-  }
-
-  getDamage(damage: number) {
-    this.hitPoints -= damage;
-  }
-
-  refreshActionPoints() {
-    this.actionPoints = this.initialActionPoints;
-  }
-
-  refreshCardsInHand() {
-    this.cardsInHand = Array.from(
-      new Set(this.cardsInHand.concat(cardsInEnemyHand))
-    );
   }
 }

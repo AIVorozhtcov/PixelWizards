@@ -1,68 +1,33 @@
-import { Game } from '..';
-import { CardInHand, fixCardsInPlayerHand } from './fixCardsInPlayerHand';
+import Character from '../Character/Charachter';
+import { CharacterInitProps } from '../Character/types';
 
-interface Particales {
-  x: number;
-  y: number;
-  size: number;
-  alpha: number;
-  velocityX: number;
-  velocityY: number;
-}
-
-export class Player {
-  game: Game;
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-  cardInHand = fixCardsInPlayerHand;
-  draggingCard: CardInHand | null = null;
-  startX = 0;
-  startY = 0;
-  initialX = 0;
-  initialY = 0;
-  hitPoints = 100;
-  tempResist = 0; //Временный резист - сюда прокидываю блок
-  resist = 0; // Постоянный резист - сюда можно будет кидать бафы от шмоток и тд
-  particles: Particales[] = []; // Часты карточки, когда она разыгрывается
-  initialActionPoints = 2; // Фиксированное количество доступных действий
-  actionPoints = 2; // Количество доступных действий
-
-  constructor(game: Game) {
-    this.game = game;
-    this.width = 120;
-    this.height = 190;
-
-    this.x = 20;
-    this.y = 100;
+export class Player extends Character {
+  constructor({
+    game,
+    initialActionPoints,
+    characterSkin,
+    hitPoints,
+    cardInHand,
+    width,
+    height,
+    x,
+    y,
+  }: CharacterInitProps) {
+    super({
+      game,
+      initialActionPoints,
+      characterSkin,
+      hitPoints,
+      cardInHand,
+      width,
+      height,
+      x,
+      y,
+    });
 
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
-  }
-
-  draw(context: CanvasRenderingContext2D) {
-    context.fillStyle = 'purple';
-    context.fillRect(this.x, this.y, this.width, this.height);
-
-    context.fillStyle = 'yellow';
-    context.fillRect(this.x, this.y * 3, this.width, 20);
-
-    context.fillStyle = 'black';
-    context.font = '18px Arial';
-
-    context.fillText(String(this.hitPoints), this.x, this.y * 3 + 15);
-  }
-
-  addCardInHand(card: CardInHand) {
-    this.cardInHand.push(card);
-  }
-
-  refreshCardsInHand() {
-    this.cardInHand = Array.from(
-      new Set(this.cardInHand.concat(fixCardsInPlayerHand))
-    );
   }
 
   displayAwailableCards(context: CanvasRenderingContext2D) {
@@ -88,7 +53,7 @@ export class Player {
       context.fillText(cardInHand.name, textX, textY);
     });
 
-    this.drawParticles(context);
+    this.animation.particlesAnimation.drawParticles(context);
   }
 
   onMouseDown(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
@@ -124,84 +89,30 @@ export class Player {
   }
 
   onMouseUp() {
-    if (this.game.whosTurn === 'player') {
-      if (this.draggingCard) {
-        this.createParticles(
-          this.draggingCard,
-          this.draggingCard.x,
-          this.draggingCard.y
-        );
+    if (this.game.whosTurn === 'player' && this.draggingCard) {
+      this.animation.particlesAnimation.createParticles(
+        this.draggingCard,
+        this.draggingCard.x,
+        this.draggingCard.y
+      );
 
-        this.draggingCard.x = this.initialX;
-        this.draggingCard.y = this.initialY;
+      this.draggingCard.x = this.initialX;
+      this.draggingCard.y = this.initialY;
 
-        const actionType = this.draggingCard.action.type;
+      const actionType = this.draggingCard.action.type;
 
-        if (actionType === 'attack') {
-          this.game.dealDamage('enemy', this.draggingCard.action.points);
-        }
+      this.doAction(actionType, this.draggingCard);
 
-        if (actionType === 'block') {
-          this.tempResist += this.draggingCard.action.points;
-        }
+      this.animation.particlesAnimation.animateParticles();
+      this.cardInHand = this.cardInHand.filter(
+        card => card !== this.draggingCard
+      );
 
-        this.animateParticles();
-        this.cardInHand = this.cardInHand.filter(
-          card => card !== this.draggingCard
-        );
+      this.actionPoints -= this.draggingCard.actionValue;
 
-        this.actionPoints -= this.draggingCard.actionValue;
-
-        this.draggingCard = null;
-        this.game.draw(this.game.context);
-        this.game.updateAfterTurn(this.actionPoints);
-      }
-    }
-  }
-
-  getDamage(damage: number) {
-    this.hitPoints -= damage;
-  }
-
-  getHeal(heal: number) {
-    this.hitPoints += heal;
-  }
-
-  refreshActionPoints() {
-    this.actionPoints = this.initialActionPoints;
-  }
-
-  drawParticles(context: CanvasRenderingContext2D) {
-    this.particles.forEach(particle => {
-      context.fillStyle = `rgba(0, 255, 0, ${particle.alpha})`;
-      context.fillRect(particle.x, particle.y, particle.size, particle.size);
-    });
-  }
-
-  createParticles(card: CardInHand, x: number, y: number) {
-    const particleCount = 100;
-    for (let i = 0; i < particleCount; i++) {
-      this.particles.push({
-        x: x + Math.random() * card.width,
-        y: y + Math.random() * card.height,
-        size: Math.random() * 4 + 1,
-        alpha: 1,
-        velocityX: (Math.random() - 0.5) * 2,
-        velocityY: (Math.random() - 0.5) * 2,
-      });
-    }
-  }
-
-  animateParticles() {
-    this.particles.forEach(particle => {
-      particle.x += particle.velocityX;
-      particle.y += particle.velocityY;
-      particle.alpha -= 0.02;
-    });
-    this.particles = this.particles.filter(particle => particle.alpha > 0);
-    if (this.particles.length > 0) {
-      requestAnimationFrame(() => this.animateParticles());
+      this.draggingCard = null;
       this.game.draw(this.game.context);
+      this.game.updateAfterTurn(this.actionPoints);
     }
   }
 }

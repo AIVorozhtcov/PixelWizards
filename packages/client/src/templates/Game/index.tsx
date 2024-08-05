@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Game } from '../../Game';
+import { Game } from '../../Game/Game';
 import Button from '../../components/atoms/Button';
 
 export default function Gameplay() {
@@ -18,7 +18,6 @@ export default function Gameplay() {
           if (gameRef.current) {
             gameRef.current.drawCharacters(ctx);
             gameRef.current.drawCardInHand(ctx);
-            // gameRef.current.update();
           }
           requestAnimationFrame(animate);
         };
