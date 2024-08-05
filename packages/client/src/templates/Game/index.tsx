@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Game } from '../../Game/Game';
+import { Game } from '../../core/Game/Game';
 import Button from '../../components/atoms/Button';
 
 export default function Gameplay() {
