@@ -52,7 +52,6 @@ export class Player extends Character {
 
       context.fillText(cardInHand.name, textX, textY);
     });
-
     this.animation.particlesAnimation.drawParticles(context);
   }
 

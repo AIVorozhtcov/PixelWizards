@@ -107,7 +107,6 @@ export default abstract class Character {
         this.width,
         this.height
       );
-
       this.drawHealthBar(context, this.x, this.y * 3, this.width, 20);
     }
   }

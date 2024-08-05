@@ -1,28 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Game } from '../../core/Game/Game';
 import Button from '../../components/atoms/Button';
 
 export default function Gameplay() {
+  const [isGameEnd, setIsGameEnd] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const gameRef = useRef<Game | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
       if (ctx) {
-        gameRef.current = new Game(canvas.width, canvas.height, ctx);
-
-        const animate = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          if (gameRef.current) {
-            gameRef.current.drawCharacters(ctx);
-            gameRef.current.drawCardInHand(ctx);
-          }
-          requestAnimationFrame(animate);
-        };
-
-        animate();
+        gameRef.current = new Game(canvas.width, canvas.height, ctx, () =>
+          setIsGameEnd(prev => !prev)
+        );
       }
     }
   }, []);
@@ -40,10 +32,14 @@ export default function Gameplay() {
       />
       <Button
         onClick={() => {
-          gameRef.current?.endTurn();
+          if (isGameEnd) {
+            gameRef.current?.beginGame();
+          } else {
+            gameRef.current?.endTurn();
+          }
         }}
         className="text-white bg-red-400 w-full h-20">
-        Закончить ход
+        {isGameEnd ? 'Начать заново' : 'Закончить ход'}
       </Button>
     </>
   );

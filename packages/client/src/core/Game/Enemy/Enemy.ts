@@ -6,6 +6,7 @@ export class Enemy extends Character {
   targetY: number; // местоположение игрока по Y
   originalX: number; // местоположение врага
   originalY: number; // местоположение врага
+  animating = false;
 
   constructor({
     game,
@@ -37,7 +38,7 @@ export class Enemy extends Character {
   }
 
   beginTurn() {
-    this.game.startAnimation();
+    this.startAnimation();
     this.animateAttack(() => {
       while (this.actionPoints) {
         const randomIndex = Math.floor(Math.random() * this.cardInHand.length);
@@ -53,7 +54,7 @@ export class Enemy extends Character {
         break;
       }
 
-      this.game.stopAnimation();
+      this.stopAnimation();
       this.game.endTurn();
     });
   }
@@ -97,5 +98,21 @@ export class Enemy extends Character {
     };
 
     animate();
+  }
+
+  startAnimation() {
+    this.animating = true;
+    window.requestAnimationFrame(this.animate.bind(this));
+  }
+
+  animate() {
+    if (this.animating && !this.game.isGameEnd) {
+      this.draw(this.game.context);
+      window.requestAnimationFrame(this.animate.bind(this));
+    }
+  }
+
+  stopAnimation() {
+    this.animating = false;
   }
 }
