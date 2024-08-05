@@ -51,8 +51,12 @@ export class Game {
   }
 
   updateAfterTurn(actionPoints: number) {
-    if (actionPoints <= 0) {
-      this.endTurn();
+    if (this.player.hitPoints <= 0 || this.enemy.hitPoints <= 0) {
+      this.endGame();
+    } else {
+      if (actionPoints <= 0) {
+        this.endTurn();
+      }
     }
   }
 
@@ -81,15 +85,27 @@ export class Game {
 
   endTurn() {
     if (this.whosTurn === 'player') {
-      this.player.refreshCardsInHand();
-      this.player.refreshActionPoints();
-      this.whosTurn = 'enemy';
-      this.enemy.beginTurn();
+      this.endPlayerTurn();
     } else {
-      this.enemy.refreshCardsInHand();
-      this.enemy.refreshActionPoints();
-      this.whosTurn = 'player';
+      this.endEnemyTurn();
     }
+  }
+
+  endGame() {
+    return;
+  }
+
+  private endPlayerTurn() {
+    this.player.refreshCardsInHand();
+    this.player.refreshActionPoints();
+    this.whosTurn = 'enemy';
+    this.enemy.beginTurn();
+  }
+
+  private endEnemyTurn() {
+    this.enemy.refreshCardsInHand();
+    this.enemy.refreshActionPoints();
+    this.whosTurn = 'player';
   }
 
   startAnimation() {
