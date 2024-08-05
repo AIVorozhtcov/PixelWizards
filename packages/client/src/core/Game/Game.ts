@@ -85,10 +85,40 @@ export class Game {
     context.drawImage(this.background, 0, 0, this.width, this.height);
   }
 
+  drawAmountOfActionPoints(context: CanvasRenderingContext2D) {
+    const angle = Math.PI / 3;
+    const hexRadius = 50;
+    const padding = 20;
+    const centerX = padding + hexRadius;
+    const centerY = this.height - padding - hexRadius;
+    const fontSize = 24;
+
+    context.fillStyle = '#709CCB';
+    context.strokeStyle = '#000';
+    context.lineWidth = 2;
+    context.beginPath();
+    for (let i = 0; i < 6; i++) {
+      context.lineTo(
+        centerX + hexRadius * Math.cos(angle * i),
+        centerY + hexRadius * Math.sin(angle * i)
+      );
+    }
+    context.closePath();
+    context.stroke();
+    context.fill();
+
+    context.font = `bold ${fontSize}px Arial`;
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillStyle = 'white';
+    context.fillText(String(this.player.actionPoints), centerX, centerY);
+  }
+
   drawEverything(context: CanvasRenderingContext2D) {
     this.drawBackground(context);
     this.drawCharacters(context);
     this.drawCardInHand(context);
+    this.drawAmountOfActionPoints(context);
   }
 
   dealDamage(toWhom: 'player' | 'enemy', damageSize: number) {
@@ -141,7 +171,7 @@ export class Game {
       y: 100,
       width: 120,
       height: 190,
-      hitPoints: 1,
+      hitPoints: 10,
       initialActionPoints: 2,
       characterSkin: '/character.png',
       game: this,
@@ -153,7 +183,7 @@ export class Game {
       y: 100,
       width: 120,
       height: 190,
-      hitPoints: 1,
+      hitPoints: 10,
       initialActionPoints: 2,
       characterSkin: '/enemy.png',
       game: this,
@@ -176,8 +206,10 @@ export class Game {
   }
 
   private endPlayerTurn() {
-    this.player.refreshCardsInHand();
-    this.player.refreshActionPoints();
+    // Сделал обновление после хода соперника в this.enemy.beginTurn();
+
+    // this.player.refreshCardsInHand();
+    // this.player.refreshActionPoints();
     this.whosTurn = 'enemy';
     this.enemy.beginTurn();
   }

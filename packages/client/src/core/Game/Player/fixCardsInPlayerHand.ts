@@ -15,11 +15,11 @@ export interface CardInHand {
 
 export const fixCardsInPlayerHand: CardInHand[] = [
   {
-    name: 'Атака',
-    x: 300,
+    name: '/attack.png',
+    x: 270,
     y: 600,
-    width: 120,
-    height: 190,
+    width: 150,
+    height: 200,
     action: {
       type: 'attack',
       points: 3,
@@ -27,11 +27,11 @@ export const fixCardsInPlayerHand: CardInHand[] = [
     actionValue: 1,
   },
   {
-    name: 'Блок',
-    x: 450,
+    name: '/block.png',
+    x: 430,
     y: 600,
-    width: 120,
-    height: 190,
+    width: 150,
+    height: 200,
     action: {
       type: 'block',
       points: 1,
@@ -39,11 +39,11 @@ export const fixCardsInPlayerHand: CardInHand[] = [
     actionValue: 1,
   },
   {
-    name: 'Супер-атака',
-    x: 600,
+    name: '/superAttack.png',
+    x: 590,
     y: 600,
-    width: 120,
-    height: 190,
+    width: 150,
+    height: 200,
     action: {
       type: 'attack',
       points: 5,

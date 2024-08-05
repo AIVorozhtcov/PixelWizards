@@ -2,6 +2,8 @@ import Character from '../Character/Charachter';
 import { CharacterInitProps } from '../Character/types';
 
 export class Player extends Character {
+  private cardImages: Map<string, HTMLImageElement> = new Map();
+
   constructor({
     game,
     initialActionPoints,
@@ -28,30 +30,45 @@ export class Player extends Character {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
+    this.preloadCardImages();
+  }
+
+  private preloadCardImages() {
+    const imagePromises = this.cardInHand.map(card => {
+      return new Promise<void>((resolve, reject) => {
+        const image = new Image();
+        image.src = card.name;
+        image.onload = () => {
+          this.cardImages.set(card.name, image);
+          resolve();
+        };
+        image.onerror = reject;
+      });
+    });
+
+    Promise.all(imagePromises)
+      .then(() => {
+        console.log('All card images loaded.');
+      })
+      .catch(err => {
+        console.error('Error loading images', err);
+      });
   }
 
   displayAwailableCards(context: CanvasRenderingContext2D) {
     this.cardInHand.forEach(cardInHand => {
-      context.fillStyle = 'green';
-      context.fillRect(
-        cardInHand.x,
-        cardInHand.y,
-        cardInHand.width,
-        cardInHand.height
-      );
-
-      const fontSize = 18;
-      const paddingY = 10;
-
-      context.fillStyle = 'white';
-      context.font = `${fontSize}px Arial`;
-
-      const textWidth = context.measureText(cardInHand.name).width;
-      const textX = cardInHand.x + (cardInHand.width - textWidth) / 2;
-      const textY = cardInHand.y + paddingY + fontSize;
-
-      context.fillText(cardInHand.name, textX, textY);
+      const image = this.cardImages.get(cardInHand.name);
+      if (image) {
+        context.drawImage(
+          image,
+          cardInHand.x,
+          cardInHand.y,
+          cardInHand.width,
+          cardInHand.height
+        );
+      }
     });
+
     this.animation.particlesAnimation.drawParticles(context);
   }
 

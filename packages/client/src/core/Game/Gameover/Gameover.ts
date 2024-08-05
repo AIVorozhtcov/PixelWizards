@@ -11,7 +11,7 @@ export default class Gameover {
     this.fontSize = fontSize;
 
     const background = new Image();
-    background.src = '/endGame.webp';
+    background.src = isWin ? '/winGame.webp' : '/endGame.webp';
 
     background.onload = () => {
       this.game.context.drawImage(

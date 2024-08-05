@@ -55,6 +55,8 @@ export class Enemy extends Character {
       }
 
       this.stopAnimation();
+      this.game.player.refreshCardsInHand();
+      this.game.player.refreshActionPoints();
       this.game.endTurn();
     });
   }

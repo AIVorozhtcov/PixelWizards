@@ -15,6 +15,7 @@ export default abstract class Character {
   startY = 0;
   initialX = 0;
   initialY = 0;
+  initialHitPoints: number;
   hitPoints: number;
   tempResist = 0; //Временный резист - сюда прокидываю блок
   resist = 0; // Постоянный резист - сюда можно будет кидать бафы от шмоток и тд
@@ -41,6 +42,7 @@ export default abstract class Character {
     this.actionPoints = this.initialActionPoints;
 
     this.hitPoints = hitPoints;
+    this.initialHitPoints = hitPoints;
 
     this.cardInHand = cardInHand;
     this.initialCardInHand = cardInHand;
@@ -84,7 +86,7 @@ export default abstract class Character {
   ) {
     context.clearRect(x, y, width, height);
 
-    const greenBarWidth = (this.hitPoints / 100) * width;
+    const greenBarWidth = (this.hitPoints / this.initialHitPoints) * width;
     const redWidth = width - greenBarWidth;
 
     context.fillStyle = 'green';
@@ -94,6 +96,8 @@ export default abstract class Character {
     context.fillRect(x + greenBarWidth, y, redWidth, height);
 
     context.fillStyle = 'black';
+    context.textAlign = 'start';
+    context.textBaseline = 'alphabetic';
     context.font = '18px Arial';
     context.fillText(String(this.hitPoints), this.x, this.y * 3 + 15);
   }
