@@ -79,7 +79,7 @@ export class Game {
 
   drawCardInHand(context: CanvasRenderingContext2D) {
     if (!this.isGameEnd) {
-      this.player.displayAwailableCards(context);
+      this.player.displayAvailableCards(context);
     }
   }
 
@@ -225,6 +225,7 @@ export class Game {
   private endEnemyTurn() {
     this.enemy.refreshCardsInHand();
     this.enemy.refreshActionPoints();
+    this.player.refreshResist();
     this.whosTurn = 'player';
   }
 }

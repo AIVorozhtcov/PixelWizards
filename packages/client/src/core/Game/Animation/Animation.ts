@@ -1,13 +1,13 @@
 import { Game } from '../Game';
-import Particales from './Particles';
+import Particles from './Particles';
 
 export default class Animation {
   game: Game;
-  particlesAnimation: Particales;
+  particlesAnimation: Particles;
 
   constructor(game: Game) {
     this.game = game;
 
-    this.particlesAnimation = new Particales(game);
+    this.particlesAnimation = new Particles(game);
   }
 }

@@ -1,4 +1,4 @@
-import Character from '../Character/Charachter';
+import Character from '../Character/Character';
 import { CharacterInitProps } from '../Character/types';
 
 export class Player extends Character {
@@ -56,7 +56,7 @@ export class Player extends Character {
       });
   }
 
-  displayAwailableCards(context: CanvasRenderingContext2D) {
+  displayAvailableCards(context: CanvasRenderingContext2D) {
     this.cardInHand.forEach(cardInHand => {
       const image = this.cardImages.get(cardInHand.name);
       if (image) {
@@ -123,18 +123,25 @@ export class Player extends Character {
       );
 
       this.actionPoints -= this.draggingCard.actionValue;
+      if (actionType === 'block' || actionType === 'heal') {
+        this.doAction(actionType, this.draggingCard);
+        this.draggingCard = null;
 
-      this.startAnimation();
-      this.animateAttack(() => {
-        if (this.draggingCard) {
-          this.doAction(actionType, this.draggingCard);
+        this.game.draw(this.game.context);
+        this.game.updateAfterTurn(this.actionPoints);
+      } else {
+        this.startAnimation();
+        this.animateAttack(() => {
+          if (this.draggingCard) {
+            this.doAction(actionType, this.draggingCard);
 
-          this.draggingCard = null;
-          this.stopAnimation();
-          this.game.draw(this.game.context);
-          this.game.updateAfterTurn(this.actionPoints);
-        }
-      });
+            this.draggingCard = null;
+            this.stopAnimation();
+            this.game.draw(this.game.context);
+            this.game.updateAfterTurn(this.actionPoints);
+          }
+        });
+      }
     }
   }
 

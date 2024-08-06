@@ -111,6 +111,7 @@ export default abstract class Character {
         this.width,
         this.height
       );
+
       this.drawHealthBar(context, this.x, this.y * 3, this.width, 20);
     }
   }
@@ -126,7 +127,8 @@ export default abstract class Character {
   }
 
   getDamage(damage: number) {
-    this.hitPoints -= damage;
+    const damageThroughResist = damage - (this.resist + this.tempResist);
+    this.hitPoints -= damageThroughResist;
 
     if (this.hitPoints <= 0) {
       this.isCharacterAlive = false;
@@ -134,7 +136,16 @@ export default abstract class Character {
   }
 
   getHeal(heal: number) {
-    this.hitPoints += heal;
+    this.hitPoints = Math.min(this.hitPoints + heal, this.initialHitPoints);
+  }
+
+  getBlock(block: number) {
+    this.tempResist += block;
+  }
+
+  refreshResist() {
+    this.resist = 0;
+    this.tempResist = 0;
   }
 
   refreshActionPoints() {
@@ -147,7 +158,7 @@ export default abstract class Character {
         this.game.dealDamage('enemy', playedCard.action.points);
         break;
       case 'block':
-        this.tempResist += playedCard.action.points;
+        this.getBlock(playedCard.action.points);
         break;
       case 'heal':
         this.getHeal(playedCard.action.points);

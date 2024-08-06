@@ -1,4 +1,4 @@
-import Character from '../Character/Charachter';
+import Character from '../Character/Character';
 import { CharacterInitProps } from '../Character/types';
 
 export class Enemy extends Character {
@@ -44,15 +44,17 @@ export class Enemy extends Character {
       while (this.actionPoints) {
         const randomIndex = Math.floor(Math.random() * this.cardInHand.length);
         const randomCard = this.cardInHand[randomIndex];
-        // Бред, нужно что-то придумать, чтобы правильно выходить из цикла
-        // Ибо если сейчас рандомно возьмется карта стоимостью 3,
-        // а у него доступно только 2 - сразу скипнется ход
         if (this.actionPoints >= randomCard.actionValue) {
           this.game.dealDamage('player', randomCard.action.points);
           this.actionPoints -= randomCard.actionValue;
           this.cardInHand = this.cardInHand.filter(card => card !== randomCard);
         }
-        break;
+        const playableCards = this.cardInHand.some(
+          card => this.actionPoints >= card.actionValue
+        );
+        if (!playableCards) {
+          break;
+        }
       }
 
       this.stopAnimation();

@@ -1,7 +1,7 @@
 import { Game } from '../Game';
 import { CardInHand, ParticlesType } from '../Character/types';
 
-export default class Particales {
+export default class Particles {
   game: Game;
   particles: ParticlesType[] = [];
 
