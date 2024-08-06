@@ -3,6 +3,7 @@ import { CharacterInitProps } from '../Character/types';
 
 export class Player extends Character {
   private cardImages: Map<string, HTMLImageElement> = new Map();
+  animating = false;
 
   constructor({
     game,
@@ -96,7 +97,7 @@ export class Player extends Character {
   }
 
   onMouseMove(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
-    if (this.draggingCard) {
+    if (this.draggingCard && !this.animating) {
       const { offsetX, offsetY } = event.nativeEvent;
       this.draggingCard.x = offsetX - this.startX;
       this.draggingCard.y = offsetY - this.startY;
@@ -114,21 +115,85 @@ export class Player extends Character {
 
       this.draggingCard.x = this.initialX;
       this.draggingCard.y = this.initialY;
-
+      this.animation.particlesAnimation.animateParticles();
       const actionType = this.draggingCard.action.type;
 
-      this.doAction(actionType, this.draggingCard);
-
-      this.animation.particlesAnimation.animateParticles();
       this.cardInHand = this.cardInHand.filter(
         card => card !== this.draggingCard
       );
 
       this.actionPoints -= this.draggingCard.actionValue;
 
-      this.draggingCard = null;
-      this.game.draw(this.game.context);
-      this.game.updateAfterTurn(this.actionPoints);
+      this.startAnimation();
+      this.animateAttack(() => {
+        if (this.draggingCard) {
+          this.doAction(actionType, this.draggingCard);
+
+          this.draggingCard = null;
+          this.stopAnimation();
+          this.game.draw(this.game.context);
+          this.game.updateAfterTurn(this.actionPoints);
+        }
+      });
     }
+  }
+
+  animateAttack(callback: () => void) {
+    const originalX = this.x;
+    const originalY = this.y;
+
+    const targetX =
+      this.game.enemy.x + this.game.enemy.width / 2 - this.width / 2;
+
+    const targetY = this.game.enemy.y - 50;
+    const attackY = this.game.enemy.y;
+    const duration = 60;
+    let frame = 0;
+
+    const animate = () => {
+      if (frame < duration) {
+        if (frame < duration / 3) {
+          this.x = originalX + (targetX - originalX) * (frame / (duration / 3));
+          this.y = originalY + (targetY - originalY) * (frame / (duration / 3));
+        } else if (frame < (2 * duration) / 3) {
+          this.y =
+            targetY +
+            (attackY - targetY) * ((frame - duration / 3) / (duration / 3));
+        } else {
+          this.x =
+            targetX +
+            (originalX - targetX) *
+              ((frame - (2 * duration) / 3) / (duration / 3));
+          this.y =
+            attackY +
+            (originalY - attackY) *
+              ((frame - (2 * duration) / 3) / (duration / 3));
+        }
+        frame++;
+        requestAnimationFrame(animate);
+      } else {
+        this.x = originalX;
+        this.y = originalY;
+        callback();
+      }
+    };
+
+    animate();
+  }
+
+  startAnimation() {
+    this.animating = true;
+    window.requestAnimationFrame(this.animate.bind(this));
+  }
+
+  animate() {
+    if (this.animating && !this.game.isGameEnd) {
+      this.draw(this.game.context);
+      window.requestAnimationFrame(this.animate.bind(this));
+    }
+  }
+
+  stopAnimation() {
+    this.animating = false;
   }
 }

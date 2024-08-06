@@ -2,6 +2,7 @@ import Character from '../Character/Charachter';
 import { CharacterInitProps } from '../Character/types';
 
 export class Enemy extends Character {
+  // TODO Дублирование из основного класса
   targetX: number; // местоположение игрока по Х
   targetY: number; // местоположение игрока по Y
   originalX: number; // местоположение врага
