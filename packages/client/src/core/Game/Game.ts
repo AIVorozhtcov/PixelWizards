@@ -4,6 +4,7 @@ import { cardsInEnemyHand } from './Enemy/cardsInEnemyHand';
 import { Enemy } from './Enemy/Enemy';
 import { fixCardsInPlayerHand } from './Player/fixCardsInPlayerHand';
 import { Player } from './Player/Player';
+import AudioPlayer from './Audio/Audio';
 
 export class Game {
   width: number;
@@ -16,6 +17,7 @@ export class Game {
   gameAnimation: number | undefined = undefined;
   changeGameStateFunc: () => void;
   background = new Image();
+  music = new AudioPlayer();
 
   constructor(
     width: number,
@@ -147,6 +149,9 @@ export class Game {
 
     this.context.clearRect(0, 0, this.width, this.height);
 
+    this.music.stopBackgroundSong();
+    this.music.playEndGameSong();
+
     this.isGameEnd = true;
 
     this.changeGameStateFunc();
@@ -164,6 +169,9 @@ export class Game {
     }
 
     this.context.clearRect(0, 0, this.width, this.height);
+
+    this.music.stopEndGameSong();
+    this.music.playBackgroundSong();
 
     this.player = new Player({
       cardInHand: fixCardsInPlayerHand,
