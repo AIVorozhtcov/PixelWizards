@@ -10,6 +10,11 @@ export type RegistrationFormData = {
   phone: string;
 };
 
+export type LoginFormData = {
+  login: string;
+  password: string;
+};
+
 export type ProfileFormData = {
   first_name: string;
   second_name: string;
