@@ -5,6 +5,7 @@ import {
   ProfileFormData,
   ProfilePasswordFormData,
   RegistrationFormData,
+  LoginFormData,
 } from './types';
 
 const nameRegex = /^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё-]*$/;
@@ -55,6 +56,18 @@ export const RegistrationValidationSchema: ZodType<RegistrationFormData> = z
     message: 'Пароли не совпадают',
     path: ['passwordAgain'],
   });
+
+export const LoginValidationSchema: ZodType<LoginFormData> = z.object({
+  login: z
+    .string()
+    .min(3, 'Логин не может быть короче 3 символов')
+    .max(20, 'Логин не может быть длиннее 20 символов')
+    .regex(loginRegex, 'Логин не соответствует требованиям'),
+  password: z
+    .string()
+    .min(8, 'Пароль не может быть короче 8 символов')
+    .max(40, 'Пароль не может быть длиннее 40 символов'),
+});
 
 export const ProfileUpdateDataSchema: ZodType<ProfileFormData> = z.object({
   first_name: z
