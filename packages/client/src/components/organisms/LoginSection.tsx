@@ -7,10 +7,19 @@ import { LoginValidationSchema } from '../../types/validationSchemas';
 import Link from '../atoms/Link';
 import Subtitle from '../atoms/Subtitle';
 import Form from './Form';
+import { useAppDispatch } from '../../lib/hooks';
+import { getUserInfo, signin } from '../../api/authApi';
+import { setUserData } from '../../store/slices/user';
 
 const LoginSection: React.FC = () => {
-  const handleLogin = (data: LoginFormData) => {
-    console.log('Login Data:', data);
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = async (data: LoginFormData) => {
+    const response = await signin(data);
+    if (!response) return;
+    const userData = await getUserInfo();
+    if (!userData) return;
+    dispatch(setUserData(userData));
   };
 
   return (
@@ -20,7 +29,7 @@ const LoginSection: React.FC = () => {
       </Subtitle>
       <Form<LoginFormData>
         zodSchema={LoginValidationSchema}
-        onSubmit={handleLogin}
+        onSubmit={handleSubmit}
         buttonText="Submit"
         buttonVariant="acentNotTransparent"
         buttonClass="bg-[#ffc107]"
