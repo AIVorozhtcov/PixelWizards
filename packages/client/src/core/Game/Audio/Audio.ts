@@ -1,3 +1,5 @@
+import { BATTLE_SONG, GAME_OVER_SONG } from '../../../constants/audioConstants';
+
 export default class AudioPlayer {
   situationSong: HTMLAudioElement | null;
   backgroundSong: HTMLAudioElement | null;
@@ -8,7 +10,7 @@ export default class AudioPlayer {
   }
 
   playBackgroundSong() {
-    this.backgroundSong = new Audio('/sound/battleSong.mp3');
+    this.backgroundSong = new Audio(BATTLE_SONG);
     this.backgroundSong.volume = 0.05;
     this.backgroundSong.loop = true;
     this.backgroundSong.play();
@@ -21,7 +23,7 @@ export default class AudioPlayer {
   }
 
   playEndGameSong() {
-    this.situationSong = new Audio('/sound/endGameSong.mp3');
+    this.situationSong = new Audio(GAME_OVER_SONG);
     this.situationSong.volume = 0.1;
     this.situationSong.play();
   }
@@ -30,5 +32,10 @@ export default class AudioPlayer {
     if (this.situationSong) {
       this.situationSong.pause();
     }
+  }
+
+  stopAll() {
+    this.backgroundSong?.pause();
+    this.situationSong?.pause();
   }
 }

@@ -1,13 +1,7 @@
-import { Game } from '../Game';
 import { CardInHand, ParticlesType } from '../Character/types';
 
 export default class Particles {
-  game: Game;
-  particles: ParticlesType[] = [];
-
-  constructor(game: Game) {
-    this.game = game;
-  }
+  private particles: ParticlesType[] = [];
 
   drawParticles(context: CanvasRenderingContext2D) {
     this.particles.forEach(particle => {
@@ -38,8 +32,7 @@ export default class Particles {
     });
     this.particles = this.particles.filter(particle => particle.alpha > 0);
     if (this.particles.length > 0) {
-      requestAnimationFrame(() => this.animateParticles());
-      this.game.draw(this.game.context);
+      requestAnimationFrame(this.animateParticles.bind(this));
     }
   }
 }

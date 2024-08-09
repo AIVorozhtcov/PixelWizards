@@ -3,7 +3,7 @@ import { CharacterInitProps } from '../Character/types';
 
 export class Player extends Character {
   private cardImages: Map<string, HTMLImageElement> = new Map();
-  animating = false;
+  isCardsLoaded: boolean | Error = false;
 
   constructor({
     game,
@@ -27,7 +27,6 @@ export class Player extends Character {
       x,
       y,
     });
-
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
@@ -41,6 +40,7 @@ export class Player extends Character {
         image.src = card.name;
         image.onload = () => {
           this.cardImages.set(card.name, image);
+
           resolve();
         };
         image.onerror = reject;
@@ -49,9 +49,11 @@ export class Player extends Character {
 
     Promise.all(imagePromises)
       .then(() => {
+        this.isCardsLoaded = true;
         console.log('All card images loaded.');
       })
       .catch(err => {
+        this.isCardsLoaded = new Error(err);
         console.error('Error loading images', err);
       });
   }
@@ -84,7 +86,7 @@ export class Player extends Character {
           offsetY >= card.y &&
           offsetY <= card.y + card.height
         ) {
-          if (this.actionPoints >= card.actionValue) {
+          if (this.state.actionPoints >= card.actionValue) {
             this.draggingCard = card;
             this.startX = offsetX - card.x;
             this.startY = offsetY - card.y;
@@ -97,11 +99,10 @@ export class Player extends Character {
   }
 
   onMouseMove(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
-    if (this.draggingCard && !this.animating) {
+    if (this.draggingCard) {
       const { offsetX, offsetY } = event.nativeEvent;
       this.draggingCard.x = offsetX - this.startX;
       this.draggingCard.y = offsetY - this.startY;
-      this.game.draw(this.game.context);
     }
   }
 
@@ -113,8 +114,6 @@ export class Player extends Character {
         this.draggingCard.y
       );
 
-      this.draggingCard.x = this.initialX;
-      this.draggingCard.y = this.initialY;
       this.animation.particlesAnimation.animateParticles();
       const actionType = this.draggingCard.action.type;
 
@@ -122,85 +121,32 @@ export class Player extends Character {
         card => card !== this.draggingCard
       );
 
-      this.actionPoints -= this.draggingCard.actionValue;
+      this.state.actionPoints -= this.draggingCard.actionValue;
       if (actionType === 'block' || actionType === 'heal') {
+        this.draggingCard.x = this.initialX;
+        this.draggingCard.y = this.initialY;
         this.doAction(actionType, this.draggingCard);
         this.draggingCard = null;
 
-        this.game.draw(this.game.context);
-        this.game.updateAfterTurn(this.actionPoints);
+        this.game.updateAfterTurn(this.state.actionPoints);
       } else {
-        this.startAnimation();
-        this.animateAttack(() => {
-          if (this.draggingCard) {
-            this.doAction(actionType, this.draggingCard);
+        this.animation.startAnimation();
+        this.animation.charAnimation.animateAttack(
+          this.game.enemy,
+          this,
+          () => {
+            if (this.draggingCard) {
+              this.draggingCard.x = this.initialX;
+              this.draggingCard.y = this.initialY;
+              this.doAction(actionType, this.draggingCard);
 
-            this.draggingCard = null;
-            this.stopAnimation();
-            this.game.draw(this.game.context);
-            this.game.updateAfterTurn(this.actionPoints);
+              this.draggingCard = null;
+              this.animation.stopAnimation();
+              this.game.updateAfterTurn(this.state.actionPoints);
+            }
           }
-        });
+        );
       }
     }
-  }
-
-  animateAttack(callback: () => void) {
-    const originalX = this.x;
-    const originalY = this.y;
-
-    const targetX =
-      this.game.enemy.x + this.game.enemy.width / 2 - this.width / 2;
-
-    const targetY = this.game.enemy.y - 50;
-    const attackY = this.game.enemy.y;
-    const duration = 60;
-    let frame = 0;
-
-    const animate = () => {
-      if (frame < duration) {
-        if (frame < duration / 3) {
-          this.x = originalX + (targetX - originalX) * (frame / (duration / 3));
-          this.y = originalY + (targetY - originalY) * (frame / (duration / 3));
-        } else if (frame < (2 * duration) / 3) {
-          this.y =
-            targetY +
-            (attackY - targetY) * ((frame - duration / 3) / (duration / 3));
-        } else {
-          this.x =
-            targetX +
-            (originalX - targetX) *
-              ((frame - (2 * duration) / 3) / (duration / 3));
-          this.y =
-            attackY +
-            (originalY - attackY) *
-              ((frame - (2 * duration) / 3) / (duration / 3));
-        }
-        frame++;
-        requestAnimationFrame(animate);
-      } else {
-        this.x = originalX;
-        this.y = originalY;
-        callback();
-      }
-    };
-
-    animate();
-  }
-
-  startAnimation() {
-    this.animating = true;
-    window.requestAnimationFrame(this.animate.bind(this));
-  }
-
-  animate() {
-    if (this.animating && !this.game.isGameEnd) {
-      this.draw(this.game.context);
-      window.requestAnimationFrame(this.animate.bind(this));
-    }
-  }
-
-  stopAnimation() {
-    this.animating = false;
   }
 }

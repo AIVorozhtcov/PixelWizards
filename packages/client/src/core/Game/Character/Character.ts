@@ -1,6 +1,18 @@
-import { Game } from '../Game';
 import Animation from '../Animation/Animation';
+import Effect from '../Effect/Effect';
+import { Game } from '../Game';
+import CharacterInfo from './CharacterInfo';
 import { ActionType, CardInHand, CharacterInitProps } from './types';
+
+export interface CharacterState {
+  resist: number;
+  tempResist: number;
+  hitPoints: number;
+  readonly initialHitPoints: number;
+  isCharacterAlive: boolean;
+  readonly initialActionPoints: number;
+  actionPoints: number;
+}
 
 export default abstract class Character {
   game: Game;
@@ -8,22 +20,19 @@ export default abstract class Character {
   height: number;
   x: number;
   y: number;
-  initialCardInHand: CardInHand[];
+  readonly initialCardInHand: CardInHand[];
   cardInHand: CardInHand[];
   draggingCard: CardInHand | null = null;
   startX = 0;
   startY = 0;
   initialX = 0;
   initialY = 0;
-  initialHitPoints: number;
-  hitPoints: number;
-  tempResist = 0; //Временный резист - сюда прокидываю блок
-  resist = 0; // Постоянный резист - сюда можно будет кидать бафы от шмоток и тд
-  initialActionPoints: number; // Фиксированное количество доступных действий
-  actionPoints: number; // Количество доступных действий
+  state: CharacterState;
   characterSkin: HTMLImageElement | null = null;
   animation: Animation;
-  isCharacterAlive = true;
+  effects: Effect;
+  charInfo: CharacterInfo;
+  isLoaded = false;
 
   constructor({
     game,
@@ -38,11 +47,18 @@ export default abstract class Character {
   }: CharacterInitProps) {
     this.game = game;
 
-    this.initialActionPoints = initialActionPoints;
-    this.actionPoints = this.initialActionPoints;
+    this.state = {
+      resist: 0,
+      tempResist: 0,
+      hitPoints: hitPoints,
+      initialHitPoints: hitPoints,
+      isCharacterAlive: true,
+      actionPoints: initialActionPoints,
+      initialActionPoints,
+    };
 
-    this.hitPoints = hitPoints;
-    this.initialHitPoints = hitPoints;
+    this.effects = new Effect(this.state);
+    this.charInfo = new CharacterInfo(this.state);
 
     this.cardInHand = cardInHand;
     this.initialCardInHand = cardInHand;
@@ -54,15 +70,15 @@ export default abstract class Character {
     this.y = y;
 
     this.setSkinForCharacter(characterSkin);
-    this.animation = new Animation(game);
+    this.animation = new Animation(game, this);
   }
 
   protected setActionPoints(points: number) {
-    this.actionPoints = points;
+    this.state.actionPoints = points;
   }
 
   protected setDefaultHitPoints(points: number) {
-    this.hitPoints = points;
+    this.state.hitPoints = points;
   }
 
   protected setDefaultCardsInHand(listOfCard: CardInHand[]) {
@@ -74,32 +90,9 @@ export default abstract class Character {
     image.src = source;
     image.onload = () => {
       this.characterSkin = image;
+
+      this.isLoaded = true;
     };
-  }
-
-  protected drawHealthBar(
-    context: CanvasRenderingContext2D,
-    x: number,
-    y: number,
-    width: number,
-    height: number
-  ) {
-    context.clearRect(x, y, width, height);
-
-    const greenBarWidth = (this.hitPoints / this.initialHitPoints) * width;
-    const redWidth = width - greenBarWidth;
-
-    context.fillStyle = 'green';
-    context.fillRect(x, y, greenBarWidth, height);
-
-    context.fillStyle = 'red';
-    context.fillRect(x + greenBarWidth, y, redWidth, height);
-
-    context.fillStyle = 'black';
-    context.textAlign = 'start';
-    context.textBaseline = 'alphabetic';
-    context.font = '18px Arial';
-    context.fillText(String(this.hitPoints), this.x, this.y * 3 + 15);
   }
 
   draw(context: CanvasRenderingContext2D) {
@@ -112,43 +105,9 @@ export default abstract class Character {
         this.height
       );
 
-      this.drawHealthBar(context, this.x, this.y * 3, this.width, 20);
-      this.drawShield(context, this.x, this.y * 3.3, 50, 50);
+      this.charInfo.drawHealthBar(context, this.x, this.y * 3, this.width, 20);
+      this.charInfo.drawShield(context, this.x, this.y * 3.3, 50, 50);
     }
-  }
-
-  drawShield(
-    context: CanvasRenderingContext2D,
-    x: number,
-    y: number,
-    width: number,
-    height: number
-  ) {
-    context.beginPath();
-    context.moveTo(x + width / 2, y + height);
-    context.lineTo(x + width, y + height * 0.6);
-    context.lineTo(x + width, y);
-    context.lineTo(x, y);
-    context.lineTo(x, y + height * 0.6);
-    context.closePath();
-
-    context.fillStyle = '#709CCB';
-    context.fill();
-
-    context.lineWidth = 2;
-    context.strokeStyle = '#003366';
-    context.stroke();
-
-    const fontSize = 24;
-    context.font = `bold ${fontSize}px Arial`;
-    context.fillStyle = '#ffffff';
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
-
-    const textX = x + width / 2;
-    const textY = y + (height * 0.6 + height * 0.4) / 2;
-
-    context.fillText(String(this.resist + this.tempResist), textX, textY);
   }
 
   addCardInHand(card: CardInHand) {
@@ -161,42 +120,16 @@ export default abstract class Character {
     );
   }
 
-  getDamage(damage: number) {
-    const damageThroughResist = damage - (this.resist + this.tempResist);
-    this.hitPoints -= damageThroughResist;
-
-    if (this.hitPoints <= 0) {
-      this.isCharacterAlive = false;
-    }
-  }
-
-  getHeal(heal: number) {
-    this.hitPoints = Math.min(this.hitPoints + heal, this.initialHitPoints);
-  }
-
-  getBlock(block: number) {
-    this.tempResist += block;
-  }
-
-  refreshResist() {
-    this.resist = 0;
-    this.tempResist = 0;
-  }
-
-  refreshActionPoints() {
-    this.actionPoints = this.initialActionPoints;
-  }
-
   doAction(action: ActionType, playedCard: CardInHand) {
     switch (action) {
       case 'attack':
         this.game.dealDamage('enemy', playedCard.action.points);
         break;
       case 'block':
-        this.getBlock(playedCard.action.points);
+        this.effects.getBlock(playedCard.action.points);
         break;
       case 'heal':
-        this.getHeal(playedCard.action.points);
+        this.effects.getHeal(playedCard.action.points);
         break;
       default:
         break;

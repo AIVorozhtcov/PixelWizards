@@ -17,6 +17,10 @@ export default function Gameplay() {
         );
       }
     }
+
+    return () => {
+      gameRef.current?.music.stopAll();
+    };
   }, []);
 
   return (

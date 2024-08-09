@@ -1,3 +1,4 @@
+import getRandomColor from '../../../utils/getRandomColor';
 import { Game } from '../Game';
 
 export default class Gameover {
@@ -38,17 +39,8 @@ export default class Gameover {
     }
   }
 
-  getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-
   fillAndRenderTextOnCanvas() {
-    this.game.context.fillStyle = this.getRandomColor();
+    this.game.context.fillStyle = getRandomColor();
 
     this.game.context.font = `${this.fontSize}px Arial`;
     this.game.context.textAlign = 'center';

@@ -1,10 +1,10 @@
-import Gameover from './Gameover/Gameover';
+import AudioPlayer from './Audio/Audio';
 import { CharacterInitProps } from './Character/types';
 import { cardsInEnemyHand } from './Enemy/cardsInEnemyHand';
 import { Enemy } from './Enemy/Enemy';
+import Gameover from './Gameover/Gameover';
 import { fixCardsInPlayerHand } from './Player/fixCardsInPlayerHand';
 import { Player } from './Player/Player';
-import AudioPlayer from './Audio/Audio';
 
 export class Game {
   width: number;
@@ -43,10 +43,10 @@ export class Game {
   }
 
   isGameContinue() {
-    if (this.player.hitPoints <= 0) {
+    if (this.player.state.hitPoints <= 0) {
       this.endGame();
       return false;
-    } else if (this.enemy.hitPoints <= 0) {
+    } else if (this.enemy.state.hitPoints <= 0) {
       this.endGame(true);
       return false;
     } else {
@@ -113,7 +113,7 @@ export class Game {
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     context.fillStyle = 'white';
-    context.fillText(String(this.player.actionPoints), centerX, centerY);
+    context.fillText(String(this.player.state.actionPoints), centerX, centerY);
   }
 
   drawEverything(context: CanvasRenderingContext2D) {
@@ -125,9 +125,9 @@ export class Game {
 
   dealDamage(toWhom: 'player' | 'enemy', damageSize: number) {
     if (toWhom === 'player') {
-      this.player.getDamage(damageSize);
+      this.player.effects.getDamage(damageSize);
     } else {
-      this.enemy.getDamage(damageSize);
+      this.enemy.effects.getDamage(damageSize);
     }
   }
 
@@ -214,18 +214,14 @@ export class Game {
   }
 
   private endPlayerTurn() {
-    // Сделал обновление после хода соперника в this.enemy.beginTurn();
-
-    // this.player.refreshCardsInHand();
-    // this.player.refreshActionPoints();
     this.whosTurn = 'enemy';
     this.enemy.beginTurn();
   }
 
   private endEnemyTurn() {
     this.enemy.refreshCardsInHand();
-    this.enemy.refreshActionPoints();
-    this.player.refreshResist();
+    this.enemy.effects.refreshActionPoints();
+    this.player.effects.refreshResist();
     this.whosTurn = 'player';
   }
 }
