@@ -1,6 +1,10 @@
 import Button from '../atoms/Button';
 
-export default function StartGameScreen() {
+export default function StartGameScreen({
+  startGame,
+}: {
+  startGame: () => void;
+}) {
   return (
     <div className="p-3 flex flex-col items-center justify-center gap-2 text-white">
       <h2 className="text-3xl font-bold">Начало игры</h2>
@@ -30,7 +34,10 @@ export default function StartGameScreen() {
         мать-Пито́ниха. Побеждая её, герои-капибары забирают с собой все
         апельсины и возвращаются домой.
       </p>
-      <Button className="w-full lg:w-1/3" variant="contained">
+      <Button
+        className="w-full lg:w-1/3"
+        variant="contained"
+        onClick={startGame}>
         Старт
       </Button>
     </div>
