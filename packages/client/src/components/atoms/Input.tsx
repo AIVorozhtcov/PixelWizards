@@ -3,7 +3,6 @@ import { cva, VariantProps } from 'class-variance-authority';
 
 import { cn } from '../../lib/utils';
 
-
 const inputVariants = cva('', {
   variants: {
     variant: {

@@ -9,6 +9,12 @@ export const USER_PATHS = {
   updatePassword: '/user/password',
 };
 
+export const AUTH_PATHS = {
+  signup: '/auth/signup',
+  signin: '/auth/signin',
+  getUserInfo: '/auth/user',
+};
+
 export const HEADERS = {
   CT_APPLICATION_JSON: { 'Content-Type': 'application/json' },
   ACCEPT: { Accept: 'application/json' },
