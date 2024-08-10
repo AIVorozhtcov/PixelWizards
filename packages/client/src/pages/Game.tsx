@@ -1,11 +1,9 @@
-import GameOverScreen from '../components/organisms/GameOver';
-import StartGameScreen from '../components/organisms/StartGameScreen';
+import GameWrapper from '../templates/Game/GameWrapper';
 
 export default function Game() {
   return (
-    <main className=" bg-[#0c1b2a]">
-      <StartGameScreen />
-      {/* <GameOverScreen /> */}
+    <main className="w-full bg-[#0c1b2a]">
+      <GameWrapper />
     </main>
   );
 }

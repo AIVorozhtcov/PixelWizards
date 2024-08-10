@@ -1,4 +1,3 @@
-import React from 'react';
 import Form from './Form';
 import Subtitle from '../atoms/Subtitle';
 import { RegistrationFormData } from '../../types/types';
