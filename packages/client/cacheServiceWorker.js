@@ -1,16 +1,18 @@
-const VERSION = '0.0.1'
+const VERSION = '0.0.1';
 const CACHE_NAME = `capybara-game-cache-v-${VERSION}`;
 
 const URLS = [
-  '/',
   '/index.html',
+  '/manifest.json'
 ];
+
+const CACHE_URLS = URLS.concat('%HASHURLS%'.split(','));
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
-      .then(cache => cache.addAll(URLS))
+      .then(cache => cache.addAll(CACHE_URLS))
       .catch(error => console.log(error))
   );
 
@@ -35,7 +37,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   event.respondWith(
     fetch(event.request)
-      .then(async (response) => { 
+      .then(async (response) => {
         if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
         }
@@ -54,7 +56,7 @@ self.addEventListener('fetch', event => {
       })
       .catch(async () => {
         console.log('Оффлайн');
-    
+
         await caches
           .open(CACHE_NAME)
           .then(cache => cache.match(event.request))
