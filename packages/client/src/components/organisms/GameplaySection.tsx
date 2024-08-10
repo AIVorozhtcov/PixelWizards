@@ -2,7 +2,6 @@ import { arrayOfGameplayText } from '../../constants/arrayOfGameplayText';
 import Section from '../../templates/Section';
 import InfoBox from '../molecules/InfoBox';
 import IntroductionBlock from '../molecules/IntroductionBlock';
-import SpaceBattle from '../../../public/battles.webp';
 
 export default function GameplaySection() {
   return (
@@ -17,7 +16,7 @@ export default function GameplaySection() {
       />
       <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
         <img
-          src={SpaceBattle}
+          src="/battles.webp"
           width="550"
           height="310"
           alt="Gameplay"
