@@ -6,7 +6,7 @@ export default function StartGameScreen({
   startGame: () => void;
 }) {
   return (
-    <div className="p-3 flex flex-col items-center justify-center gap-2 text-white">
+    <div className="p-3 min-h-dvh flex flex-col items-center justify-center gap-2 text-white">
       <h2 className="text-3xl font-bold">Начало игры</h2>
       <hr className="w-full lg:w-1/3" />
       <h3 className="text-xl font-semibold">История</h3>
