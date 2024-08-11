@@ -129,7 +129,7 @@ export const ProfileUpdateAvatarSchema: ZodType<FormAvatarType> = z.object({
       'Разрешены форматы изображения: .jpg, .jpeg, .png и .webp'
     )
     .refine(
-      avatar => avatar[0]?.size < 3 * 1024 * 1024,
-      'Размер файла должен быть меньше 3MB'
+      avatar => avatar[0]?.size < 2 * 1024 * 1024,
+      'Размер файла должен быть меньше 2MB'
     ),
 });

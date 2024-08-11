@@ -1,4 +1,3 @@
-import React from 'react';
 import Form from './Form';
 import Subtitle from '../atoms/Subtitle';
 import { RegistrationFormData } from '../../types/types';
@@ -6,10 +5,18 @@ import { RegistrationValidationSchema } from '../../types/validationSchemas';
 import registrationCapibara from '../../../public/registrationCapibara.webp';
 import registrationCapibara2 from '../../../public/registrationCapibara2.webp';
 import FORM_INPUT_NAMES from '../../constants/formInputNames';
+import { getUserInfo, signup } from '../../api/authApi';
+import { useAppDispatch } from '../../lib/hooks';
+import { setUserData } from '../../store/slices/user';
 
 const RegistrationSection: React.FC = () => {
-  const handleRegister = (data: RegistrationFormData) => {
-    console.log('Register Data:', data);
+  const dispatch = useAppDispatch();
+  const handleSubmit = async (data: RegistrationFormData) => {
+    const response = await signup(data);
+    if (!response) return;
+    const userData = await getUserInfo();
+    if (!userData) return;
+    dispatch(setUserData(userData));
   };
 
   return (
@@ -19,7 +26,7 @@ const RegistrationSection: React.FC = () => {
       </Subtitle>
       <Form<RegistrationFormData>
         zodSchema={RegistrationValidationSchema}
-        onSubmit={handleRegister}
+        onSubmit={handleSubmit}
         buttonText="Submit"
         buttonVariant="acentNotTransparent"
         buttonClass="bg-[#ffc107]"
