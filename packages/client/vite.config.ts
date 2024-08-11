@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
 import { buildSync } from 'esbuild';
 import { join } from 'node:path';
+import path from 'path';
 
 dotenv.config();
 

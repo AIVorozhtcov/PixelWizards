@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from '../templates/Layout';
+import ProtectedLayout from '../templates/Layout/ProtectedLayout';
+import UnprotectedLayout from '../templates/Layout/UnprotectedLayout';
 import LINKS from './links';
 
 const NotFound = lazy(() => import('../pages/NotFound'));
@@ -16,7 +17,7 @@ const ServerErrorPage = lazy(() => import('../pages/505'));
 
 const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: <ProtectedLayout />,
     errorElement: <ServerErrorPage />,
     children: [
       {
@@ -59,12 +60,18 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: LINKS.login,
-    element: <Login />,
-  },
-  {
-    path: LINKS.registration,
-    element: <Registration />,
+    element: <UnprotectedLayout />,
+    errorElement: <ServerErrorPage />,
+    children: [
+      {
+        path: LINKS.login,
+        element: <Login />,
+      },
+      {
+        path: LINKS.registration,
+        element: <Registration />,
+      },
+    ],
   },
 ]);
 
