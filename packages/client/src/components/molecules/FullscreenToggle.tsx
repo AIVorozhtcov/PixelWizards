@@ -1,7 +1,10 @@
 import Button from '../atoms/Button';
 import fullscreenToggle from '../../../public/fullscreenToggle.webp';
 
-export default function FullscreenToggle() {
+export default function FullscreenToggle({
+  className,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
@@ -11,8 +14,12 @@ export default function FullscreenToggle() {
   };
 
   return (
-    <Button variant="contained" onClick={toggleFullScreen}>
-      <img src={fullscreenToggle} alt="Fullscreen Toggle" />
+    <Button onClick={toggleFullScreen} className={className} {...props}>
+      <img
+        className="fill-white"
+        src={fullscreenToggle}
+        alt="Fullscreen Toggle"
+      />
     </Button>
   );
 }

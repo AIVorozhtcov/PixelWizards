@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Game } from '../../core/Game/Game';
 import Button from '../../components/atoms/Button';
+import FullscreenToggle from '../../components/molecules/FullscreenToggle';
 
 export default function Gameplay() {
   const [isGameEnd, setIsGameEnd] = useState(false);
@@ -45,6 +46,7 @@ export default function Gameplay() {
         className="text-white bg-red-400 w-full h-20">
         {isGameEnd ? 'Начать заново' : 'Закончить ход'}
       </Button>
+      <FullscreenToggle className="absolute top-20 left-5 opacity-50 w-20"></FullscreenToggle>
     </>
   );
 }
