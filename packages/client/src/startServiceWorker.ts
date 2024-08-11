@@ -1,5 +1,5 @@
 export default function startServiceWorker() {
-  if (navigator.serviceWorker) {
+  if (navigator.serviceWorker && import.meta.env.MODE === 'production') {
     window.addEventListener('load', () => {
       navigator.serviceWorker
         .register('cacheServiceWorker.js', { scope: '/' })
