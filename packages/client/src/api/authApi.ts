@@ -12,6 +12,7 @@ export const signup = async (
         ...HEADERS.CT_APPLICATION_JSON,
         ...HEADERS.ACCEPT,
       },
+      credentials: 'include',
     });
     return (await response.json()) as { id: number };
   } catch (error) {
@@ -30,6 +31,7 @@ export const signin = async (
         ...HEADERS.CT_APPLICATION_JSON,
         ...HEADERS.ACCEPT,
       },
+      credentials: 'include',
     });
     return response.status === 200;
   } catch (error) {
@@ -41,10 +43,7 @@ export const getUserInfo = async (): Promise<UserData | undefined> => {
   try {
     const response = await fetch(`${URLS.base}${AUTH_PATHS.getUserInfo}`, {
       method: 'GET',
-      headers: {
-        ...HEADERS.CT_APPLICATION_JSON,
-        ...HEADERS.ACCEPT,
-      },
+      credentials: 'include',
     });
     return (await response.json()) as UserData;
   } catch (error) {

@@ -3,6 +3,7 @@ import { Game } from '../../core/Game/Game';
 import Button from '../../components/atoms/Button';
 import FullscreenToggle from '../../components/molecules/FullscreenToggle';
 
+
 export default function Gameplay() {
   const [isGameEnd, setIsGameEnd] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -47,6 +48,7 @@ export default function Gameplay() {
         {isGameEnd ? 'Начать заново' : 'Закончить ход'}
       </Button>
       <FullscreenToggle className="absolute top-20 left-5 opacity-50 w-20"></FullscreenToggle>
+
     </>
   );
 }

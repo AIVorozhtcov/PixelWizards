@@ -1,9 +1,9 @@
-import { ImageWithTextProps } from '../components/molecules/ImageWithText';
+import { ImageWithTextPropsCustom } from '../components/molecules/ImageWithText';
 import CapitanCapibara from '../../public/capCapibara.webp';
 import Sneak from '../../public/sneakEnemy.webp';
 import Mechanic from '../../public/mechanicCapibara.webp';
 
-export const arrayOfImagesWithText: ImageWithTextProps[] = [
+export const arrayOfImagesWithText: ImageWithTextPropsCustom[] = [
   {
     imgSrc: CapitanCapibara,
     imgAlt: 'Capybara Character',
