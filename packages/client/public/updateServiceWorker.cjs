@@ -1,12 +1,36 @@
 const fs = require('fs');
-const assetManifest = require('./manifest.json');
 
-const urls = Object.values(assetManifest).map(data => data.file);
+const BUILD_FOLDER = 'dist';
+const SW_FILE = 'cacheServiceWorker.js';
+const FILE_EXEPTION = 'updateServiceWorker.cjs';
 
-fs.readFile('dist/cacheServiceWorker.js', 'utf-8', (err, data) => {
-  const urlsWithHash = data.replace('%HASHURLS%', urls);
+fs.readFile(`${BUILD_FOLDER}/${SW_FILE}`, 'utf-8', (err, data) => {
+  const filesUrls = getAllFilesInDir(`./${BUILD_FOLDER}`);
+  const urlsForCache = data.replace('%FILESURLS%', filesUrls);
 
-  fs.writeFile('dist/cacheServiceWorker.js', urlsWithHash, (error) => {
-    error ? console.log(`Ошибка при добавлении файлов манифеста: ${error}`) : console.log(`Файлы из манифеста добавлены`);
+  fs.writeFile(`${BUILD_FOLDER}/${SW_FILE}`, urlsForCache, (error) => {
+    if (error) {
+      console.log(`Ошибка при добавлении файлов в service worker: ${error}`); 
+    } else {
+      console.log(`Файлы в service worker добавлены`);
+    }
   });
 });
+
+function getAllFilesInDir(dirPath, files) {
+  const filesAndDirs = fs.readdirSync(dirPath);
+  files = files || [];
+
+  filesAndDirs.forEach(file => {
+    const pathName = `${dirPath}/${file}`;
+
+    if (fs.statSync(pathName).isDirectory()) {
+      files = getAllFilesInDir(pathName, files);
+    } else {
+      const pathNameForCache = pathName.replace(`./${BUILD_FOLDER}`, '');
+      files.push(pathNameForCache);
+    }
+  });
+
+  return files.filter(file => !file.includes(FILE_EXEPTION) && !file.includes(SW_FILE));
+}

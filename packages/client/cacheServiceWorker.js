@@ -1,12 +1,12 @@
 const VERSION = '0.0.1';
 const CACHE_NAME = `capybara-game-cache-v-${VERSION}`;
+const TIMOUT_CONNECTION = 5000;
 
 const URLS = [
-  '/index.html',
-  '/manifest.json'
+  '/',
 ];
 
-const CACHE_URLS = URLS.concat('%HASHURLS%'.split(','));
+const CACHE_URLS = URLS.concat('%FILESURLS%'.split(','));
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -57,7 +57,7 @@ self.addEventListener('fetch', event => {
       .catch(async () => {
         console.log('Оффлайн');
 
-        await caches
+        return await caches
           .open(CACHE_NAME)
           .then(cache => cache.match(event.request))
           .then(response => response || Promise.reject('Нет данных в кеше'));

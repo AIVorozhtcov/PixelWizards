@@ -1,9 +1,8 @@
-import { defineConfig } from 'vite';
+import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
 import { buildSync } from 'esbuild';
 import { join } from 'node:path';
-import path from 'path';
 
 dotenv.config();
 
@@ -15,11 +14,9 @@ export default defineConfig({
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
-  build: {
-    manifest: true,
-  },
   plugins: [
     react(),
+    splitVendorChunkPlugin(),
     {
       name: 'build-sw',
       apply: 'build',
