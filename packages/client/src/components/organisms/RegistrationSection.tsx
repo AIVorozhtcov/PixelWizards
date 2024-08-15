@@ -1,5 +1,7 @@
 import Form from './Form';
 import Subtitle from '../atoms/Subtitle';
+import Link from '../atoms/Link';
+import { useNavigate } from 'react-router-dom';
 import { RegistrationFormData } from '../../types/types';
 import { RegistrationValidationSchema } from '../../types/validationSchemas';
 import registrationCapibara from '../../../public/registrationCapibara.webp';
@@ -11,16 +13,19 @@ import { setUserData } from '../../store/slices/user';
 
 const RegistrationSection: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const handleSubmit = async (data: RegistrationFormData) => {
     const response = await signup(data);
     if (!response) return;
     const userData = await getUserInfo();
     if (!userData) return;
     dispatch(setUserData(userData));
+    navigate('/');
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
+    <div className="max-w-md mx-auto mt-10 flex flex-col">
       <Subtitle className="text-[#ffc107]" as="h2" variant="h2">
         Регистрация
       </Subtitle>
@@ -30,7 +35,7 @@ const RegistrationSection: React.FC = () => {
         buttonText="Submit"
         buttonVariant="acentNotTransparent"
         buttonClass="bg-[#ffc107]"
-        formFieldClass="mb-4 "
+        formFieldClass="mb-4 w-80"
         labelVariant="basic"
         inputVariant="basic"
         fields={[
@@ -59,6 +64,9 @@ const RegistrationSection: React.FC = () => {
           },
         ]}
       />
+      <Link className="self-center mt-10" to="/login">
+        Войти
+      </Link>
       <img
         src={registrationCapibara}
         width="225"

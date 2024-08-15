@@ -3,7 +3,7 @@ import { RegistrationFormData, SignInData, UserData } from '../types/types';
 
 export const signup = async (
   data: RegistrationFormData
-): Promise<{ id: number } | undefined> => {
+): Promise<boolean | undefined> => {
   try {
     const response = await fetch(`${URLS.base}${AUTH_PATHS.signup}`, {
       method: 'POST',
@@ -14,7 +14,7 @@ export const signup = async (
       },
       credentials: 'include',
     });
-    return (await response.json()) as { id: number };
+    return response.status === 200;
   } catch (error) {
     console.log(error);
   }

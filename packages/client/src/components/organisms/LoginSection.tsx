@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import registrationCapibara from '../../../public/registrationCapibara.webp';
 import registrationCapibara2 from '../../../public/registrationCapibara2.webp';
 import FORM_INPUT_NAMES from '../../constants/formInputNames';
@@ -13,6 +14,7 @@ import { setUserData } from '../../store/slices/user';
 
 const LoginSection: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (data: LoginFormData) => {
     const response = await signin(data);
@@ -20,6 +22,7 @@ const LoginSection: React.FC = () => {
     const userData = await getUserInfo();
     if (!userData) return;
     dispatch(setUserData(userData));
+    navigate('/');
   };
 
   return (
@@ -33,7 +36,7 @@ const LoginSection: React.FC = () => {
         buttonText="Submit"
         buttonVariant="acentNotTransparent"
         buttonClass="bg-[#ffc107]"
-        formFieldClass="mb-4 "
+        formFieldClass="mb-4 w-80"
         labelVariant="basic"
         inputVariant="basic"
         fields={[
