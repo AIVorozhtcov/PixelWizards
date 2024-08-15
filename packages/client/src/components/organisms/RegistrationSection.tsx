@@ -1,5 +1,6 @@
 import Form from './Form';
 import Subtitle from '../atoms/Subtitle';
+import Link from '../atoms/Link';
 import { RegistrationFormData } from '../../types/types';
 import { RegistrationValidationSchema } from '../../types/validationSchemas';
 import registrationCapibara from '../../../public/registrationCapibara.webp';
@@ -20,7 +21,7 @@ const RegistrationSection: React.FC = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
+    <div className="max-w-md mx-auto mt-10 flex flex-col">
       <Subtitle className="text-[#ffc107]" as="h2" variant="h2">
         Регистрация
       </Subtitle>
@@ -59,6 +60,9 @@ const RegistrationSection: React.FC = () => {
           },
         ]}
       />
+      <Link className="self-center mt-10" to="/login">
+        Войти
+      </Link>
       <img
         src={registrationCapibara}
         width="225"
