@@ -35,7 +35,7 @@ const RegistrationSection: React.FC = () => {
         buttonText="Submit"
         buttonVariant="acentNotTransparent"
         buttonClass="bg-[#ffc107]"
-        formFieldClass="mb-4 "
+        formFieldClass="mb-4 w-80"
         labelVariant="basic"
         inputVariant="basic"
         fields={[
