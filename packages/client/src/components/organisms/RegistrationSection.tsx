@@ -1,6 +1,7 @@
 import Form from './Form';
 import Subtitle from '../atoms/Subtitle';
 import Link from '../atoms/Link';
+import { useNavigate } from 'react-router-dom';
 import { RegistrationFormData } from '../../types/types';
 import { RegistrationValidationSchema } from '../../types/validationSchemas';
 import registrationCapibara from '../../../public/registrationCapibara.webp';
@@ -12,12 +13,15 @@ import { setUserData } from '../../store/slices/user';
 
 const RegistrationSection: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const handleSubmit = async (data: RegistrationFormData) => {
     const response = await signup(data);
     if (!response) return;
     const userData = await getUserInfo();
     if (!userData) return;
     dispatch(setUserData(userData));
+    navigate('/login');
   };
 
   return (
