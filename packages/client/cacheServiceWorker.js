@@ -1,5 +1,6 @@
 const VERSION = '0.0.1';
 const CACHE_NAME = `capybara-game-cache-v-${VERSION}`;
+
 const TIMOUT_CONNECTION = 5000;
 
 const URLS = [
