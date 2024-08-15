@@ -21,7 +21,7 @@ const RegistrationSection: React.FC = () => {
     const userData = await getUserInfo();
     if (!userData) return;
     dispatch(setUserData(userData));
-    navigate('/login');
+    navigate('/');
   };
 
   return (
