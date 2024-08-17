@@ -27,11 +27,11 @@ const Popup = <T extends FieldValues>({
   zodSchema,
 }: Popup<T>) => {
   return (
-    <div className="absolute top-0 left-0 z-[20] w-full h-full bg-black bg-opacity-50">
+    <div className="fixed top-0 left-0 z-[40] w-full h-full bg-black bg-opacity-50 overflow-y-hidden">
       <div
         className="
         absolute top-1/3 left-1/2 -translate-y-1/3 -translate-x-1/2
-        max-w-96 flex flex-col items-stretch text-center bg-[#152f48]
+        w-80 flex flex-col items-stretch text-center bg-[#152f48]
         rounded-lg pt-10 pb-6 pl-3 pr-3 shadow-[0_0_10px_2px] shadow-[#0b1016]
       ">
         <Span
