@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import ProfileAvatar from '../molecules/ProfileAvatar';
-import { FormAvatarType, ProfileModeType } from '../../types/types';
-import ProfileModeManager from './ProfileModeManager';
-import Button from '../atoms/Button';
+import generalAPI from '../../api/fetchTransport/generalApi';
 import { PROFILE_MODE, PROFILE_POPUP } from '../../constants/profilePageData';
-import Popup from '../molecules/Popup';
-import { updateUserAvatar } from '../../api/userApi';
+import { FormAvatarType, ProfileModeType } from '../../types/types';
 import { ProfileUpdateAvatarSchema } from '../../types/validationSchemas';
+import Button from '../atoms/Button';
+import Popup from '../molecules/Popup';
+import ProfileAvatar from '../molecules/ProfileAvatar';
+import ProfileModeManager from './ProfileModeManager';
 
 const ProfileSection = () => {
   const [mode, setMode] = useState<ProfileModeType>('base');
@@ -19,7 +19,10 @@ const ProfileSection = () => {
       {isPopupDisplay && (
         <Popup<FormAvatarType>
           handleClick={() => setPopupDisplay(false)}
-          onSubmit={(data: FormAvatarType) => updateUserAvatar(data)}
+          onSubmit={data => {
+            // TODO Notification if error
+            generalAPI.updateUserAvatar(data);
+          }}
           zodSchema={ProfileUpdateAvatarSchema}
           popup={PROFILE_POPUP}
         />

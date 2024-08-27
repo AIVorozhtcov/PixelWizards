@@ -1,8 +1,14 @@
-import { USER_PATHS } from '../../constants/apiConstants';
-import { Profile } from '../../types/types';
+import { AUTH_PATHS, USER_PATHS } from '../../constants/apiConstants';
+import { FormAvatarType } from '../../types/types';
+import {
+  ErrorSchema,
+  SignUpSchema,
+  UserInfoSchema,
+} from '../../types/validationSchemas';
+import resultFromSchema from '../../utils/resultFromSchema';
 import BaseApi from './baseApi';
 
-type Data = Record<string, string>;
+type Data = Record<string, string | null>;
 
 class GeneralApi extends BaseApi {
   constructor() {
@@ -14,9 +20,7 @@ class GeneralApi extends BaseApi {
       data,
     });
 
-    const responseData = await response.json();
-
-    return responseData as { id: number };
+    return resultFromSchema(SignUpSchema, ErrorSchema, response);
   }
 
   async signin(data: Data) {
@@ -25,7 +29,12 @@ class GeneralApi extends BaseApi {
       withCredentials: 'include',
     });
 
-    return response.status === 200;
+    if (response.status === 200) {
+      return true;
+    } else {
+      const error = ErrorSchema.parse(await response.json());
+      return error;
+    }
   }
 
   async userInfo() {
@@ -33,9 +42,7 @@ class GeneralApi extends BaseApi {
       withCredentials: 'include',
     });
 
-    const responseData = await response.json();
-
-    return responseData as Profile;
+    return resultFromSchema(UserInfoSchema, ErrorSchema, response);
   }
 
   async updateUserProfile(data: Data) {
@@ -43,9 +50,7 @@ class GeneralApi extends BaseApi {
       data,
     });
 
-    const responseData = await response.json();
-
-    return responseData as Profile;
+    return resultFromSchema(UserInfoSchema, ErrorSchema, response);
   }
 
   async updatePassword(data: Data) {
@@ -53,19 +58,23 @@ class GeneralApi extends BaseApi {
       data,
     });
 
-    const responseData = await response.json();
-
-    return responseData;
+    if (response.status === 200) {
+      return true;
+    } else {
+      return ErrorSchema.parse(await response.json());
+    }
   }
 
-  async updateUserAvatar(data: FormData) {
+  async updateUserAvatar(data: FormAvatarType) {
     const response = await this.put(USER_PATHS.updateAvatar, {
       data,
     });
 
-    const responseData = await response.json();
+    return resultFromSchema(UserInfoSchema, ErrorSchema, response);
+  }
 
-    return responseData as Profile;
+  async logout() {
+    await this.post(AUTH_PATHS.logout);
   }
 }
 

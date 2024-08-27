@@ -11,7 +11,7 @@ import { getUserInfo, signup } from '../../api/authApi';
 import { useAppDispatch } from '../../lib/hooks';
 import { setUserData } from '../../store/slices/user';
 
-const RegistrationSection: React.FC = () => {
+const RegistrationSection = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

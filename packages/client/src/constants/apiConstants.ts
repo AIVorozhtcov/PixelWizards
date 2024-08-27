@@ -12,8 +12,9 @@ export const USER_PATHS = {
 export const AUTH_PATHS = {
   signup: '/auth/signup',
   signin: '/auth/signin',
+  logout: '/auth/logout',
   getUserInfo: '/auth/user',
-};
+} as const;
 
 export const HEADERS = {
   CT_APPLICATION_JSON: { 'Content-Type': 'application/json' },

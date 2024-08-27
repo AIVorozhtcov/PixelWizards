@@ -1,26 +1,36 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import registrationCapibara from '../../../public/registrationCapibara.webp';
 import registrationCapibara2 from '../../../public/registrationCapibara2.webp';
+import generalAPI from '../../api/fetchTransport/generalApi';
 import FORM_INPUT_NAMES from '../../constants/formInputNames';
+import { useAppDispatch } from '../../lib/hooks';
+import { setUserData } from '../../store/slices/user';
 import { LoginFormData } from '../../types/types';
 import { LoginValidationSchema } from '../../types/validationSchemas';
 import Link from '../atoms/Link';
 import Subtitle from '../atoms/Subtitle';
 import Form from './Form';
-import { useAppDispatch } from '../../lib/hooks';
-import { getUserInfo, signin } from '../../api/authApi';
-import { setUserData } from '../../store/slices/user';
+import { toast } from 'sonner';
 
-const LoginSection: React.FC = () => {
+const LoginSection = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (data: LoginFormData) => {
-    const response = await signin(data);
-    if (!response) return;
-    const userData = await getUserInfo();
-    if (!userData) return;
+    const response = await generalAPI.signin(data);
+
+    if (typeof response === 'object' && 'reason' in response) {
+      toast.error(response.reason);
+      return;
+    }
+
+    const userData = await generalAPI.userInfo();
+
+    if ('reason' in userData) {
+      toast.error(userData.reason);
+      return;
+    }
+
     dispatch(setUserData(userData));
     navigate('/');
   };

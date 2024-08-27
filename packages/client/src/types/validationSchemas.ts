@@ -1,12 +1,4 @@
-import { z, ZodType } from 'zod';
-
-import {
-  FormAvatarType,
-  ProfileFormData,
-  ProfilePasswordFormData,
-  RegistrationFormData,
-  LoginFormData,
-} from './types';
+import { z } from 'zod';
 
 const nameRegex = /^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё-]*$/;
 const loginRegex = /^(?=.*[A-Za-z])[-\w]{3,20}$/;
@@ -20,7 +12,7 @@ const acceptedImageTypes = [
   'image/webp',
 ];
 
-export const RegistrationValidationSchema: ZodType<RegistrationFormData> = z
+export const RegistrationValidationSchema = z
   .object({
     first_name: z
       .string()
@@ -57,7 +49,7 @@ export const RegistrationValidationSchema: ZodType<RegistrationFormData> = z
     path: ['passwordAgain'],
   });
 
-export const LoginValidationSchema: ZodType<LoginFormData> = z.object({
+export const LoginValidationSchema = z.object({
   login: z
     .string()
     .min(3, 'Логин не может быть короче 3 символов')
@@ -69,7 +61,7 @@ export const LoginValidationSchema: ZodType<LoginFormData> = z.object({
     .max(40, 'Пароль не может быть длиннее 40 символов'),
 });
 
-export const ProfileUpdateDataSchema: ZodType<ProfileFormData> = z.object({
+export const ProfileUpdateDataSchema = z.object({
   first_name: z
     .string()
     .min(1, 'Необходимо ввести имя')
@@ -87,13 +79,14 @@ export const ProfileUpdateDataSchema: ZodType<ProfileFormData> = z.object({
   display_name: z
     .string()
     .min(3, 'Никнейм не может быть короче 3 символов')
-    .max(20, 'Никнейм не может быть длиннее 20 символов'),
+    .max(20, 'Никнейм не может быть длиннее 20 символов')
+    .nullable(),
   phone: z
     .string()
     .regex(phoneRegex, 'Номер телефона не соответствует требованиям'),
 });
 
-export const ProfileUpdatePasswordSchema: ZodType<ProfilePasswordFormData> = z
+export const ProfileUpdatePasswordSchema = z
   .object({
     oldPassword: z
       .string()
@@ -121,7 +114,7 @@ export const ProfileUpdatePasswordSchema: ZodType<ProfilePasswordFormData> = z
     path: ['passwordAgain'],
   });
 
-export const ProfileUpdateAvatarSchema: ZodType<FormAvatarType> = z.object({
+export const ProfileUpdateAvatarSchema = z.object({
   avatar: z
     .instanceof(FileList)
     .refine(
@@ -133,3 +126,24 @@ export const ProfileUpdateAvatarSchema: ZodType<FormAvatarType> = z.object({
       'Размер файла должен быть меньше 2MB'
     ),
 });
+
+export const ErrorSchema = z.object({
+  reason: z.string(),
+});
+
+export const SignUpSchema = z.object({
+  id: z.number(),
+});
+
+export const AvatarSchema = z.object({
+  avatar: z.string().nullable(),
+});
+
+export const SignInSchema = z.object({
+  login: z.string(),
+  password: z.string(),
+});
+
+export const AvatarIdSchema = SignUpSchema.merge(AvatarSchema);
+
+export const UserInfoSchema = ProfileUpdateDataSchema.merge(AvatarIdSchema);
