@@ -58,3 +58,7 @@ export type SignInData = {
   login: string;
   password: string;
 };
+export type Profile = ProfileFormData & {
+  id: string;
+  avatar: string;
+};
