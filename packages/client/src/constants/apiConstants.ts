@@ -7,7 +7,7 @@ export const USER_PATHS = {
   updateProfile: '/user/profile',
   updateAvatar: '/user/profile/avatar',
   updatePassword: '/user/password',
-};
+} as const;
 
 export const HEADERS = {
   CT_APPLICATION_JSON: { 'Content-Type': 'application/json' },

@@ -42,3 +42,8 @@ export type ProfileDataType = {
 export type FormAvatarType = {
   avatar: FileList;
 };
+
+export type Profile = ProfileFormData & {
+  id: string;
+  avatar: string;
+};
