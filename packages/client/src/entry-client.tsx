@@ -5,13 +5,8 @@ import router from './constants/router';
 import startServiceWorker from './startServiceWorker';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import App from './App';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </>
-);
+ReactDOM.hydrateRoot(document.getElementById('root') as HTMLElement, <App />);
 
 startServiceWorker();
