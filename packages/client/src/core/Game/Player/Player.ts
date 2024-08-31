@@ -34,12 +34,12 @@ export class Player extends Character {
   }
 
   private preloadCardImages() {
-    const imagePromises = this.cardInHand.map(card => {
+    const imagePromises = this.cards.currentCardsInHand.map(card => {
       return new Promise<void>((resolve, reject) => {
         const image = new Image();
-        image.src = card.name;
+        image.src = card.src;
         image.onload = () => {
-          this.cardImages.set(card.name, image);
+          this.cardImages.set(card.src, image);
 
           resolve();
         };
@@ -59,8 +59,8 @@ export class Player extends Character {
   }
 
   displayAvailableCards(context: CanvasRenderingContext2D) {
-    this.cardInHand.forEach(cardInHand => {
-      const image = this.cardImages.get(cardInHand.name);
+    this.cards.currentCardsInHand.forEach(cardInHand => {
+      const image = this.cardImages.get(cardInHand.src);
       if (image) {
         context.drawImage(
           image,
@@ -68,6 +68,39 @@ export class Player extends Character {
           cardInHand.y,
           cardInHand.width,
           cardInHand.height
+        );
+
+        context.font = '14px Arial';
+        context.fillStyle = 'white';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+
+        context.fillText(
+          cardInHand.name,
+          cardInHand.x + cardInHand.width / 2,
+          cardInHand.y + cardInHand.height / 1.35
+        );
+
+        context.font = '14px Arial';
+        context.fillStyle = 'white';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+
+        context.fillText(
+          String(cardInHand.actionValue),
+          cardInHand.x + cardInHand.width / 4.8,
+          cardInHand.y + cardInHand.height / 5.8
+        );
+
+        context.font = '14px Arial';
+        context.fillStyle = 'white';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+
+        context.fillText(
+          String(cardInHand.action.points),
+          cardInHand.x + cardInHand.width / 4.8,
+          cardInHand.y + cardInHand.height / 1.16
         );
       }
     });
@@ -79,7 +112,7 @@ export class Player extends Character {
     if (this.game.whosTurn === 'player') {
       const { offsetX, offsetY } = event.nativeEvent;
 
-      this.cardInHand.forEach(card => {
+      this.cards.currentCardsInHand.forEach(card => {
         if (
           offsetX >= card.x &&
           offsetX <= card.x + card.width &&
@@ -117,7 +150,7 @@ export class Player extends Character {
       this.animation.particlesAnimation.animateParticles();
       const actionType = this.draggingCard.action.type;
 
-      this.cardInHand = this.cardInHand.filter(
+      this.cards.currentCardsInHand = this.cards.currentCardsInHand.filter(
         card => card !== this.draggingCard
       );
 

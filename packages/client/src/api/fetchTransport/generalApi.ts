@@ -16,7 +16,7 @@ class GeneralApi extends BaseApi {
   }
 
   async signup(data: Data) {
-    const response = await this.post('/auth/signup', {
+    const response = await this.post(AUTH_PATHS.signup, {
       data,
     });
 
@@ -24,7 +24,7 @@ class GeneralApi extends BaseApi {
   }
 
   async signin(data: Data) {
-    const response = await this.post('/auth/signin', {
+    const response = await this.post(AUTH_PATHS.signin, {
       data,
       withCredentials: 'include',
     });
@@ -38,7 +38,7 @@ class GeneralApi extends BaseApi {
   }
 
   async userInfo() {
-    const response = await this.get('/auth/user', {
+    const response = await this.get(AUTH_PATHS.getUserInfo, {
       withCredentials: 'include',
     });
 

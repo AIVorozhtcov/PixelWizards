@@ -30,14 +30,18 @@ export class Enemy extends Character {
     this.animation.startAnimation();
     this.animation.charAnimation.animateAttack(this.game.player, this, () => {
       while (this.state.actionPoints) {
-        const randomIndex = Math.floor(Math.random() * this.cardInHand.length);
-        const randomCard = this.cardInHand[randomIndex];
+        const randomIndex = Math.floor(
+          Math.random() * this.cards.currentCardsInHand.length
+        );
+        const randomCard = this.cards.currentCardsInHand[randomIndex];
         if (this.state.actionPoints >= randomCard.actionValue) {
           this.game.dealDamage('player', randomCard.action.points);
           this.state.actionPoints -= randomCard.actionValue;
-          this.cardInHand = this.cardInHand.filter(card => card !== randomCard);
+          this.cards.currentCardsInHand = this.cards.currentCardsInHand.filter(
+            card => card !== randomCard
+          );
         }
-        const playableCards = this.cardInHand.some(
+        const playableCards = this.cards.currentCardsInHand.some(
           card => this.state.actionPoints >= card.actionValue
         );
         if (!playableCards) {
@@ -46,7 +50,7 @@ export class Enemy extends Character {
       }
 
       this.animation.stopAnimation();
-      this.game.player.refreshCardsInHand();
+      this.game.player.cards.refreshCardsInHand();
       this.game.player.effects.refreshActionPoints();
       this.game.endTurn();
     });

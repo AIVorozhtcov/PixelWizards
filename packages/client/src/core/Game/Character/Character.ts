@@ -1,4 +1,5 @@
 import Animation from '../Animation/Animation';
+import Cards from '../Cards/Cards';
 import Effect from '../Effect/Effect';
 import { Game } from '../Game';
 import CharacterInfo from './CharacterInfo';
@@ -20,8 +21,6 @@ export default abstract class Character {
   height: number;
   x: number;
   y: number;
-  readonly initialCardInHand: CardInHand[];
-  cardInHand: CardInHand[];
   draggingCard: CardInHand | null = null;
   startX = 0;
   startY = 0;
@@ -33,6 +32,7 @@ export default abstract class Character {
   effects: Effect;
   charInfo: CharacterInfo;
   isLoaded = false;
+  cards: Cards;
 
   constructor({
     game,
@@ -59,9 +59,7 @@ export default abstract class Character {
 
     this.effects = new Effect(this.state);
     this.charInfo = new CharacterInfo(this.state);
-
-    this.cardInHand = cardInHand;
-    this.initialCardInHand = cardInHand;
+    this.cards = new Cards(this.game, cardInHand);
 
     this.width = width;
     this.height = height;
@@ -79,10 +77,6 @@ export default abstract class Character {
 
   protected setDefaultHitPoints(points: number) {
     this.state.hitPoints = points;
-  }
-
-  protected setDefaultCardsInHand(listOfCard: CardInHand[]) {
-    this.cardInHand = listOfCard;
   }
 
   protected setSkinForCharacter(source: string) {
@@ -108,16 +102,6 @@ export default abstract class Character {
       this.charInfo.drawHealthBar(context, this.x, this.y * 3, this.width, 20);
       this.charInfo.drawShield(context, this.x, this.y * 3.3, 50, 50);
     }
-  }
-
-  addCardInHand(card: CardInHand) {
-    this.cardInHand.push(card);
-  }
-
-  refreshCardsInHand() {
-    this.cardInHand = Array.from(
-      new Set(this.cardInHand.concat(this.initialCardInHand))
-    );
   }
 
   doAction(action: ActionType, playedCard: CardInHand) {

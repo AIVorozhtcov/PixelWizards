@@ -3,7 +3,6 @@ import { Game } from '../../core/Game/Game';
 import Button from '../../components/atoms/Button';
 import FullscreenToggle from '../../components/molecules/FullscreenToggle';
 
-
 export default function Gameplay() {
   const [isGameEnd, setIsGameEnd] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -38,6 +37,21 @@ export default function Gameplay() {
       />
       <Button
         onClick={() => {
+          gameRef.current?.player.cards.addCardInHand({
+            name: 'Хил',
+            src: '/block.png',
+            action: {
+              type: 'heal',
+              points: 3,
+            },
+            actionValue: 2,
+          });
+        }}
+        className="text-white bg-red-400 w-full h-20">
+        Хилка в след раунд
+      </Button>
+      <Button
+        onClick={() => {
           if (isGameEnd) {
             gameRef.current?.beginGame();
           } else {
@@ -48,7 +62,6 @@ export default function Gameplay() {
         {isGameEnd ? 'Начать заново' : 'Закончить ход'}
       </Button>
       <FullscreenToggle className="absolute top-20 left-5 opacity-50 w-20"></FullscreenToggle>
-
     </>
   );
 }

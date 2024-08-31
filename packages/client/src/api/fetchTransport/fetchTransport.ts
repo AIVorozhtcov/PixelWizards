@@ -1,3 +1,4 @@
+import { URLS } from '../../constants/apiConstants';
 import { queryStringify } from '../../utils/queryStringify';
 
 export type Path = `/${string}` | '';
@@ -34,7 +35,7 @@ export type APIMethod = (
 export default class FetchTransport {
   private corePath: string;
 
-  constructor(baseUrl = 'https://ya-praktikum.tech/api/v2', path = '') {
+  constructor(baseUrl = URLS.base, path = '') {
     this.corePath = baseUrl + path;
   }
 

@@ -219,7 +219,7 @@ export class Game {
   }
 
   private endEnemyTurn() {
-    this.enemy.refreshCardsInHand();
+    this.enemy.cards.refreshCardsInHand();
     this.enemy.effects.refreshActionPoints();
     this.player.effects.refreshResist();
     this.whosTurn = 'player';
