@@ -1,12 +1,9 @@
-import { CardInHand } from '../Player/fixCardsInPlayerHand';
+import { OmitedCardInHand } from '../Character/types';
 
-export const cardsInEnemyHand: CardInHand[] = [
+export const cardsInEnemyHand: OmitedCardInHand[] = [
   {
     name: 'Атака',
-    x: 300,
-    y: 600,
-    width: 120,
-    height: 190,
+    src: '',
     action: {
       type: 'attack',
       points: 3,
@@ -15,10 +12,7 @@ export const cardsInEnemyHand: CardInHand[] = [
   },
   {
     name: 'Супер-атака',
-    x: 600,
-    y: 600,
-    width: 120,
-    height: 190,
+    src: '',
     action: {
       type: 'attack',
       points: 5,

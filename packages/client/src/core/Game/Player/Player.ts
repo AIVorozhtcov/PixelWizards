@@ -119,7 +119,7 @@ export class Player extends Character {
           offsetY >= card.y &&
           offsetY <= card.y + card.height
         ) {
-          if (this.state.actionPoints >= card.actionValue) {
+          if (this.actionPoints >= card.actionValue) {
             this.draggingCard = card;
             this.startX = offsetX - card.x;
             this.startY = offsetY - card.y;
@@ -154,14 +154,14 @@ export class Player extends Character {
         card => card !== this.draggingCard
       );
 
-      this.state.actionPoints -= this.draggingCard.actionValue;
+      this.actionPoints -= this.draggingCard.actionValue;
       if (actionType === 'block' || actionType === 'heal') {
         this.draggingCard.x = this.initialX;
         this.draggingCard.y = this.initialY;
         this.doAction(actionType, this.draggingCard);
         this.draggingCard = null;
 
-        this.game.updateAfterTurn(this.state.actionPoints);
+        this.game.updateAfterTurn(this.actionPoints);
       } else {
         this.animation.startAnimation();
         this.animation.charAnimation.animateAttack(
@@ -175,7 +175,7 @@ export class Player extends Character {
 
               this.draggingCard = null;
               this.animation.stopAnimation();
-              this.game.updateAfterTurn(this.state.actionPoints);
+              this.game.updateAfterTurn(this.actionPoints);
             }
           }
         );

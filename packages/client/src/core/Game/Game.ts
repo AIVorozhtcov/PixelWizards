@@ -43,10 +43,10 @@ export class Game {
   }
 
   isGameContinue() {
-    if (this.player.state.hitPoints <= 0) {
+    if (this.player.hitPoints <= 0) {
       this.endGame();
       return false;
-    } else if (this.enemy.state.hitPoints <= 0) {
+    } else if (this.enemy.hitPoints <= 0) {
       this.endGame(true);
       return false;
     } else {
@@ -113,7 +113,7 @@ export class Game {
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     context.fillStyle = 'white';
-    context.fillText(String(this.player.state.actionPoints), centerX, centerY);
+    context.fillText(String(this.player.actionPoints), centerX, centerY);
   }
 
   drawEverything(context: CanvasRenderingContext2D) {

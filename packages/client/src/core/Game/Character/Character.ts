@@ -26,7 +26,13 @@ export default abstract class Character {
   startY = 0;
   initialX = 0;
   initialY = 0;
-  state: CharacterState;
+  resist: number;
+  tempResist: number;
+  hitPoints: number;
+  readonly initialHitPoints: number;
+  isCharacterAlive: boolean;
+  readonly initialActionPoints: number;
+  actionPoints: number;
   characterSkin: HTMLImageElement | null = null;
   animation: Animation;
   effects: Effect;
@@ -47,18 +53,16 @@ export default abstract class Character {
   }: CharacterInitProps) {
     this.game = game;
 
-    this.state = {
-      resist: 0,
-      tempResist: 0,
-      hitPoints: hitPoints,
-      initialHitPoints: hitPoints,
-      isCharacterAlive: true,
-      actionPoints: initialActionPoints,
-      initialActionPoints,
-    };
+    this.resist = 0;
+    this.tempResist = 0;
+    this.hitPoints = hitPoints;
+    this.initialHitPoints = hitPoints;
+    this.isCharacterAlive = true;
+    this.actionPoints = initialActionPoints;
+    this.initialActionPoints = initialActionPoints;
 
-    this.effects = new Effect(this.state);
-    this.charInfo = new CharacterInfo(this.state);
+    this.effects = new Effect(this);
+    this.charInfo = new CharacterInfo(this);
     this.cards = new Cards(this.game, cardInHand);
 
     this.width = width;
@@ -72,11 +76,11 @@ export default abstract class Character {
   }
 
   protected setActionPoints(points: number) {
-    this.state.actionPoints = points;
+    this.actionPoints = points;
   }
 
   protected setDefaultHitPoints(points: number) {
-    this.state.hitPoints = points;
+    this.hitPoints = points;
   }
 
   protected setSkinForCharacter(source: string) {
