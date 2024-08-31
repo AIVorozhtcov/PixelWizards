@@ -1,14 +1,11 @@
 import { Suspense } from 'react';
-import { useAuth } from '.';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { checkAuth } from '../../lib/hooks';
 import Loader from '../Loader';
 
 export default function ProtectedRoute() {
-  const userInfo = useAuth();
+  checkAuth();
 
-  if (!userInfo?.user) {
-    return <Navigate to="/login" replace />;
-  }
   return (
     <Suspense fallback={<Loader />}>
       <Outlet />

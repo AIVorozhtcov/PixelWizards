@@ -20,7 +20,7 @@ export type ProfileFormData = {
   second_name: string;
   login: string;
   email: string;
-  display_name: string;
+  display_name: string | null;
   phone: string;
 };
 
@@ -47,14 +47,19 @@ export type UserData = {
   id: number;
   first_name: string;
   second_name: string;
-  display_name: string;
+  display_name: string | null;
   phone: string;
   login: string;
-  avatar: string;
+  avatar: string | null;
   email: string;
 };
 
 export type SignInData = {
   login: string;
   password: string;
+};
+
+export type Profile = ProfileFormData & {
+  id: string;
+  avatar: string;
 };

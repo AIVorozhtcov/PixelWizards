@@ -2,7 +2,7 @@ import Span from '../atoms/Span';
 
 type ProfileListItemProps = {
   label: string;
-  data: string;
+  data: string | null;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const ProfileListItem = ({ label, data }: ProfileListItemProps) => {

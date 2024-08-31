@@ -1,18 +1,18 @@
+import { ProfileDataType, ProfileFormData, UserData } from '../../types/types';
 import ProfileListItem from '../molecules/ProfileListItem';
-import { ProfileDataType, ProfileFormData } from '../../types/types';
-import { MOCK_FORM_DEFAULT_VALUES } from '../../constants/mockProfileFormDefaultValues';
 
 type ProfileListProps = {
   profileData: ProfileDataType[];
+  userInfo: UserData;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const ProfileList = ({ profileData }: ProfileListProps) => {
+const ProfileList = ({ profileData, userInfo }: ProfileListProps) => {
   return (
     <div className="flex flex-col gap-2">
       {profileData.map((item, idx) => (
         <ProfileListItem
           label={item.label}
-          data={MOCK_FORM_DEFAULT_VALUES[item.name as keyof ProfileFormData]}
+          data={userInfo[item.name as keyof ProfileFormData]}
           key={idx}
         />
       ))}
