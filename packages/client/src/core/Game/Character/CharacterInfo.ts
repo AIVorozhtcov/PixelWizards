@@ -1,9 +1,9 @@
-import Dependent from '../DependentClass/Dependent';
-import { CharacterState } from './Character';
+import Character from './Character';
 
-export default class CharacterInfo extends Dependent<CharacterState> {
-  constructor(state: CharacterState) {
-    super(state);
+export default class CharacterInfo {
+  character: Character;
+  constructor(character: Character) {
+    this.character = character;
   }
 
   drawShield(
@@ -38,7 +38,7 @@ export default class CharacterInfo extends Dependent<CharacterState> {
     const textY = y + (height * 0.6 + height * 0.4) / 2;
 
     context.fillText(
-      String(this.state.resist + this.state.tempResist),
+      String(this.character.resist + this.character.tempResist),
       textX,
       textY
     );
@@ -54,7 +54,7 @@ export default class CharacterInfo extends Dependent<CharacterState> {
     context.clearRect(x, y, width, height);
 
     const greenBarWidth =
-      (this.state.hitPoints / this.state.initialHitPoints) * width;
+      (this.character.hitPoints / this.character.initialHitPoints) * width;
     const redWidth = width - greenBarWidth;
 
     context.fillStyle = 'green';
@@ -67,6 +67,6 @@ export default class CharacterInfo extends Dependent<CharacterState> {
     context.textAlign = 'start';
     context.textBaseline = 'alphabetic';
     context.font = '18px Arial';
-    context.fillText(String(this.state.hitPoints), x, y + 16);
+    context.fillText(String(this.character.hitPoints), x, y + 16);
   }
 }

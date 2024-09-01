@@ -1,25 +1,9 @@
-type ActionType = 'attack' | 'block' | 'heal';
+import { OmitedCardInHand } from '../Character/types';
 
-export interface CardInHand {
-  name: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  action: {
-    type: ActionType;
-    points: number;
-  };
-  actionValue: number;
-}
-
-export const fixCardsInPlayerHand: CardInHand[] = [
+export const fixCardsInPlayerHand: OmitedCardInHand[] = [
   {
-    name: '/attack.png',
-    x: 270,
-    y: 600,
-    width: 150,
-    height: 200,
+    name: 'Атака',
+    src: '/attack.png',
     action: {
       type: 'attack',
       points: 3,
@@ -27,11 +11,8 @@ export const fixCardsInPlayerHand: CardInHand[] = [
     actionValue: 1,
   },
   {
-    name: '/block.png',
-    x: 430,
-    y: 600,
-    width: 150,
-    height: 200,
+    name: 'Блок',
+    src: '/block.png',
     action: {
       type: 'block',
       points: 1,
@@ -39,11 +20,8 @@ export const fixCardsInPlayerHand: CardInHand[] = [
     actionValue: 1,
   },
   {
-    name: '/superAttack.png',
-    x: 590,
-    y: 600,
-    width: 150,
-    height: 200,
+    name: 'Супер-атака',
+    src: '/attack.png',
     action: {
       type: 'attack',
       points: 5,

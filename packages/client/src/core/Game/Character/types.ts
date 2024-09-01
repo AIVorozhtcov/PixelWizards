@@ -5,7 +5,7 @@ export interface CharacterInitProps {
   initialActionPoints: number;
   characterSkin: string;
   hitPoints: number;
-  cardInHand: CardInHand[];
+  cardInHand: OmitedCardInHand[];
   width: number;
   height: number;
   x: number;
@@ -24,6 +24,7 @@ export interface ParticlesType {
 export type ActionType = 'attack' | 'block' | 'heal';
 
 export interface CardInHand {
+  src: string;
   name: string;
   x: number;
   y: number;
@@ -35,3 +36,5 @@ export interface CardInHand {
   };
   actionValue: number;
 }
+
+export type OmitedCardInHand = Omit<CardInHand, 'x' | 'y' | 'width' | 'height'>;

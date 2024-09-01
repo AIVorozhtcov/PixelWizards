@@ -1,38 +1,39 @@
-import { CharacterState } from '../Character/Character';
-import Dependent from '../DependentClass/Dependent';
+import Character from '../Character/Character';
 
-export default class Effect extends Dependent<CharacterState> {
-  constructor(state: CharacterState) {
-    super(state);
+export default class Effect {
+  character: Character;
+
+  constructor(character: Character) {
+    this.character = character;
   }
 
   getDamage(damage: number) {
     const damageThroughResist =
-      damage - (this.state.resist + this.state.tempResist);
-    this.state.hitPoints -= damageThroughResist;
+      damage - (this.character.resist + this.character.tempResist);
+    this.character.hitPoints -= damageThroughResist;
 
-    if (this.state.hitPoints <= 0) {
-      this.state.isCharacterAlive = false;
+    if (this.character.hitPoints <= 0) {
+      this.character.isCharacterAlive = false;
     }
   }
 
   getHeal(heal: number) {
-    this.state.hitPoints = Math.min(
-      this.state.hitPoints + heal,
-      this.state.initialHitPoints
+    this.character.hitPoints = Math.min(
+      this.character.hitPoints + heal,
+      this.character.initialHitPoints
     );
   }
 
   getBlock(block: number) {
-    this.state.resist += block;
+    this.character.tempResist = block;
   }
 
   refreshResist() {
-    this.state.resist = 0;
-    this.state.tempResist = 0;
+    this.character.resist = 0;
+    this.character.tempResist = 0;
   }
 
   refreshActionPoints() {
-    this.state.actionPoints = this.state.initialActionPoints;
+    this.character.actionPoints = this.character.initialActionPoints;
   }
 }

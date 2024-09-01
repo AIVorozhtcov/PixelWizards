@@ -1,4 +1,5 @@
 import Animation from '../Animation/Animation';
+import Cards from '../Cards/Cards';
 import Effect from '../Effect/Effect';
 import { Game } from '../Game';
 import CharacterInfo from './CharacterInfo';
@@ -20,19 +21,24 @@ export default abstract class Character {
   height: number;
   x: number;
   y: number;
-  readonly initialCardInHand: CardInHand[];
-  cardInHand: CardInHand[];
   draggingCard: CardInHand | null = null;
   startX = 0;
   startY = 0;
   initialX = 0;
   initialY = 0;
-  state: CharacterState;
+  resist: number;
+  tempResist: number;
+  hitPoints: number;
+  readonly initialHitPoints: number;
+  isCharacterAlive: boolean;
+  readonly initialActionPoints: number;
+  actionPoints: number;
   characterSkin: HTMLImageElement | null = null;
   animation: Animation;
   effects: Effect;
   charInfo: CharacterInfo;
   isLoaded = false;
+  cards: Cards;
 
   constructor({
     game,
@@ -47,21 +53,17 @@ export default abstract class Character {
   }: CharacterInitProps) {
     this.game = game;
 
-    this.state = {
-      resist: 0,
-      tempResist: 0,
-      hitPoints: hitPoints,
-      initialHitPoints: hitPoints,
-      isCharacterAlive: true,
-      actionPoints: initialActionPoints,
-      initialActionPoints,
-    };
+    this.resist = 0;
+    this.tempResist = 0;
+    this.hitPoints = hitPoints;
+    this.initialHitPoints = hitPoints;
+    this.isCharacterAlive = true;
+    this.actionPoints = initialActionPoints;
+    this.initialActionPoints = initialActionPoints;
 
-    this.effects = new Effect(this.state);
-    this.charInfo = new CharacterInfo(this.state);
-
-    this.cardInHand = cardInHand;
-    this.initialCardInHand = cardInHand;
+    this.effects = new Effect(this);
+    this.charInfo = new CharacterInfo(this);
+    this.cards = new Cards(this.game, cardInHand);
 
     this.width = width;
     this.height = height;
@@ -74,15 +76,11 @@ export default abstract class Character {
   }
 
   protected setActionPoints(points: number) {
-    this.state.actionPoints = points;
+    this.actionPoints = points;
   }
 
   protected setDefaultHitPoints(points: number) {
-    this.state.hitPoints = points;
-  }
-
-  protected setDefaultCardsInHand(listOfCard: CardInHand[]) {
-    this.cardInHand = listOfCard;
+    this.hitPoints = points;
   }
 
   protected setSkinForCharacter(source: string) {
@@ -108,16 +106,6 @@ export default abstract class Character {
       this.charInfo.drawHealthBar(context, this.x, this.y * 3, this.width, 20);
       this.charInfo.drawShield(context, this.x, this.y * 3.3, 50, 50);
     }
-  }
-
-  addCardInHand(card: CardInHand) {
-    this.cardInHand.push(card);
-  }
-
-  refreshCardsInHand() {
-    this.cardInHand = Array.from(
-      new Set(this.cardInHand.concat(this.initialCardInHand))
-    );
   }
 
   doAction(action: ActionType, playedCard: CardInHand) {
