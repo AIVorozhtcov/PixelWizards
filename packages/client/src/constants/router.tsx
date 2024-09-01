@@ -14,6 +14,7 @@ const Profile = lazy(() => import('../pages/Profile'));
 const Registration = lazy(() => import('../pages/Registration'));
 const Topic = lazy(() => import('../pages/Topic'));
 const ServerErrorPage = lazy(() => import('../pages/505'));
+const Test = lazy(() => import('../__test__/Test'));
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: LINKS.registration,
         element: <Registration />,
+      },
+      {
+        path: '/test',
+        element: <Test />,
       },
     ],
   },

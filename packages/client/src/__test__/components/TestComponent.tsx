@@ -1,42 +1,19 @@
-import { useEffect, useState } from 'react';
-import { useErrorBoundary } from 'react-error-boundary';
+import useNotification from '../../lib/useNotification';
 
-export default function TestComponent({
-  withError = false,
-  withFetchError = false,
-}) {
-  if (withError) throw new Error('Cannot display Component');
+export default function TestComponent() {
+  const { showNotification } = useNotification();
 
-  const [data, setData] = useState([] as any[]);
-  const { showBoundary } = useErrorBoundary();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = withFetchError
-          ? await fetch(
-              'https://jsonplace12412sadasholder.typicode.com/todos?_limit=5'
-            )
-          : await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5');
-
-        const data = await response.json();
-
-        setData(data);
-      } catch (error) {
-        showBoundary(error);
-        throw new Error('Fetch error');
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  const handleNewMessage = () => {
+    showNotification('Новое сообщение!', {
+      body: 'У вас новое сообщение от пользователя.',
+      icon: '/attack.png',
+      silent: true,
+    });
+  };
   return (
     <div>
-      Component works fine
-      {data.map(item => (
-        <p className="text-blue-500">{item.title}</p>
-      ))}
+      <h1>React Notification API Example</h1>
+      <button onClick={handleNewMessage}>Получить сообщение</button>
     </div>
   );
 }
