@@ -9,7 +9,6 @@ import { LoginFormData } from '../../types/types';
 import { LoginValidationSchema } from '../../types/validationSchemas';
 import Link from '../atoms/Link';
 import Subtitle from '../atoms/Subtitle';
-import Button from '../atoms/Button';
 import OauthButton from '../molecules/OauthButton';
 import Form from './Form';
 import { toast } from 'sonner';
