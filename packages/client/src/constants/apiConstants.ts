@@ -16,6 +16,11 @@ export const AUTH_PATHS = {
   getUserInfo: '/auth/user',
 } as const;
 
+export const OAUTH_PATHS = {
+  getServiceId: '/oauth/yandex/service-id',
+  signIn: '/oauth/yandex',
+} as const;
+
 export const HEADERS = {
   CT_APPLICATION_JSON: { 'Content-Type': 'application/json' },
   ACCEPT: { Accept: 'application/json' },

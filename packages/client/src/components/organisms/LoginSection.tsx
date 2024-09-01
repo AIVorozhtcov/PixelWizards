@@ -9,6 +9,8 @@ import { LoginFormData } from '../../types/types';
 import { LoginValidationSchema } from '../../types/validationSchemas';
 import Link from '../atoms/Link';
 import Subtitle from '../atoms/Subtitle';
+import Button from '../atoms/Button';
+import OauthButton from '../molecules/OauthButton';
 import Form from './Form';
 import { toast } from 'sonner';
 
@@ -58,7 +60,8 @@ const LoginSection = () => {
           },
         ]}
       />
-      <Link className="self-center mt-10" to="/registration">
+      <OauthButton className="self-center mt-24 w-80" />
+      <Link className="self-center mt-3" to="/registration">
         Зарегистрироваться
       </Link>
       <img

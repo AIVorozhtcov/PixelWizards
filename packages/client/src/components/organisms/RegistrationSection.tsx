@@ -1,4 +1,5 @@
 import Form from './Form';
+import OauthButton from '../molecules/OauthButton';
 import Subtitle from '../atoms/Subtitle';
 import Link from '../atoms/Link';
 import { useNavigate } from 'react-router-dom';
@@ -64,7 +65,8 @@ const RegistrationSection = () => {
           },
         ]}
       />
-      <Link className="self-center mt-10" to="/login">
+      <OauthButton className="self-center mt-24 w-80" />
+      <Link className="self-center mt-3" to="/login">
         Войти
       </Link>
       <img
