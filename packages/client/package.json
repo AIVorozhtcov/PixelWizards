@@ -1,14 +1,16 @@
 {
   "name": "client",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build && npm run updateSW",
-    "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest ./",
+    "dev": "vite",
+    "build": "tsc && vite build && npm run updateSW",
+    "preview": "vite preview",
+    "ssr:dev": "tsc --project tsconfig.server.json && cross-env NODE_ENV=development node server/index.js",
+    "ssr:build": "tsc --project tsconfig.server.json && vite build && vite build --ssr src/entry-server.tsx --outDir dist/server",
+    "ssr:preview": "node server/index.js",
     "updateSW": "node dist/updateServiceWorker.cjs"
   },
   "dependencies": {
@@ -18,6 +20,7 @@
     "clsx": "^2.1.1",
     "dotenv": "^16.0.2",
     "eslint-config-prettier": "^8.5.0",
+    "express": "^4.19.2",
     "fs": "^0.0.1-security",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
@@ -28,6 +31,7 @@
     "react-router-dom": "^6.25.1",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.4.0",
+    "vite": "4.4.9",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -47,8 +51,7 @@
     "prettier": "^2.7.1",
     "tailwindcss": "^3.4.6",
     "ts-jest": "^28.0.8",
-    "typescript": "^4.8.2",
-    "vite": "^3.0.7"
+    "typescript": "^4.8.2"
   },
   "license": "MIT"
 }

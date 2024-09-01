@@ -14,6 +14,12 @@ export default defineConfig({
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
+  build: {
+    outDir: join(__dirname, 'dist/client'),
+  },
+  ssr: {
+    format: 'cjs',
+  },
   plugins: [
     react(),
     splitVendorChunkPlugin(),
