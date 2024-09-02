@@ -1,5 +1,4 @@
 import { AUTH_PATHS, USER_PATHS } from '../../constants/apiConstants';
-import { FormAvatarType } from '../../types/types';
 import {
   ErrorSchema,
   SignUpSchema,
@@ -65,9 +64,10 @@ class GeneralApi extends BaseApi {
     }
   }
 
-  async updateUserAvatar(data: FormAvatarType) {
+  async updateUserAvatar(data: FormData) {
     const response = await this.put(USER_PATHS.updateAvatar, {
       data,
+      headers: {},
     });
 
     return resultFromSchema(UserInfoSchema, ErrorSchema, response);

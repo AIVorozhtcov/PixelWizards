@@ -1,22 +1,35 @@
 import { useState } from 'react';
-import generalAPI from '../../api/fetchTransport/generalApi';
+import { updateUserAvatar } from '../../api/userApi';
 import { PROFILE_POPUP } from '../../constants/profilePageData';
-import { FormAvatarType } from '../../types/types';
+import { FormAvatarType, UserData } from '../../types/types';
 import { ProfileUpdateAvatarSchema } from '../../types/validationSchemas';
 import Popup from '../molecules/Popup';
 import ProfileAvatar from '../molecules/ProfileAvatar';
+import { toast } from 'sonner';
+import { setUserData } from '../../store/slices/user';
+import { useAppDispatch } from '../../lib/hooks';
 
 const ProfileSection = ({ children }: { children: React.ReactNode }) => {
   const [isPopupDisplay, setPopupDisplay] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   return (
     <>
       {isPopupDisplay && (
         <Popup<FormAvatarType>
           handleClick={() => setPopupDisplay(false)}
-          onSubmit={data => {
-            // TODO Notification if error
-            generalAPI.updateUserAvatar(data);
+          onSubmit={async data => {
+            toast.message('Обновляем аватар...');
+            const user = await updateUserAvatar(data);
+
+            if ('reason' in user) {
+              toast.error('Не удалось обновить аватар. Попробуйте еще раз.');
+              return;
+            }
+
+            dispatch(setUserData(user as UserData));
+            setPopupDisplay(!isPopupDisplay);
+            toast.success('Аватар обновлен!');
           }}
           zodSchema={ProfileUpdateAvatarSchema}
           popup={PROFILE_POPUP}
