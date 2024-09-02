@@ -34,6 +34,7 @@ export class Node {
     image.src = this.src;
 
     image.onload = () => {
+      this.context.beginPath();
       this.drawCircleBackground(
         backgroundColor,
         strokeColor,
@@ -61,14 +62,13 @@ export class Node {
     this.context.strokeStyle = strokeColor;
     this.context.stroke();
     this.context.closePath();
-
-    this.context.beginPath();
   }
 
   onMouseMove(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
     const isOnHoverNode = this.isOnHoverNode(event);
 
     if (isOnHoverNode) {
+      //TODO придумать как выделять только связанные ноды (сотреть по таблице связей NODE_CONNECTION_TABLE)
       if (!this.visited) {
         this.drawNode('#2E2E2E');
       } else {
