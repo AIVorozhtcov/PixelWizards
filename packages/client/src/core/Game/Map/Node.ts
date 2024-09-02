@@ -1,9 +1,4 @@
-export const NODE_TYPES = {
-  heal: 'heal',
-  battle: 'battle',
-  treasure: 'treasure',
-  boss: 'boss',
-};
+import { NODE_TYPES } from './mapConstants';
 
 export class Node {
   private imageOffset = 40;
