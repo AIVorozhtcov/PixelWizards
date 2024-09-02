@@ -1,9 +1,11 @@
 import { NODE_TYPES } from './mapConstants';
+import { NodeType } from './types';
 
 export class Node {
   private imageOffset = 40;
   private context: CanvasRenderingContext2D;
   private imageSize = 80;
+  private backgroundSize = 50;
 
   id: number;
   x: number;
@@ -12,11 +14,7 @@ export class Node {
   src: string;
 
   constructor(
-    id: number,
-    x: number,
-    y: number,
-    type: keyof typeof NODE_TYPES,
-    src: string,
+    { id, x, y, type, src }: NodeType,
     ctx: CanvasRenderingContext2D
   ) {
     this.id = id;
@@ -25,20 +23,17 @@ export class Node {
     this.type = type;
     this.src = src;
     this.context = ctx;
+    this.onMouseMove = this.onMouseMove.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
-  drawNode() {
+  drawNode(backgroundColor = 'black') {
     const image = new Image();
     image.src = this.src;
 
     image.onload = () => {
-      this.context.beginPath();
-      this.context.arc(this.x, this.y, 50, 0, 2 * Math.PI);
-      this.context.fillStyle = 'white';
-      this.context.fill();
-      this.context.closePath();
+      this.drawCircleBackground(backgroundColor, this.backgroundSize);
 
-      this.context.beginPath();
       this.context.drawImage(
         image,
         this.x - this.imageOffset,
@@ -48,5 +43,50 @@ export class Node {
       );
       this.context.closePath();
     };
+  }
+
+  drawCircleBackground(color: string, radius: number) {
+    this.context.beginPath();
+    this.context.arc(this.x, this.y, radius, 0, 2 * Math.PI);
+    this.context.fillStyle = color;
+    this.context.fill();
+    this.context.setLineDash([]);
+    this.context.lineWidth = 3;
+    this.context.strokeStyle = 'black';
+    this.context.stroke();
+    this.context.closePath();
+
+    this.context.beginPath();
+  }
+
+  onMouseMove(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
+    const isOnHoverNode = this.isOnHoverNode(event);
+
+    if (isOnHoverNode) {
+      this.drawNode('white');
+    } else {
+      this.drawNode();
+    }
+  }
+
+  onClick(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
+    const isOnHoverNode = this.isOnHoverNode(event);
+
+    if (isOnHoverNode) {
+      //TODO В зависимости от типа узла делать переход на новый уровень
+      alert(this.type);
+    }
+  }
+
+  isOnHoverNode(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
+    const { offsetX, offsetY } = event.nativeEvent;
+    const isOnHoverNodeX =
+      offsetX > this.x - this.backgroundSize &&
+      offsetX < this.x + this.backgroundSize;
+    const isOnHoverNodeY =
+      offsetY > this.y - this.backgroundSize &&
+      offsetY < this.y + this.backgroundSize;
+
+    return isOnHoverNodeX && isOnHoverNodeY;
   }
 }

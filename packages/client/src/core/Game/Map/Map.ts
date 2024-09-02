@@ -9,9 +9,7 @@ export class Map {
   background = new Image();
 
   constructor(ctx: CanvasRenderingContext2D) {
-    this.nodes = NODES.map(
-      node => new Node(node.id, node.x, node.y, node.type, node.src, ctx)
-    );
+    this.nodes = NODES.map(node => new Node({ ...node }, ctx));
     this.nodeConnectionTable = { ...NODE_CONNECTION_TABLE };
     this.context = ctx;
     this.background.src = '/map-02.png';
@@ -29,17 +27,17 @@ export class Map {
 
     nodeConnectionArr.map(([nodeId, connectionsId]) => {
       const node = this.getNodeById(Number(nodeId));
-      const NodeRadius = 30;
+      const offset = 30;
 
       connectionsId.map(id => {
         const connectionNode = this.getNodeById(id);
 
         this.context.beginPath();
-        this.context.moveTo(node.x + NodeRadius, node.y);
-        this.context.lineTo(connectionNode.x - NodeRadius, connectionNode.y);
+        this.context.moveTo(node.x + offset, node.y);
+        this.context.lineTo(connectionNode.x - offset, connectionNode.y);
         this.context.setLineDash([10]);
         this.context.lineWidth = 5;
-        this.context.strokeStyle = 'black';
+        this.context.strokeStyle = 'white';
         this.context.stroke();
         this.context.closePath();
       });

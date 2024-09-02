@@ -10,7 +10,6 @@ export default function GameMap() {
 
     if (canvas) {
       const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
       if (ctx) {
         mapRef.current = new Map(ctx);
       }
@@ -18,6 +17,13 @@ export default function GameMap() {
   }, []);
 
   return (
-    <canvas className="m-auto" ref={canvasRef} width={1000} height={800} />
+    <canvas
+      className="m-auto"
+      ref={canvasRef}
+      width={1000}
+      height={800}
+      onMouseMove={e => mapRef.current?.nodes.map(node => node.onMouseMove(e))}
+      onClick={e => mapRef.current?.nodes.map(node => node.onClick(e))}
+    />
   );
 }
