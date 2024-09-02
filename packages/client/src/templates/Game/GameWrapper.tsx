@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Gameplay from './Gameplay';
 import GameMap from './GameMap';
-// import StartGameScreen from '../../components/organisms/StartGameScreen';
+import StartGameScreen from '../../components/organisms/StartGameScreen';
 
 export default function GameWrapper() {
   const [isGameStart, setIsGameStart] = useState(false);
@@ -16,7 +16,7 @@ export default function GameWrapper() {
         <Gameplay />
       ) : (
         <GameMap />
-        //<StartGameScreen startGame={changeGameStatus} />
+        // <StartGameScreen startGame={changeGameStatus} />
       )}
     </div>
   );

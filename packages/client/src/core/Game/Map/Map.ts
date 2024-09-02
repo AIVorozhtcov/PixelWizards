@@ -1,9 +1,4 @@
-const NODE_TYPES = {
-  heal: 'heal',
-  battle: 'battle',
-  treasure: 'treasure',
-  boss: 'boss',
-};
+import { Node, NODE_TYPES } from './Node';
 
 const NODE_CONNECTION_TABLE = {
   1: [2, 3, 4],
@@ -14,7 +9,7 @@ const NODE_CONNECTION_TABLE = {
   6: [7],
 };
 
-const NODES: Node[] = [
+const NODES: NodeType[] = [
   {
     id: 1,
     x: 100,
@@ -66,7 +61,7 @@ const NODES: Node[] = [
   },
 ];
 
-type Node = {
+type NodeType = {
   id: number;
   x: number;
   y: number;
@@ -82,7 +77,9 @@ export class Map {
   background = new Image();
 
   constructor(ctx: CanvasRenderingContext2D) {
-    this.nodes = [...NODES];
+    this.nodes = NODES.map(
+      node => new Node(node.id, node.x, node.y, node.type, node.src, ctx)
+    );
     this.nodeConnectionTable = { ...NODE_CONNECTION_TABLE };
     this.context = ctx;
     this.background.src = '/map-02.png';
@@ -92,29 +89,7 @@ export class Map {
   }
 
   drawNodes() {
-    this.nodes.map(node => {
-      const imageOffset = 40;
-      const image = new Image();
-      image.src = node.src;
-
-      image.onload = () => {
-        this.context.beginPath();
-        this.context.arc(node.x, node.y, 50, 0, 2 * Math.PI);
-        this.context.fillStyle = 'white';
-        this.context.fill();
-        this.context.closePath();
-
-        this.context.beginPath();
-        this.context.drawImage(
-          image,
-          node.x - imageOffset,
-          node.y - imageOffset,
-          80,
-          80
-        );
-        this.context.closePath();
-      };
-    });
+    this.nodes.map(node => node.drawNode());
   }
 
   drawConnections() {

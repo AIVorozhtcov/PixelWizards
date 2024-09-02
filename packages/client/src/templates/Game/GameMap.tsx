@@ -3,6 +3,7 @@ import { Map } from '../../core/Game/Map/Map';
 
 export default function GameMap() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const mapRef = useRef<Map | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -11,7 +12,7 @@ export default function GameMap() {
       const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
       if (ctx) {
-        new Map(ctx);
+        mapRef.current = new Map(ctx);
       }
     }
   }, []);
