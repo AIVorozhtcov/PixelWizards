@@ -6,4 +6,5 @@ export type NodeType = {
   y: number;
   type: keyof typeof NODE_TYPES;
   src: string;
+  visited: boolean;
 };

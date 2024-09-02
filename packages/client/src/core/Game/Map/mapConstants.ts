@@ -23,6 +23,7 @@ export const NODES: NodeType[] = [
     y: 300,
     type: 'battle',
     src: '/map-battle-01.png',
+    visited: false,
   },
   {
     id: 2,
@@ -30,6 +31,7 @@ export const NODES: NodeType[] = [
     y: 180,
     type: 'battle',
     src: '/map-battle-01.png',
+    visited: false,
   },
   {
     id: 3,
@@ -37,6 +39,7 @@ export const NODES: NodeType[] = [
     y: 300,
     type: 'battle',
     src: '/map-battle-01.png',
+    visited: false,
   },
   {
     id: 4,
@@ -44,6 +47,7 @@ export const NODES: NodeType[] = [
     y: 420,
     type: 'heal',
     src: '/map-heal.png',
+    visited: false,
   },
   {
     id: 5,
@@ -51,6 +55,7 @@ export const NODES: NodeType[] = [
     y: 180,
     type: 'heal',
     src: '/map-heal.png',
+    visited: false,
   },
   {
     id: 6,
@@ -58,6 +63,7 @@ export const NODES: NodeType[] = [
     y: 360,
     type: 'treasure',
     src: '/map-treasure.png',
+    visited: false,
   },
   {
     id: 7,
@@ -65,5 +71,6 @@ export const NODES: NodeType[] = [
     y: 300,
     type: 'boss',
     src: '/map-boss.png',
+    visited: false,
   },
 ];

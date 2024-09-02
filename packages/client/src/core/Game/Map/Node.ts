@@ -12,9 +12,10 @@ export class Node {
   y: number;
   type: keyof typeof NODE_TYPES;
   src: string;
+  visited: boolean;
 
   constructor(
-    { id, x, y, type, src }: NodeType,
+    { id, x, y, type, src, visited }: NodeType,
     ctx: CanvasRenderingContext2D
   ) {
     this.id = id;
@@ -22,17 +23,22 @@ export class Node {
     this.y = y;
     this.type = type;
     this.src = src;
+    this.visited = visited;
     this.context = ctx;
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onClick = this.onClick.bind(this);
   }
 
-  drawNode(backgroundColor = 'black') {
+  drawNode(backgroundColor = 'black', strokeColor = 'black') {
     const image = new Image();
     image.src = this.src;
 
     image.onload = () => {
-      this.drawCircleBackground(backgroundColor, this.backgroundSize);
+      this.drawCircleBackground(
+        backgroundColor,
+        strokeColor,
+        this.backgroundSize
+      );
 
       this.context.drawImage(
         image,
@@ -45,14 +51,14 @@ export class Node {
     };
   }
 
-  drawCircleBackground(color: string, radius: number) {
+  drawCircleBackground(color: string, strokeColor: string, radius: number) {
     this.context.beginPath();
     this.context.arc(this.x, this.y, radius, 0, 2 * Math.PI);
     this.context.fillStyle = color;
     this.context.fill();
     this.context.setLineDash([]);
     this.context.lineWidth = 3;
-    this.context.strokeStyle = 'black';
+    this.context.strokeStyle = strokeColor;
     this.context.stroke();
     this.context.closePath();
 
@@ -63,9 +69,17 @@ export class Node {
     const isOnHoverNode = this.isOnHoverNode(event);
 
     if (isOnHoverNode) {
-      this.drawNode('white');
+      if (!this.visited) {
+        this.drawNode('#2E2E2E');
+      } else {
+        this.drawNode('DarkGray', 'white');
+      }
     } else {
-      this.drawNode();
+      if (!this.visited) {
+        this.drawNode();
+      } else {
+        this.drawNode('DarkGray', 'white');
+      }
     }
   }
 
@@ -74,6 +88,8 @@ export class Node {
 
     if (isOnHoverNode) {
       //TODO В зависимости от типа узла делать переход на новый уровень
+
+      this.visited = true;
       alert(this.type);
     }
   }
