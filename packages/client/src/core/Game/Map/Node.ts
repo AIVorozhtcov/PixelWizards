@@ -14,13 +14,12 @@ export class Node {
   src: string;
   visited: boolean;
   active: boolean;
-  isConnectedToActiveNode: (id: number) => boolean;
+  connectedToActive: boolean;
   changeActiveNode: (id: number) => void;
 
   constructor(
-    { id, x, y, type, src, visited, active }: NodeType,
+    { id, x, y, type, src, visited, active, connectedToActive }: NodeType,
     ctx: CanvasRenderingContext2D,
-    isConnectedToActiveNode: (id: number) => boolean,
     changeActiveNode: (id: number) => void
   ) {
     this.id = id;
@@ -30,10 +29,10 @@ export class Node {
     this.src = src;
     this.visited = visited;
     this.active = active;
+    this.connectedToActive = connectedToActive;
     this.context = ctx;
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onClick = this.onClick.bind(this);
-    this.isConnectedToActiveNode = isConnectedToActiveNode;
     this.changeActiveNode = changeActiveNode;
   }
 
@@ -46,7 +45,7 @@ export class Node {
       strokeColor = 'white';
     }
 
-    if (this.isConnectedToActiveNode(this.id)) {
+    if (this.connectedToActive) {
       backgroundColor = 'DarkGray';
     }
 
@@ -86,7 +85,7 @@ export class Node {
 
     if (isOnHoverNode) {
       //TODO придумать как выделять только связанные ноды (сотреть по таблице связей NODE_CONNECTION_TABLE)
-      if (this.isConnectedToActiveNode(this.id)) {
+      if (this.connectedToActive) {
         this.drawNode('DarkGray', 'white');
       } else {
         this.drawNode();
@@ -99,7 +98,7 @@ export class Node {
   onClick(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
     const isOnHoverNode = this.isOnHoverNode(event);
 
-    if (isOnHoverNode && this.isConnectedToActiveNode(this.id)) {
+    if (isOnHoverNode && this.connectedToActive) {
       //TODO В зависимости от типа узла делать переход на новый уровень
 
       this.visited = true;

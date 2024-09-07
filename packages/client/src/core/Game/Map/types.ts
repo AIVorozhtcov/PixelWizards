@@ -8,4 +8,5 @@ export type NodeType = {
   src: string;
   visited: boolean;
   active: boolean;
+  connectedToActive: boolean;
 };
