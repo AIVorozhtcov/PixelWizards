@@ -13,10 +13,15 @@ export class Node {
   type: keyof typeof NODE_TYPES;
   src: string;
   visited: boolean;
+  active: boolean;
+  isConnectedToActiveNode: (id: number) => boolean;
+  changeActiveNode: (id: number) => void;
 
   constructor(
-    { id, x, y, type, src, visited }: NodeType,
-    ctx: CanvasRenderingContext2D
+    { id, x, y, type, src, visited, active }: NodeType,
+    ctx: CanvasRenderingContext2D,
+    isConnectedToActiveNode: (id: number) => boolean,
+    changeActiveNode: (id: number) => void
   ) {
     this.id = id;
     this.x = x;
@@ -24,14 +29,26 @@ export class Node {
     this.type = type;
     this.src = src;
     this.visited = visited;
+    this.active = active;
     this.context = ctx;
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.isConnectedToActiveNode = isConnectedToActiveNode;
+    this.changeActiveNode = changeActiveNode;
   }
 
   drawNode(backgroundColor = 'black', strokeColor = 'black') {
     const image = new Image();
     image.src = this.src;
+
+    if (this.active) {
+      backgroundColor = 'DarkGray';
+      strokeColor = 'white';
+    }
+
+    if (this.isConnectedToActiveNode(this.id)) {
+      backgroundColor = 'DarkGray';
+    }
 
     image.onload = () => {
       this.context.beginPath();
@@ -69,27 +86,24 @@ export class Node {
 
     if (isOnHoverNode) {
       //TODO придумать как выделять только связанные ноды (сотреть по таблице связей NODE_CONNECTION_TABLE)
-      if (!this.visited) {
-        this.drawNode('#2E2E2E');
-      } else {
+      if (this.isConnectedToActiveNode(this.id)) {
         this.drawNode('DarkGray', 'white');
+      } else {
+        this.drawNode();
       }
     } else {
-      if (!this.visited) {
-        this.drawNode();
-      } else {
-        this.drawNode('DarkGray', 'white');
-      }
+      this.drawNode();
     }
   }
 
   onClick(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
     const isOnHoverNode = this.isOnHoverNode(event);
 
-    if (isOnHoverNode) {
+    if (isOnHoverNode && this.isConnectedToActiveNode(this.id)) {
       //TODO В зависимости от типа узла делать переход на новый уровень
 
       this.visited = true;
+      this.changeActiveNode(this.id);
       alert(this.type);
     }
   }

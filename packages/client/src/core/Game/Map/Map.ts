@@ -9,7 +9,19 @@ export class Map {
   background = new Image();
 
   constructor(ctx: CanvasRenderingContext2D) {
-    this.nodes = NODES.map(node => new Node({ ...node }, ctx));
+    this.nodes = NODES.map(
+      node =>
+        new Node(
+          { ...node },
+          ctx,
+          this.isConnectedToActiveNode.bind(this),
+          this.changeActiveNode.bind(this)
+        )
+    );
+    const hasActiveNode = this.nodes.some(node => node.active);
+    if (!hasActiveNode) {
+      this.getNodeById(1).active = true;
+    }
     this.nodeConnectionTable = { ...NODE_CONNECTION_TABLE };
     this.context = ctx;
     this.background.src = '/map-02.png';
@@ -46,6 +58,28 @@ export class Map {
 
   getNodeById(id: number) {
     return this.nodes.filter(node => node.id === id)[0];
+  }
+
+  isConnectedToActiveNode(id: number) {
+    const activeNode = this.nodes.find(node => node.active);
+    if (!activeNode) {
+      throw new Error('No active node found');
+    }
+    const connectedNodes = this.nodeConnectionTable[activeNode.id] || [];
+    return connectedNodes.includes(id);
+  }
+
+  changeActiveNode(id: number) {
+    const newActiveNode = this.getNodeById(id);
+    const lastActiveNode = this.nodes.find(node => node.active);
+    if (!newActiveNode) {
+      throw new Error('Wrong id given');
+    }
+    if (!lastActiveNode) {
+      throw new Error('No active node found');
+    }
+    lastActiveNode.active = false;
+    newActiveNode.active = true;
   }
 
   drawMap() {

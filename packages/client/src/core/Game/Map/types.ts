@@ -7,4 +7,5 @@ export type NodeType = {
   type: keyof typeof NODE_TYPES;
   src: string;
   visited: boolean;
+  active: boolean;
 };
