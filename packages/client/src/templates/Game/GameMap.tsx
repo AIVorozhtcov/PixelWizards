@@ -1,7 +1,16 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { Map } from '../../core/Game/Map/Map';
+import { gameController } from '../../core/Game/GameController';
 
-export default function GameMap() {
+type GameMapProps = {
+  setIsGameStart: Dispatch<SetStateAction<boolean>>;
+  setIsMapOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function GameMap({
+  setIsGameStart,
+  setIsMapOpen,
+}: GameMapProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mapRef = useRef<Map | null>(null);
 
@@ -11,7 +20,10 @@ export default function GameMap() {
     if (canvas) {
       const ctx = canvas.getContext('2d', { willReadFrequently: true });
       if (ctx) {
-        mapRef.current = new Map(ctx);
+        const map = new Map(ctx, setIsGameStart, setIsMapOpen);
+        mapRef.current = map;
+
+        gameController.setMap(map);
       }
     }
   }, []);

@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { NODES, NODE_CONNECTION_TABLE } from './mapConstants';
 import { Node } from './Node';
 
@@ -7,15 +8,25 @@ export class Map {
   context: CanvasRenderingContext2D;
 
   background = new Image();
+  setIsMapOpen: Dispatch<SetStateAction<boolean>>;
+  setIsGameStart: Dispatch<SetStateAction<boolean>>;
 
-  constructor(ctx: CanvasRenderingContext2D) {
-    this.nodes = NODES.map(node => new Node({ ...node }, ctx));
+  constructor(
+    ctx: CanvasRenderingContext2D,
+    setIsGameStart: Dispatch<SetStateAction<boolean>>,
+    setIsMapOpen: Dispatch<SetStateAction<boolean>>
+  ) {
+    this.nodes = NODES.map(
+      node => new Node({ ...node }, ctx, setIsGameStart, setIsMapOpen)
+    );
     this.nodeConnectionTable = { ...NODE_CONNECTION_TABLE };
     this.context = ctx;
     this.background.src = '/map-02.png';
     this.background.onload = () => {
       this.drawMap();
     };
+    this.setIsMapOpen = setIsMapOpen;
+    this.setIsGameStart = setIsGameStart;
   }
 
   drawNodes() {

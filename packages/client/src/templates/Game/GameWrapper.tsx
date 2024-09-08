@@ -5,18 +5,16 @@ import StartGameScreen from '../../components/organisms/StartGameScreen';
 
 export default function GameWrapper() {
   const [isGameStart, setIsGameStart] = useState(false);
-
-  const changeGameStatus = () => {
-    setIsGameStart(prev => !prev);
-  };
+  const [isMapOpen, setIsMapOpen] = useState(false);
 
   return (
     <div>
-      {isGameStart ? (
+      {isMapOpen ? (
+        <GameMap setIsGameStart={setIsGameStart} setIsMapOpen={setIsMapOpen} />
+      ) : isGameStart ? (
         <Gameplay />
       ) : (
-        <GameMap />
-        // <StartGameScreen startGame={changeGameStatus} />
+        <StartGameScreen setIsMapOpen={setIsMapOpen} />
       )}
     </div>
   );

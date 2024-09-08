@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { NODE_TYPES } from './mapConstants';
 import { NodeType } from './types';
 
@@ -6,6 +7,8 @@ export class Node {
   private context: CanvasRenderingContext2D;
   private imageSize = 80;
   private backgroundSize = 50;
+  private setIsGameStart: Dispatch<SetStateAction<boolean>>;
+  private setIsMapOpen: Dispatch<SetStateAction<boolean>>;
 
   id: number;
   x: number;
@@ -16,7 +19,9 @@ export class Node {
 
   constructor(
     { id, x, y, type, src, visited }: NodeType,
-    ctx: CanvasRenderingContext2D
+    ctx: CanvasRenderingContext2D,
+    setIsGameStart: Dispatch<SetStateAction<boolean>>,
+    setIsMapOpen: Dispatch<SetStateAction<boolean>>
   ) {
     this.id = id;
     this.x = x;
@@ -27,6 +32,8 @@ export class Node {
     this.context = ctx;
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.setIsGameStart = setIsGameStart;
+    this.setIsMapOpen = setIsMapOpen;
   }
 
   drawNode(backgroundColor = 'black', strokeColor = 'black') {
@@ -68,7 +75,6 @@ export class Node {
     const isOnHoverNode = this.isOnHoverNode(event);
 
     if (isOnHoverNode) {
-      //TODO придумать как выделять только связанные ноды (сотреть по таблице связей NODE_CONNECTION_TABLE)
       if (!this.visited) {
         this.drawNode('#2E2E2E');
       } else {
@@ -88,7 +94,7 @@ export class Node {
 
     if (isOnHoverNode) {
       //TODO В зависимости от типа узла делать переход на новый уровень
-
+      this.startNodeLevel();
       this.visited = true;
       alert(this.type);
     }
@@ -104,5 +110,23 @@ export class Node {
       offsetY < this.y + this.backgroundSize;
 
     return isOnHoverNodeX && isOnHoverNodeY;
+  }
+
+  startNodeLevel() {
+    //TODO дописать действия
+    switch (this.type) {
+      case NODE_TYPES.battle:
+        this.setIsMapOpen(false);
+        this.setIsGameStart(true);
+        break;
+      case NODE_TYPES.boss:
+        break;
+      case NODE_TYPES.heal:
+        break;
+      case NODE_TYPES.treasure:
+        break;
+      default:
+        console.log('default level');
+    }
   }
 }

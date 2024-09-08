@@ -1,9 +1,10 @@
+import { Dispatch, SetStateAction } from 'react';
 import Button from '../atoms/Button';
 
 export default function StartGameScreen({
-  startGame,
+  setIsMapOpen,
 }: {
-  startGame: () => void;
+  setIsMapOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   return (
     <div className="p-3 min-h-dvh flex flex-col items-center justify-center gap-2 text-white">
@@ -37,7 +38,7 @@ export default function StartGameScreen({
       <Button
         className="w-full lg:w-1/3"
         variant="contained"
-        onClick={startGame}>
+        onClick={() => setIsMapOpen(true)}>
         Старт
       </Button>
     </div>
