@@ -24,6 +24,8 @@ export const NODES: NodeType[] = [
     type: 'battle',
     src: '/map-battle-01.png',
     visited: false,
+    active: false,
+    connectedToActive: false,
   },
   {
     id: 2,
@@ -32,6 +34,8 @@ export const NODES: NodeType[] = [
     type: 'battle',
     src: '/map-battle-01.png',
     visited: false,
+    active: false,
+    connectedToActive: false,
   },
   {
     id: 3,
@@ -40,6 +44,8 @@ export const NODES: NodeType[] = [
     type: 'battle',
     src: '/map-battle-01.png',
     visited: false,
+    active: false,
+    connectedToActive: false,
   },
   {
     id: 4,
@@ -48,6 +54,8 @@ export const NODES: NodeType[] = [
     type: 'heal',
     src: '/map-heal.png',
     visited: false,
+    active: false,
+    connectedToActive: false,
   },
   {
     id: 5,
@@ -56,6 +64,8 @@ export const NODES: NodeType[] = [
     type: 'heal',
     src: '/map-heal.png',
     visited: false,
+    active: false,
+    connectedToActive: false,
   },
   {
     id: 6,
@@ -64,6 +74,8 @@ export const NODES: NodeType[] = [
     type: 'treasure',
     src: '/map-treasure.png',
     visited: false,
+    active: false,
+    connectedToActive: false,
   },
   {
     id: 7,
@@ -72,5 +84,7 @@ export const NODES: NodeType[] = [
     type: 'boss',
     src: '/map-boss.png',
     visited: false,
+    active: false,
+    connectedToActive: false,
   },
 ];

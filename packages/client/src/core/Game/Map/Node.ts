@@ -16,12 +16,16 @@ export class Node {
   type: keyof typeof NODE_TYPES;
   src: string;
   visited: boolean;
+  active: boolean;
+  connectedToActive: boolean;
+  changeActiveNode: (id: number) => void;
 
   constructor(
-    { id, x, y, type, src, visited }: NodeType,
+    { id, x, y, type, src, visited, connectedToActive, active }: NodeType,
     ctx: CanvasRenderingContext2D,
     setIsGameStart: Dispatch<SetStateAction<boolean>>,
-    setIsMapOpen: Dispatch<SetStateAction<boolean>>
+    setIsMapOpen: Dispatch<SetStateAction<boolean>>,
+    changeActiveNode: (id: number) => void
   ) {
     this.id = id;
     this.x = x;
@@ -29,16 +33,28 @@ export class Node {
     this.type = type;
     this.src = src;
     this.visited = visited;
+    this.active = active;
+    this.connectedToActive = connectedToActive;
     this.context = ctx;
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onClick = this.onClick.bind(this);
     this.setIsGameStart = setIsGameStart;
     this.setIsMapOpen = setIsMapOpen;
+    this.changeActiveNode = changeActiveNode;
   }
 
   drawNode(backgroundColor = 'black', strokeColor = 'black') {
     const image = new Image();
     image.src = this.src;
+
+    if (this.active) {
+      backgroundColor = 'DarkGray';
+      strokeColor = 'white';
+    }
+
+    if (this.connectedToActive) {
+      backgroundColor = 'DarkGray';
+    }
 
     image.onload = () => {
       this.context.beginPath();
@@ -75,27 +91,23 @@ export class Node {
     const isOnHoverNode = this.isOnHoverNode(event);
 
     if (isOnHoverNode) {
-      if (!this.visited) {
-        this.drawNode('#2E2E2E');
-      } else {
+      if (this.connectedToActive) {
         this.drawNode('DarkGray', 'white');
+      } else {
+        this.drawNode();
       }
     } else {
-      if (!this.visited) {
-        this.drawNode();
-      } else {
-        this.drawNode('DarkGray', 'white');
-      }
+      this.drawNode();
     }
   }
 
   onClick(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
     const isOnHoverNode = this.isOnHoverNode(event);
 
-    if (isOnHoverNode) {
-      //TODO В зависимости от типа узла делать переход на новый уровень
+    if (isOnHoverNode && this.connectedToActive) {
       this.startNodeLevel();
       this.visited = true;
+      this.changeActiveNode(this.id);
       alert(this.type);
     }
   }
