@@ -32,6 +32,14 @@ export class Map {
     this.background.onload = () => this.drawMap();
     this.setIsMapOpen = setIsMapOpen;
     this.setIsGameStart = setIsGameStart;
+
+    const activeNode = this.nodes.find(node => node.active);
+    if (!activeNode) {
+      this.getNodeById(1).active = true;
+      this.setConnectedToActive(1);
+    } else {
+      this.setConnectedToActive(activeNode.id);
+    }
   }
 
   drawNodes() {
@@ -67,6 +75,8 @@ export class Map {
     this.nodeConnectionTable[id]?.map(id => {
       this.getNodeById(id).connectedToActive = true;
     });
+
+    console.log(this.nodes);
   }
 
   getNodeById(id: number) {
@@ -84,6 +94,8 @@ export class Map {
     }
     lastActiveNode.active = false;
     newActiveNode.active = true;
+    console.log(newActiveNode, lastActiveNode);
+    console.log(this.nodes);
     this.setConnectedToActive(id);
   }
 

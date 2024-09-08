@@ -47,13 +47,9 @@ export class Node {
     const image = new Image();
     image.src = this.src;
 
-    if (this.active) {
+    if (this.active || this.visited) {
       backgroundColor = 'DarkGray';
       strokeColor = 'white';
-    }
-
-    if (this.connectedToActive) {
-      backgroundColor = 'DarkGray';
     }
 
     image.onload = () => {
@@ -136,6 +132,8 @@ export class Node {
       case NODE_TYPES.heal:
         break;
       case NODE_TYPES.treasure:
+        break;
+      case NODE_TYPES.start:
         break;
       default:
         console.log('default level');
