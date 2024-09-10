@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { Game } from '../../core/Game/Game';
 import Button from '../../components/atoms/Button';
 import FullscreenToggle from '../../components/molecules/FullscreenToggle';
-import { gameController } from '../../core/Game/GameController';
+import { Game } from '../../core/Game/Game';
 
 export default function Gameplay() {
   const [isGameEnd, setIsGameEnd] = useState(false);
@@ -19,7 +18,8 @@ export default function Gameplay() {
         );
         gameRef.current = game;
 
-        gameController.setGame(game);
+        gameRef.current?.showMap();
+        // gameController.setGame(gameRef.current);
       }
     }
 
@@ -35,14 +35,33 @@ export default function Gameplay() {
         ref={canvasRef}
         width={1000}
         height={800}
-        onMouseDown={e => gameRef.current?.player?.onMouseDown(e)}
-        onMouseMove={e => gameRef.current?.player?.onMouseMove(e)}
-        onMouseUp={() => gameRef.current?.player?.onMouseUp()}
+        onMouseDown={e => {
+          if (gameRef.current?.currentGameStage === 'battle') {
+            gameRef.current?.player?.onMouseDown(e);
+          }
+        }}
+        onMouseMove={e => {
+          if (gameRef.current?.currentGameStage === 'battle') {
+            gameRef.current?.player?.onMouseMove(e);
+          } else {
+            gameRef.current?.map?.nodes.map(node => node.onMouseMove(e));
+          }
+        }}
+        onMouseUp={() => {
+          if (gameRef.current?.currentGameStage === 'battle') {
+            gameRef.current?.player?.onMouseUp();
+          }
+        }}
+        onClick={e => {
+          if (gameRef.current?.currentGameStage === 'map') {
+            gameRef.current?.map?.nodes.map(node => node.onClick(e));
+          }
+        }}
       />
       <Button
         onClick={() => {
           if (isGameEnd) {
-            gameController.showMap();
+            gameRef.current?.showMap();
           } else {
             gameRef.current?.endTurn();
           }

@@ -15,9 +15,9 @@ class GameController {
 
   showMap() {
     if (this.game?.isGameEnd) {
-      this.map?.setIsMapOpen(true);
+      // this.map?.setIsMapOpen(true);
       this.map?.drawMap();
-      this.map?.setIsGameStart(false);
+      // this.map?.setIsGameStart(false);
     }
   }
 }
