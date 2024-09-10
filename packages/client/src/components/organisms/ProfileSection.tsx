@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { updateUserAvatar } from '../../api/userApi';
 import { PROFILE_POPUP } from '../../constants/profilePageData';
-import { FormAvatarType, UserData } from '../../types/types';
+import { FormAvatarType, UserData } from '../../types';
 import { ProfileUpdateAvatarSchema } from '../../types/validationSchemas';
 import Popup from '../molecules/Popup';
 import ProfileAvatar from '../molecules/ProfileAvatar';
 import { toast } from 'sonner';
 import { setUserData } from '../../store/slices/user';
 import { useAppDispatch } from '../../lib/hooks';
+import generalAPI from '../../api/fetchTransport/generalApi';
 
 const ProfileSection = ({ children }: { children: React.ReactNode }) => {
-  const [isPopupDisplay, setPopupDisplay] = useState<boolean>(false);
+  const [isPopupDisplay, setPopupDisplay] = useState(false);
   const dispatch = useAppDispatch();
 
   return (
@@ -20,7 +20,7 @@ const ProfileSection = ({ children }: { children: React.ReactNode }) => {
           handleClick={() => setPopupDisplay(false)}
           onSubmit={async data => {
             toast.message('Обновляем аватар...');
-            const user = await updateUserAvatar(data);
+            const user = await generalAPI.updateUserAvatar(data);
 
             if ('reason' in user) {
               toast.error('Не удалось обновить аватар. Попробуйте еще раз.');

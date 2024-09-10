@@ -1,7 +1,7 @@
 export const URLS = {
   base: 'https://ya-praktikum.tech/api/v2',
   resources: 'https://ya-praktikum.tech/api/v2/resources',
-};
+} as const;
 
 export const USER_PATHS = {
   updateProfile: '/user/profile',
@@ -16,7 +16,10 @@ export const AUTH_PATHS = {
   getUserInfo: '/auth/user',
 } as const;
 
-export const HEADERS = {
-  CT_APPLICATION_JSON: { 'Content-Type': 'application/json' },
-  ACCEPT: { Accept: 'application/json' },
-};
+export const IMETHOD = {
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT',
+  PATCH: 'PATCH',
+  DELETE: 'DELETE',
+} as const;

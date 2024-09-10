@@ -1,38 +1,41 @@
 import { useNavigate } from 'react-router-dom';
-import registrationCapibara from '../../../public/registrationCapibara.webp';
-import registrationCapibara2 from '../../../public/registrationCapibara2.webp';
+import { toast } from 'sonner';
 import generalAPI from '../../api/fetchTransport/generalApi';
-import FORM_INPUT_NAMES from '../../constants/formInputNames';
+import { LOGIN_INPUTS_DATA } from '../../constants/profilePageData';
 import { useAppDispatch } from '../../lib/hooks';
 import { setUserData } from '../../store/slices/user';
-import { LoginFormData } from '../../types/types';
+import { LoginFormData } from '../../types';
 import { LoginValidationSchema } from '../../types/validationSchemas';
 import Link from '../atoms/Link';
 import Subtitle from '../atoms/Subtitle';
 import Form from './Form';
-import { toast } from 'sonner';
+import Image from '../atoms/Image';
 
 const LoginSection = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (data: LoginFormData) => {
-    const response = await generalAPI.signin(data);
+    try {
+      const response = await generalAPI.signin(data);
 
-    if (typeof response === 'object' && 'reason' in response) {
-      toast.error(response.reason);
-      return;
+      if (typeof response === 'object' && 'reason' in response) {
+        toast.error(response.reason);
+        return;
+      }
+
+      const userData = await generalAPI.userInfo();
+
+      if ('reason' in userData) {
+        toast.error(userData.reason);
+        return;
+      }
+
+      dispatch(setUserData(userData));
+      navigate('/');
+    } catch (error) {
+      toast.error('Произошла ошибка');
     }
-
-    const userData = await generalAPI.userInfo();
-
-    if ('reason' in userData) {
-      toast.error(userData.reason);
-      return;
-    }
-
-    dispatch(setUserData(userData));
-    navigate('/');
   };
 
   return (
@@ -49,26 +52,19 @@ const LoginSection = () => {
         formFieldClass="mb-4 w-80"
         labelVariant="basic"
         inputVariant="basic"
-        fields={[
-          { name: FORM_INPUT_NAMES.login, label: 'Логин' },
-          {
-            name: FORM_INPUT_NAMES.password,
-            label: 'Пароль',
-            type: 'password',
-          },
-        ]}
+        fields={LOGIN_INPUTS_DATA}
       />
       <Link className="self-center mt-10" to="/registration">
         Зарегистрироваться
       </Link>
-      <img
-        src={registrationCapibara}
+      <Image
+        src="/registrationCapibara.webp"
         width="225"
         alt="Космическая капибара!"
         className="mx-auto aspect-square overflow-hidden rounded-xl object-cover absolute top-0 right-0 opacity-50"
       />
-      <img
-        src={registrationCapibara2}
+      <Image
+        src="/registrationCapibara2.webp"
         width="225"
         alt="Космическая капибара!"
         className="absolute top-10 left-0 opacity-50"

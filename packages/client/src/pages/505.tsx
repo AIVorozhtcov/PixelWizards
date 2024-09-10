@@ -4,9 +4,7 @@ import Title from '../components/atoms/Title';
 import LINKS from '../constants/links';
 
 type ErrorResponse = {
-  data: any;
-  status: number;
-  statusText: string;
+  statusText?: string;
   message?: string;
 };
 

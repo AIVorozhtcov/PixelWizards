@@ -5,16 +5,6 @@ import { Game } from '../Game';
 import CharacterInfo from './CharacterInfo';
 import { ActionType, CardInHand, CharacterInitProps } from './types';
 
-export interface CharacterState {
-  resist: number;
-  tempResist: number;
-  hitPoints: number;
-  readonly initialHitPoints: number;
-  isCharacterAlive: boolean;
-  readonly initialActionPoints: number;
-  actionPoints: number;
-}
-
 export default abstract class Character {
   game: Game;
   width: number;

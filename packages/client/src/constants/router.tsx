@@ -73,7 +73,7 @@ const router = createBrowserRouter([
         element: <Registration />,
       },
       {
-        path: '/test',
+        path: LINKS.test,
         element: <Test />,
       },
     ],

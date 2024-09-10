@@ -13,7 +13,7 @@ import {
   ProfileFormData,
   ProfileModeType,
   ProfilePasswordFormData,
-} from '../../types/types';
+} from '../../types';
 import {
   ProfileUpdateDataSchema,
   ProfileUpdatePasswordSchema,

@@ -1,4 +1,4 @@
-import { ProfileDataType, ProfileFormData, UserData } from '../../types/types';
+import { ProfileDataType, ProfileFormData, UserData } from '../../types';
 import ProfileListItem from '../molecules/ProfileListItem';
 
 type ProfileListProps = {

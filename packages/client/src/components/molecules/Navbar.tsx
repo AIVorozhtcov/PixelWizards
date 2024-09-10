@@ -20,7 +20,9 @@ export default function Navbar() {
         variant="acent"
         onClick={async () => {
           toast.info('Выходим из системы');
-          await generalAPI.logout();
+          await generalAPI.logout().catch(error => {
+            toast.error('Не удалось выйти из системы, из-за ' + error.message);
+          });
           navigate('/login');
         }}>
         Выйти из профиля
