@@ -1,20 +1,33 @@
-import dotenv from 'dotenv';
-import cors from 'cors';
-dotenv.config();
+import express, { Application, Request, Response, NextFunction } from 'express';
+import bodyParser from 'body-parser';
+import commentRouter from './routers/comment-router';
+import topicRouter from './routers/topic-router';
+import userRouter from './routers/user-router';
+import { dbConnect } from './db';
+import replyRouter from './routers/reply-router';
 
-import express from 'express';
-import { createClientAndConnect } from './db';
+// Инициализация Express приложения
+const app: Application = express();
 
-const app = express();
-app.use(cors());
-const port = Number(process.env.SERVER_PORT) || 3001;
+// Настройка промежуточного ПО
+app.use(bodyParser.json());
 
-createClientAndConnect();
+dbConnect().then(() => {
+  // Настройка маршрутов
+  app.use('/api/users', userRouter);
+  app.use('/api/topics', topicRouter);
+  app.use('/api/comments', commentRouter);
+  app.use('/api/replies', replyRouter);
 
-app.get('/', (_, res) => {
-  res.json('👋 Howdy from the server :)');
-});
+  // Обработка ошибок
+  app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+    console.error(err.stack);
+    res.status(500).send('Что-то пошло не так!');
+  });
 
-app.listen(port, () => {
-  console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
+  // Запуск сервера
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Сервер запущен на порту ${PORT}`);
+  });
 });
