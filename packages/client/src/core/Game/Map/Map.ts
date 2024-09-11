@@ -75,8 +75,6 @@ export class Map {
     this.nodeConnectionTable[id]?.map(id => {
       this.getNodeById(id).connectedToActive = true;
     });
-
-    console.log(this.nodes);
   }
 
   getNodeById(id: number) {
@@ -94,8 +92,6 @@ export class Map {
     }
     lastActiveNode.active = false;
     newActiveNode.active = true;
-    console.log(newActiveNode, lastActiveNode);
-    console.log(this.nodes);
     this.setConnectedToActive(id);
   }
 
