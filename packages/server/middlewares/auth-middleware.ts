@@ -1,22 +1,23 @@
 import jwt from 'jsonwebtoken';
 import { Response, NextFunction, Request } from 'express';
-import dotenv from 'dotenv';
 import User from '../models/user';
-
-dotenv.config();
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) {
-    return res.sendStatus(403);
+    res.sendStatus(403);
+    return;
   }
 
-  const userId = jwt.verify(token, process.env.JWT_SECRET as string);
-  User.findOne({ where: { id: userId } })
+  const verifiedUser = jwt.verify(token, process.env.JWT_SECRET as string) as {
+    id: number;
+  };
+  User.findOne({ where: { id: verifiedUser.id } })
     .then(user => {
       if (user) {
         (req as any).user = user;
         next();
+        return;
       } else {
         return res.sendStatus(403);
       }

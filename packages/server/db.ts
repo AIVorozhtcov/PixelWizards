@@ -11,7 +11,7 @@ const sequelizeOptions: SequelizeOptions = {
   username: process.env.POSTGRES_USER as string,
   password: process.env.POSTGRES_PASSWORD as string,
   port: Number(process.env.POSTGRES_PORT),
-  host: 'localhost',
+  host: process.env.POSTGRES_HOST,
 };
 export const sequelize = new Sequelize(sequelizeOptions);
 
