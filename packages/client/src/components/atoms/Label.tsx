@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
 
@@ -20,7 +19,7 @@ interface LabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement>,
     VariantProps<typeof labelVariants> {}
 
-const Label: FC<LabelProps> = ({ variant, className, children, ...props }) => {
+const Label = ({ variant, className, children, ...props }: LabelProps) => {
   return (
     <label {...props} className={cn(labelVariants({ variant }), className)}>
       {children}

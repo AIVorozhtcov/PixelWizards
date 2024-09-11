@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import Button from '../atoms/Button';
-import enterFullscreen from '../../../public/enterFullscreen.webp';
-import exitFullscreen from '../../../public/exitFullscreen.webp';
 
 export default function FullscreenToggle({
   className,
@@ -22,7 +20,7 @@ export default function FullscreenToggle({
   return (
     <Button onClick={toggleFullScreen} className={className} {...props}>
       <img
-        src={isFullscreen ? exitFullscreen : enterFullscreen}
+        src={isFullscreen ? '/exitFullscreen.webp' : '/enterFullscreen.webp'}
         alt="Fullscreen Toggle"
       />
     </Button>

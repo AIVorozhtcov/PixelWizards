@@ -1,41 +1,11 @@
-import { URLS } from '../../constants/apiConstants';
+import { IMETHOD, URLS } from '../../constants/apiConstants';
+import { APIMethod, BaseAPIConfig, Options } from '../../types';
 import { queryStringify } from '../../utils/queryStringify';
-
-export type Path = `/${string}` | '';
-export type Headers = { extends?: boolean } & Record<string, string | boolean>;
-
-export const IMETHOD = {
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT',
-  PATCH: 'PATCH',
-  DELETE: 'DELETE',
-} as const;
-
-type MethodKeys = typeof IMETHOD[keyof typeof IMETHOD];
-
-export interface BaseAPIConfig {
-  path?: Path;
-  baseUrl?: string;
-}
-
-export interface Options {
-  method?: MethodKeys;
-  headers?: Headers;
-  withCredentials?: RequestCredentials;
-  signal?: AbortSignal;
-  data?: Record<string, unknown> | FormData;
-}
-
-export type APIMethod = (
-  endpoint: Path | URL,
-  options?: Options
-) => Promise<Response>;
 
 export default class FetchTransport {
   private corePath: string;
 
-  constructor(baseUrl = URLS.base, path = '') {
+  constructor(baseUrl: BaseAPIConfig['baseUrl'] = URLS.base, path = '') {
     this.corePath = baseUrl + path;
   }
 

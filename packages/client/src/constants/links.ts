@@ -9,6 +9,7 @@ const LINKS = {
   forum: '/forum',
   topic: '/topic/:id',
   serverErrorPage: '/500',
+  test: '/test',
 } as const;
 
 export default LINKS;

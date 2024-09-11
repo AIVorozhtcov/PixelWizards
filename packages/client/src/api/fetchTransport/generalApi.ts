@@ -1,4 +1,5 @@
 import { AUTH_PATHS, USER_PATHS } from '../../constants/apiConstants';
+import { Data, FormAvatarType } from '../../types';
 import {
   ErrorSchema,
   SignUpSchema,
@@ -6,8 +7,6 @@ import {
 } from '../../types/validationSchemas';
 import resultFromSchema from '../../utils/resultFromSchema';
 import BaseApi from './baseApi';
-
-type Data = Record<string, string | null>;
 
 class GeneralApi extends BaseApi {
   constructor() {
@@ -64,7 +63,7 @@ class GeneralApi extends BaseApi {
     }
   }
 
-  async updateUserAvatar(data: FormData) {
+  async updateUserAvatar(data: FormAvatarType) {
     const response = await this.put(USER_PATHS.updateAvatar, {
       data,
       headers: {},

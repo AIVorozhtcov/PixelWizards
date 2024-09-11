@@ -1,7 +1,6 @@
-type ImageProps = Record<string, unknown> &
-  React.ImgHTMLAttributes<HTMLImageElement>;
-
-const Image = (props: ImageProps) => {
+const Image = (
+  props: Record<string, unknown> & React.ImgHTMLAttributes<HTMLImageElement>
+) => {
   return <img {...props} />;
 };
 

@@ -38,11 +38,15 @@ export class Game {
     };
   }
 
-  createEnemy(props: CharacterInitProps) {
+  private createEnemy(props: CharacterInitProps) {
     return new Enemy(props);
   }
 
-  isGameContinue() {
+  private createHero(props: CharacterInitProps) {
+    return new Player(props);
+  }
+
+  private isGameContinue() {
     if (this.player.hitPoints <= 0) {
       this.endGame();
       return false;
@@ -70,24 +74,24 @@ export class Game {
     }
   }
 
-  drawCharacters(context: CanvasRenderingContext2D) {
+  private drawCharacters(context: CanvasRenderingContext2D) {
     if (!this.isGameEnd) {
       this.player.draw(context);
       this.enemy.draw(context);
     }
   }
 
-  drawCardInHand(context: CanvasRenderingContext2D) {
+  private drawCardInHand(context: CanvasRenderingContext2D) {
     if (!this.isGameEnd) {
       this.player.displayAvailableCards(context);
     }
   }
 
-  drawBackground(context: CanvasRenderingContext2D) {
+  private drawBackground(context: CanvasRenderingContext2D) {
     context.drawImage(this.background, 0, 0, this.width, this.height);
   }
 
-  drawAmountOfActionPoints(context: CanvasRenderingContext2D) {
+  private drawAmountOfActionPoints(context: CanvasRenderingContext2D) {
     const angle = Math.PI / 3;
     const hexRadius = 50;
     const padding = 20;
@@ -116,7 +120,7 @@ export class Game {
     context.fillText(String(this.player.actionPoints), centerX, centerY);
   }
 
-  drawEverything(context: CanvasRenderingContext2D) {
+  private drawEverything(context: CanvasRenderingContext2D) {
     this.drawBackground(context);
     this.drawCharacters(context);
     this.drawCardInHand(context);
@@ -141,7 +145,7 @@ export class Game {
     }
   }
 
-  endGame(isWin = false) {
+  private endGame(isWin = false) {
     if (this.gameAnimation) {
       window.cancelAnimationFrame(this.gameAnimation);
       this.gameAnimation = undefined;
@@ -173,7 +177,7 @@ export class Game {
     this.music.stopEndGameSong();
     this.music.playBackgroundSong();
 
-    this.player = new Player({
+    this.player = this.createHero({
       cardInHand: fixCardsInPlayerHand,
       x: 20,
       y: 100,

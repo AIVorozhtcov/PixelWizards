@@ -3,7 +3,7 @@ import { CharacterInitProps } from '../Character/types';
 
 export class Player extends Character {
   private cardImages: Map<string, HTMLImageElement> = new Map();
-  isCardsLoaded: boolean | Error = false;
+  private isCardsLoaded: boolean | Error = false;
 
   constructor({
     game,
