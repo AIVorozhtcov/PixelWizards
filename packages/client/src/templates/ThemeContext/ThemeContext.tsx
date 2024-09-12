@@ -40,15 +40,3 @@ export const Theme = (props: { children: React.ReactNode }) => {
     </ThemeContext.Provider>
   );
 };
-
-const themeHandler = () => {
-  const { theme, setTheme } = useTheme();
-
-  if (theme === THEMES.dark) {
-    setTheme('light');
-  } else {
-    setTheme('dark');
-  }
-};
-
-Theme.ThemeHandler = themeHandler;
