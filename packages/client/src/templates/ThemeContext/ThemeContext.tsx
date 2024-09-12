@@ -1,12 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ThemeType } from '../../types';
 import { getThemeFromStorage, setThemeInStorage } from '../../lib/theme';
-import { THEMES } from '../../constants/themeConstants';
 
 type ThemeContextType = {
   theme: ThemeType;
   setTheme: (theme: ThemeType) => void;
-  supportedThemes: { [key: string]: string };
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -34,7 +32,6 @@ export const Theme = (props: { children: React.ReactNode }) => {
       value={{
         theme,
         setTheme,
-        supportedThemes: THEMES,
       }}>
       {props.children}
     </ThemeContext.Provider>
