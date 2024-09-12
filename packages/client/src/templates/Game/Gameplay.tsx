@@ -19,7 +19,6 @@ export default function Gameplay() {
         gameRef.current = game;
 
         gameRef.current?.showMap();
-        // gameController.setGame(gameRef.current);
       }
     }
 

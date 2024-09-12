@@ -41,10 +41,6 @@ export class Game {
     );
 
     this.background.src = '/backgroundGame.webp';
-
-    // this.background.onload = () => {
-    //   this.beginGame();
-    // };
   }
 
   showMap() {
@@ -225,6 +221,7 @@ export class Game {
   beginAndDrawGame() {
     this.beginGame();
     this.draw(this.context);
+    console.log(this.currentGameStage);
   }
 
   private initialDraw() {
