@@ -3,6 +3,7 @@ import { CharacterInitProps } from './Character/types';
 import { cardsInEnemyHand } from './Enemy/cardsInEnemyHand';
 import { Enemy } from './Enemy/Enemy';
 import Gameover from './Gameover/Gameover';
+import { Map as GameMap } from './Map/Map';
 import { fixCardsInPlayerHand } from './Player/fixCardsInPlayerHand';
 import { Player } from './Player/Player';
 
@@ -18,6 +19,8 @@ export class Game {
   changeGameStateFunc: () => void;
   background = new Image();
   music = new AudioPlayer();
+  map: GameMap;
+  currentGameStage: 'battle' | 'map' = 'map';
 
   constructor(
     width: number,
@@ -30,12 +33,30 @@ export class Game {
     this.changeGameStateFunc = changeGameStateFunc;
 
     this.context = ctx;
+    this.map = new GameMap(
+      this.context,
+      this.beginAndDrawGame.bind(this),
+      this.width,
+      this.height
+    );
 
     this.background.src = '/backgroundGame.webp';
 
-    this.background.onload = () => {
-      this.beginGame();
-    };
+    // this.background.onload = () => {
+    //   this.beginGame();
+    // };
+  }
+
+  showMap() {
+    if (this.gameAnimation) {
+      window.cancelAnimationFrame(this.gameAnimation);
+      this.gameAnimation = undefined;
+    }
+    this.currentGameStage = 'map';
+
+    this.context.clearRect(0, 0, this.width, this.height);
+
+    this.map.drawMap();
   }
 
   createEnemy(props: CharacterInitProps) {
@@ -65,7 +86,6 @@ export class Game {
   draw(context: CanvasRenderingContext2D) {
     if (!this.isGameEnd) {
       context.clearRect(0, 0, this.width, this.height);
-
       this.drawEverything(context);
     }
   }
@@ -161,6 +181,7 @@ export class Game {
 
   beginGame() {
     this.isGameEnd = false;
+    this.currentGameStage = 'battle';
 
     if (this.gameAnimation) {
       window.cancelAnimationFrame(this.gameAnimation);
@@ -199,6 +220,11 @@ export class Game {
 
     this.whosTurn = 'player';
     this.gameAnimation = requestAnimationFrame(this.initialDraw.bind(this));
+  }
+
+  beginAndDrawGame() {
+    this.beginGame();
+    this.draw(this.context);
   }
 
   private initialDraw() {

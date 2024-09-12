@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import { NODE_TYPES } from './mapConstants';
 import { NodeType } from './types';
 
@@ -7,8 +6,6 @@ export class Node {
   private context: CanvasRenderingContext2D;
   private imageSize = 80;
   private backgroundSize = 50;
-  private setIsGameStart: Dispatch<SetStateAction<boolean>>;
-  private setIsMapOpen: Dispatch<SetStateAction<boolean>>;
 
   id: number;
   x: number;
@@ -19,13 +16,13 @@ export class Node {
   active: boolean;
   connectedToActive: boolean;
   changeActiveNode: (id: number) => void;
+  createBattle: () => void;
 
   constructor(
     { id, x, y, type, src, visited, connectedToActive, active }: NodeType,
     ctx: CanvasRenderingContext2D,
-    setIsGameStart: Dispatch<SetStateAction<boolean>>,
-    setIsMapOpen: Dispatch<SetStateAction<boolean>>,
-    changeActiveNode: (id: number) => void
+    changeActiveNode: (id: number) => void,
+    createBattle: () => void
   ) {
     this.id = id;
     this.x = x;
@@ -38,9 +35,8 @@ export class Node {
     this.context = ctx;
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onClick = this.onClick.bind(this);
-    this.setIsGameStart = setIsGameStart;
-    this.setIsMapOpen = setIsMapOpen;
     this.changeActiveNode = changeActiveNode;
+    this.createBattle = createBattle;
   }
 
   drawNode(backgroundColor = 'black', strokeColor = 'black') {
@@ -124,8 +120,7 @@ export class Node {
     //TODO дописать действия
     switch (this.type) {
       case NODE_TYPES.battle:
-        this.setIsMapOpen(false);
-        this.setIsGameStart(true);
+        this.createBattle();
         break;
       case NODE_TYPES.boss:
         break;
