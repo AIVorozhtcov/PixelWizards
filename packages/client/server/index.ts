@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import serialize from 'serialize-javascript';
-import express from 'express';
+import express, { Request as ExpressRequest } from 'express';
 import path from 'path';
 
 import fs from 'fs/promises';
@@ -35,7 +35,9 @@ async function createServer() {
     try {
       // Получаем файл client/index.html который мы правили ранее
       // Создаём переменные
-      let render: () => Promise<{ html: string; initialState: unknown }>;
+      let render: (
+        req: ExpressRequest
+      ) => Promise<{ html: string; initialState: unknown }>;
       let template: string;
       if (vite) {
         template = await fs.readFile(
@@ -70,7 +72,7 @@ async function createServer() {
       }
 
       // Получаем HTML-строку из JSX
-      const { html: appHtml, initialState } = await render();
+      const { html: appHtml, initialState } = await render(req);
 
       // Заменяем комментарий на сгенерированную HTML-строку
       const html = template.replace('<!--ssr-outlet-->', appHtml).replace(

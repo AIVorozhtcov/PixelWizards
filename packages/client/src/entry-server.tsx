@@ -5,22 +5,34 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { fetchUserThunk } from './store/slices/user';
 import { reducer } from './store/store';
+import { createFetchRequest } from './entry-server.utils';
+import { Request as ExpressRequest } from 'express';
+import {
+  createStaticHandler,
+  createStaticRouter,
+  StaticRouterProvider,
+} from 'react-router-dom/server';
+import { routes } from './constants/routes';
 
-export const render = async () => {
+export const render = async (req: ExpressRequest) => {
+  const { query, dataRoutes } = createStaticHandler(routes);
+  const fetchRequest = createFetchRequest(req);
+  const context = await query(fetchRequest);
+
+  if (context instanceof Response) {
+    throw context;
+  }
   const store = configureStore({
     reducer,
   });
-
-  const userState = fetchUserThunk();
-  await store.dispatch(userState);
-  const initialState = store.getState();
-
+  await store.dispatch(fetchUserThunk());
+  const router = createStaticRouter(dataRoutes, context);
   return {
     html: ReactDOM.renderToString(
       <Provider store={store}>
-        <App />
+        <StaticRouterProvider router={router} context={context} />
       </Provider>
     ),
-    initialState: initialState,
+    initialState: store.getState(),
   };
 };
