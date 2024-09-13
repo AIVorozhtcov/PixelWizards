@@ -6,12 +6,13 @@ import startServiceWorker from './startServiceWorker';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { Toaster } from 'sonner';
+import App from './App';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.hydrateRoot(
+  document.getElementById('root') as HTMLElement,
   <Provider store={store}>
-    <RouterProvider router={router} />
-    <Toaster richColors closeButton visibleToasts={1} duration={2000} />
+    <App />
   </Provider>
 );
 
-startServiceWorker();
+//startServiceWorker();
