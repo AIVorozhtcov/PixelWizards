@@ -11,6 +11,12 @@ export const REGISTRATION_INPUTS_DATA = [
   createInput('Телефон', FORM_INPUT_NAMES.phone, 'tel'),
 ];
 
+export const FORUM_REGISTRATION_INPUTS_DATA = [
+  createInput('Логин', FORM_INPUT_NAMES.login),
+  createInput('Пароль', FORM_INPUT_NAMES.password, 'password'),
+  createInput('Повторите пароль', FORM_INPUT_NAMES.passwordAgain, 'password'),
+];
+
 export const PROFILE_INPUTS_DATA = [
   createInput('Имя', FORM_INPUT_NAMES.firstName),
   createInput('Фамилия', FORM_INPUT_NAMES.secondName),

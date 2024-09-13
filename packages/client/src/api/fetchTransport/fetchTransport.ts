@@ -21,6 +21,10 @@ export default class FetchTransport {
     return this.request(url, { ...options, method: IMETHOD.PUT });
   };
 
+  delete: APIMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: IMETHOD.DELETE });
+  };
+
   private request: APIMethod = (url, options = { method: IMETHOD.GET }) => {
     const {
       method,

@@ -8,9 +8,9 @@ fs.readFile(`${BUILD_FOLDER}/${SW_FILE}`, 'utf-8', (err, data) => {
   const filesUrls = getAllFilesInDir(`./${BUILD_FOLDER}`);
   const urlsForCache = data.replace('%FILESURLS%', filesUrls);
 
-  fs.writeFile(`${BUILD_FOLDER}/${SW_FILE}`, urlsForCache, (error) => {
+  fs.writeFile(`${BUILD_FOLDER}/${SW_FILE}`, urlsForCache, error => {
     if (error) {
-      console.log(`Ошибка при добавлении файлов в service worker: ${error}`); 
+      console.log(`Ошибка при добавлении файлов в service worker: ${error}`);
     } else {
       console.log(`Файлы в service worker добавлены`);
     }
@@ -32,5 +32,7 @@ function getAllFilesInDir(dirPath, files) {
     }
   });
 
-  return files.filter(file => !file.includes(FILE_EXEPTION) && !file.includes(SW_FILE));
+  return files.filter(
+    file => !file.includes(FILE_EXEPTION) && !file.includes(SW_FILE)
+  );
 }

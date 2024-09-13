@@ -44,4 +44,13 @@ export default abstract class BaseApi {
 
     return response;
   };
+
+  protected delete: APIMethod = async (endpoint, options) => {
+    const response = await this.http.delete(
+      endpoint,
+      this.checkOptions(options)
+    );
+
+    return response;
+  };
 }

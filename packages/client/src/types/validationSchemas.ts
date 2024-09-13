@@ -12,6 +12,31 @@ const acceptedImageTypes = [
   'image/webp',
 ];
 
+export const ForumRegistrationValidationSchema = z
+  .object({
+    login: z
+      .string()
+      .min(3, 'Логин не может быть короче 3 символов')
+      .max(20, 'Логин не может быть длиннее 20 символов')
+      .regex(loginRegex, 'Логин не соответствует требованиям'),
+    password: z
+      .string()
+      .min(8, 'Пароль не может быть короче 8 символов')
+      .max(40, 'Пароль не может быть длиннее 40 символов')
+      .regex(
+        passwordRegex,
+        'Пароль должен содержать хотя бы одну заглавную букву и одну цифру'
+      ),
+    passwordAgain: z
+      .string()
+      .min(8, 'Пароль не может быть короче 8 символов')
+      .max(40, 'Пароль не может быть длиннее 40 символов'),
+  })
+  .refine(data => data.password === data.passwordAgain, {
+    message: 'Пароли не совпадают',
+    path: ['passwordAgain'],
+  });
+
 export const RegistrationValidationSchema = z
   .object({
     first_name: z
@@ -133,6 +158,40 @@ export const ErrorSchema = z.object({
 
 export const SignUpSchema = z.object({
   id: z.number(),
+});
+
+export const TopicSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  content: z.string(),
+  createdAt: z.date(),
+  userId: z.number(),
+  updatedAt: z.date(),
+});
+
+export const TopicsSchema = z.array(TopicSchema);
+
+export const CommentSchema = z.object({
+  id: z.number(),
+  content: z.string(),
+  userId: z.number(),
+  topicId: z.number(),
+});
+
+export const CommentsSchema = z.array(CommentSchema);
+
+export const ReplySchema = z.object({
+  id: z.number(),
+  content: z.string(),
+  userId: z.number(),
+  commentId: z.number(),
+  parentId: z.number(),
+});
+
+export const RepliesSchema = z.array(ReplySchema);
+
+export const MessageSchema = z.object({
+  message: z.string(),
 });
 
 export const AvatarSchema = z.object({

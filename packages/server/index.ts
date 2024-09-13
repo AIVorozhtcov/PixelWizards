@@ -6,12 +6,14 @@ import userRouter from './routers/user-router';
 import { dbConnect } from './db';
 import replyRouter from './routers/reply-router';
 import authMiddleware from './middlewares/auth-middleware';
+import cors from 'cors';
 
 // Инициализация Express приложения
 const app: Application = express();
 
 // Настройка промежуточного ПО
 app.use(bodyParser.json());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
 dbConnect().then(() => {
   // Настройка маршрутов

@@ -1,9 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import generalAPI from '../../api/fetchTransport/generalApi';
 import { LOGIN_INPUTS_DATA } from '../../constants/profilePageData';
-import { useAppDispatch } from '../../lib/hooks';
-import { setUserData } from '../../store/slices/user';
 import { LoginFormData } from '../../types';
 import { LoginValidationSchema } from '../../types/validationSchemas';
 import Link from '../atoms/Link';
@@ -11,29 +8,23 @@ import Subtitle from '../atoms/Subtitle';
 import Form from './Form';
 import Image from '../atoms/Image';
 import LINKS from '../../constants/links';
+import forumApi from '../../api/fetchTransport/forumApi';
+import { forumTokenLocalStorageKey } from '../../constants/forumConsts';
 
-const LoginSection = () => {
-  const dispatch = useAppDispatch();
+const ForumLoginSection = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (data: LoginFormData) => {
     try {
-      const response = await generalAPI.signin(data);
+      const response = await forumApi.login(data);
 
       if (typeof response === 'object' && 'reason' in response) {
         toast.error(response.reason);
         return;
+      } else {
+        localStorage.setItem(forumTokenLocalStorageKey, response as string);
+        navigate('/forum');
       }
-
-      const userData = await generalAPI.userInfo();
-
-      if ('reason' in userData) {
-        toast.error(userData.reason);
-        return;
-      }
-
-      dispatch(setUserData(userData));
-      navigate('/');
     } catch (error) {
       toast.error('Произошла ошибка');
     }
@@ -42,7 +33,7 @@ const LoginSection = () => {
   return (
     <div className="max-w-md mx-auto mt-10 flex flex-col">
       <Subtitle className="text-[#ffc107]" as="h2" variant="h2">
-        Войти
+        Войти в форум
       </Subtitle>
       <Form<LoginFormData>
         zodSchema={LoginValidationSchema}
@@ -55,11 +46,8 @@ const LoginSection = () => {
         inputVariant="basic"
         fields={LOGIN_INPUTS_DATA}
       />
-      <Link className="self-center mt-10" to={LINKS.registration}>
+      <Link className="self-center mt-10" to={LINKS.forumRegistration}>
         Зарегистрироваться
-      </Link>
-      <Link className="self-center mt-5" to={LINKS.forum}>
-        Форум
       </Link>
       <Image
         src="/registrationCapibara.webp"
@@ -77,4 +65,4 @@ const LoginSection = () => {
   );
 };
 
-export default LoginSection;
+export default ForumLoginSection;

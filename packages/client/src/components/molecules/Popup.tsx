@@ -57,7 +57,7 @@ const Popup = <T extends FieldValues>({
           inputAcept={popup.inputAccept}
           fields={[
             {
-              name: popup.inputName,
+              name: popup.inputName as string,
               type: popup.inputType,
               label: '',
             },

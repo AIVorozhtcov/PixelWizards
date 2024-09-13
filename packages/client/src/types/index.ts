@@ -1,6 +1,12 @@
 import { IMETHOD, URLS } from '../constants/apiConstants';
 import { PROFILE_MODE } from '../constants/profilePageData';
 
+export type ForumRegistrationFormData = {
+  login: string;
+  password: string;
+  passwordAgain: string;
+};
+
 export type RegistrationFormData = {
   first_name: string;
   second_name: string;

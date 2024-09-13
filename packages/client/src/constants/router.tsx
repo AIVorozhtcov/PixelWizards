@@ -12,7 +12,9 @@ const LeaderBoard = lazy(() => import('../pages/LeaderBoard'));
 const Login = lazy(() => import('../pages/Login'));
 const Profile = lazy(() => import('../pages/Profile'));
 const Registration = lazy(() => import('../pages/Registration'));
-const Topic = lazy(() => import('../pages/Topic'));
+const Topic = lazy(() => import('../pages/ForumTopic'));
+const ForumLogin = lazy(() => import('../pages/ForumLogin'));
+const ForumRegistration = lazy(() => import('../pages/ForumRegistration'));
 const ServerErrorPage = lazy(() => import('../pages/505'));
 const Test = lazy(() => import('../__test__/Test'));
 
@@ -37,7 +39,6 @@ const router = createBrowserRouter([
         path: LINKS.home,
         element: <Home />,
       },
-
       {
         path: LINKS.game,
         element: <Game />,
@@ -50,13 +51,31 @@ const router = createBrowserRouter([
         path: LINKS.leaderboard,
         element: <LeaderBoard />,
       },
+    ],
+  },
+  {
+    errorElement: <ServerErrorPage />,
+    children: [
       {
         path: LINKS.forum,
         element: <Forum />,
       },
       {
-        path: LINKS.topic,
+        path: LINKS.forumTopic,
         element: <Topic />,
+      },
+    ],
+  },
+  {
+    errorElement: <ServerErrorPage />,
+    children: [
+      {
+        path: LINKS.forumLogin,
+        element: <ForumLogin />,
+      },
+      {
+        path: LINKS.forumRegistration,
+        element: <ForumRegistration />,
       },
     ],
   },
