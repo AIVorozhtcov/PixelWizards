@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/server';
 import '../index.css';
-import App from './App';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { fetchUserThunk } from './store/slices/user';
