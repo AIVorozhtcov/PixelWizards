@@ -61,7 +61,7 @@ export default function Gameplay() {
         className="text-white bg-red-400 w-full h-20">
         {isGameEnd ? 'Начать заново' : 'Закончить ход'}
       </Button>
-      <FullscreenToggle className="absolute top-20 left-5 opacity-50 w-20"></FullscreenToggle>
+      <FullscreenToggle className="absolute top-20 left-5 opacity-50 w-20 dark:bg-opacity-0 bg-red-700"></FullscreenToggle>
     </>
   );
 }

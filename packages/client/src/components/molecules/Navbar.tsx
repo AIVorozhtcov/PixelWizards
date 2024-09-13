@@ -13,21 +13,12 @@ export default function Navbar() {
   return (
     <nav className="ml-auto flex gap-4 items-center sm:gap-6">
       {arrayOfLinks.map(link => (
-        <Link
-          key={link.href}
-          to={link.href}
-          isActive={pathname === link.href}
-          className={
-            pathname === link.href
-              ? 'dark:text-[#ffc107] text-red-700'
-              : 'dark:text-white text-[#0c1b2a]'
-          }>
+        <Link key={link.href} to={link.href} isActive={pathname === link.href}>
           {link.name}
         </Link>
       ))}
       <Button
         variant="acent"
-        className="dark:text-white text-[#0c1b2a]"
         onClick={async () => {
           toast.info('Выходим из системы');
           await generalAPI.logout().catch(error => {
