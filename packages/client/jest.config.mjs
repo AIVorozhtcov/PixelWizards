@@ -4,7 +4,6 @@ dotenv.config();
 export default {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}'],
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy',
   },
