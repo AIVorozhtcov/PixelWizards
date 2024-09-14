@@ -1,4 +1,8 @@
-import { AUTH_PATHS, USER_PATHS } from '../../constants/apiConstants';
+import {
+  AUTH_PATHS,
+  FORUM_PATHS,
+  USER_PATHS,
+} from '../../constants/apiConstants';
 import { Data, FormAvatarType } from '../../types';
 import {
   ErrorSchema,
@@ -74,6 +78,23 @@ class GeneralApi extends BaseApi {
 
   async logout() {
     await this.post(AUTH_PATHS.logout);
+  }
+
+  async topicMessages(id: number) {
+    // TODO replace
+    const url = FORUM_PATHS.topicMessages.replace(
+      ':id',
+      String(id)
+    ) as `/${string}`;
+    const response = await this.post(url);
+
+    return await response.json();
+  }
+
+  async setEmoji(id: number, emoji: string) {
+    // TODO make fetch
+
+    return {};
   }
 }
 
