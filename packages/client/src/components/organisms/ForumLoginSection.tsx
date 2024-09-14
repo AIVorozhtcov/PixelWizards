@@ -18,11 +18,11 @@ const ForumLoginSection = () => {
     try {
       const response = await forumApi.login(data);
 
-      if (typeof response === 'object' && 'reason' in response) {
-        toast.error(response.reason);
+      if (typeof response === 'object' && 'error' in response) {
+        toast.error(response.error);
         return;
       } else {
-        localStorage.setItem(forumTokenLocalStorageKey, response as string);
+        localStorage.setItem(forumTokenLocalStorageKey, response.token);
         navigate('/forum');
       }
     } catch (error) {

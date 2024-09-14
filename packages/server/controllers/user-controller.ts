@@ -13,7 +13,9 @@ export const registerUser = async (req: Request, res: Response) => {
     const newUser = await User.create({ username, password: hashedPassword });
     res.status(201).json(newUser);
   } catch (err) {
-    res.status(500).json({ error: 'Ошибка при регистрации пользователя' });
+    res
+      .status(500)
+      .json({ error: 'Ошибка при регистрации пользователя. ' + err });
   }
 };
 
