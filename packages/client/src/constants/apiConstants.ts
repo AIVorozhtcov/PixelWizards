@@ -33,7 +33,3 @@ export const IMETHOD = {
   PATCH: 'PATCH',
   DELETE: 'DELETE',
 } as const;
-
-export const FORUM_PATHS = {
-  topicMessages: '/forum/:id/messages',
-} as const;

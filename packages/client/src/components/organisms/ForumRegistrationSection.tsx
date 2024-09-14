@@ -14,21 +14,33 @@ const RegistrationSection = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (data: RegistrationFormData) => {
-    const response = await forumApi.register(data);
+    try {
+      const response = await forumApi.register(data);
 
-    if ('reason' in response) {
-      toast.error('Не удалось обновить аватар. Попробуйте еще раз.');
-      return;
-    }
+      if ('reason' in response || 'error' in response) {
+        throw new Error(response?.reason ?? response.error);
+      }
 
-    const responseLogin = await forumApi.login(data);
+      const responseLogin = await forumApi.login(data);
 
-    if (typeof responseLogin === 'object' && 'reason' in responseLogin) {
-      toast.error(responseLogin.reason);
-      return;
-    } else {
-      localStorage.setItem(forumTokenLocalStorageKey, responseLogin);
-      navigate('/forum');
+      if (
+        typeof responseLogin === 'object' &&
+        ('reason' in responseLogin || 'error' in responseLogin)
+      ) {
+        throw new Error(
+          response?.reason ?? response.error + '. Ошибка при логине'
+        );
+      } else {
+        localStorage.setItem(forumTokenLocalStorageKey, responseLogin);
+        navigate('/forum');
+      }
+    } catch (error) {
+      console.dir({ error });
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('Неизвестная ошибка');
+      }
     }
   };
 
