@@ -16,18 +16,18 @@ const RegistrationSection = () => {
   const handleSubmit = async (data: RegistrationFormData) => {
     const response = await forumApi.register(data);
 
-    if ('reason' in response) {
-      toast.error('Не удалось обновить аватар. Попробуйте еще раз.');
+    if ('error' in response) {
+      toast.error(response.error);
       return;
     }
 
     const responseLogin = await forumApi.login(data);
 
-    if (typeof responseLogin === 'object' && 'reason' in responseLogin) {
-      toast.error(responseLogin.reason);
+    if (typeof responseLogin === 'object' && 'error' in responseLogin) {
+      toast.error(responseLogin.error);
       return;
     } else {
-      localStorage.setItem(forumTokenLocalStorageKey, responseLogin);
+      localStorage.setItem(forumTokenLocalStorageKey, responseLogin.token);
       navigate('/forum');
     }
   };

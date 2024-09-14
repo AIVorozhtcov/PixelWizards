@@ -54,6 +54,7 @@ const router = createBrowserRouter([
     ],
   },
   {
+    element: <UnprotectedLayout />,
     errorElement: <ServerErrorPage />,
     children: [
       {
@@ -64,11 +65,6 @@ const router = createBrowserRouter([
         path: LINKS.forumTopic,
         element: <Topic />,
       },
-    ],
-  },
-  {
-    errorElement: <ServerErrorPage />,
-    children: [
       {
         path: LINKS.forumLogin,
         element: <ForumLogin />,
@@ -77,12 +73,6 @@ const router = createBrowserRouter([
         path: LINKS.forumRegistration,
         element: <ForumRegistration />,
       },
-    ],
-  },
-  {
-    element: <UnprotectedLayout />,
-    errorElement: <ServerErrorPage />,
-    children: [
       {
         path: LINKS.login,
         element: <Login />,
