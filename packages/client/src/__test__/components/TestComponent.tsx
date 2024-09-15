@@ -1,19 +1,17 @@
-import useNotification from '../../lib/useNotification';
+import { useEffect } from 'react';
+import MessageList from '../../components/organisms/MessageList';
+import { useAppDispatch } from '../../lib/hooks';
+import { fetchTopicMessages } from '../../store/slices/topicMessages';
 
 export default function TestComponent() {
-  const { showNotification } = useNotification();
+  const dispatch = useAppDispatch();
 
-  const handleNewMessage = () => {
-    showNotification('Новое сообщение!', {
-      body: 'У вас новое сообщение от пользователя.',
-      icon: '/attack.png',
-      silent: true,
-    });
-  };
+  useEffect(() => {
+    dispatch(fetchTopicMessages(123));
+  }, []);
   return (
-    <div>
-      <h1>React Notification API Example</h1>
-      <button onClick={handleNewMessage}>Получить сообщение</button>
+    <div className="flex justify-center items-center w-screen h-screen">
+      <MessageList />
     </div>
   );
 }

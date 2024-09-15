@@ -4,6 +4,7 @@ import Link from '../atoms/Link';
 import Button from '../atoms/Button';
 import generalAPI from '../../api/fetchTransport/generalApi';
 import { toast } from 'sonner';
+import ThemeButton from './ThemeButton';
 
 export default function Navbar() {
   const { pathname } = useLocation();
@@ -27,6 +28,7 @@ export default function Navbar() {
         }}>
         Выйти из профиля
       </Button>
+      <ThemeButton />
     </nav>
   );
 }

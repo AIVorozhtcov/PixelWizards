@@ -6,6 +6,7 @@ import {
 } from 'react-redux';
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
+import topicMessagesSlice from './slices/topicMessages';
 import userReducer from './slices/user';
 
 declare global {
@@ -16,6 +17,7 @@ declare global {
 
 export const reducer = combineReducers({
   user: userReducer,
+  topicMessagesSlice
 });
 
 export const store = configureStore({
