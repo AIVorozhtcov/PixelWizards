@@ -67,7 +67,7 @@ export type Profile = ProfileFormData & {
 };
 
 export interface IUserState {
-  user: UserData;
+  user: UserData | null;
 }
 
 export type Data = Record<string, string | null>;

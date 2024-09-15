@@ -26,7 +26,7 @@ import ProfileList from './ProfileList';
 const ProfileModeManager = () => {
   const [mode, setMode] = useState<ProfileModeType>('base');
   const handleClick = () => setMode(PROFILE_MODE.base);
-  const userInfo = useAppSelector(state => state.userSlice.user);
+  const userInfo = useAppSelector(state => state.user.user);
   const dispatch = useAppDispatch();
 
   switch (mode) {
@@ -59,7 +59,7 @@ const ProfileModeManager = () => {
             formFieldClass="mb-2"
             labelVariant="profile"
             inputVariant="profile"
-            defaultValues={userInfo}
+            defaultValues={userInfo!}
             fields={PROFILE_INPUTS_DATA}
           />
           <Button

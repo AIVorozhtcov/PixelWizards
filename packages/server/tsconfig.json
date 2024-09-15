@@ -23,8 +23,18 @@
     "types": ["node", "jest"],
     "baseUrl": ".",
     "paths": {
-      "*": ["types/*"]
+      "*": ["*"]
     },
     "outDir": "dist"
-  }
+  },
+  "include": [
+    "controllers",
+    "middlewares",
+    "models",
+    "routers",
+    "db.ts",
+    "index.ts",
+    "mockProfileFormDefaultValues.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
 }
