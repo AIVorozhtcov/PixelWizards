@@ -23,12 +23,21 @@ services:
             dockerfile: Dockerfile.server
             args:
               SERVER_PORT: ${SERVER_PORT}
+        depends_on:
+          - postgres
         restart: always
         ports:
             - "${SERVER_PORT}:${SERVER_PORT}"
         environment:
           SERVER_PORT: ${SERVER_PORT}
-
+          POSTGRES_USER: ${POSTGRES_USER}
+          POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+          POSTGRES_DB: ${POSTGRES_DB}
+          POSTGRES_PORT: ${POSTGRES_PORT}
+          POSTGRES_HOST: ${POSTGRES_HOST}
+          JWT_SECRET: ${JWT_SECRET}
+        networks:
+          - awesome
     postgres:
       image: postgres:14     
       ports:
@@ -39,4 +48,9 @@ services:
         POSTGRES_DB: ${POSTGRES_DB}
       volumes:
         - ./tmp/pgdata:/var/lib/postgresql/data
+      networks:
+        - awesome
 
+networks:
+    awesome:
+        driver: bridge 

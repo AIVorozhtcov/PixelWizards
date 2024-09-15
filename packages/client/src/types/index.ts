@@ -117,4 +117,18 @@ export interface FormFields {
 export type FormFieldProps = FormFields &
   React.InputHTMLAttributes<HTMLInputElement>;
 
+
 export type ThemeType = keyof typeof THEMES;
+
+export interface ITopicMessages {
+  id: number;
+  text: string;
+  reactions: {
+    current: string | null;
+    available: string[];
+  };
+}
+
+export interface ITopicMessagesState {
+  topicMessages: ITopicMessages[] | string;
+}
