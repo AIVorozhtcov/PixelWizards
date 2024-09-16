@@ -10,6 +10,7 @@ export class Map {
   height: number;
 
   background = new Image();
+  mapHeal = 0;
 
   constructor(
     ctx: CanvasRenderingContext2D,
@@ -25,7 +26,8 @@ export class Map {
           ctx,
           this.changeActiveNode.bind(this),
           createBattle,
-          setIsMapOpen
+          setIsMapOpen,
+          this.getHealFromMap.bind(this)
         )
     );
     this.width = width;
@@ -106,5 +108,9 @@ export class Map {
 
   drawBackground() {
     this.context.drawImage(this.background, 0, 0);
+  }
+
+  getHealFromMap(heal = 3) {
+    this.mapHeal += heal;
   }
 }

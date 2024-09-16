@@ -4,7 +4,7 @@ import { cardsInEnemyHand } from './Enemy/cardsInEnemyHand';
 import { Enemy } from './Enemy/Enemy';
 import Gameover from './Gameover/Gameover';
 import { Map as GameMap } from './Map/Map';
-import { NodeKeyofType, NodeType } from './Map/types';
+import { NodeKeyofType } from './Map/types';
 import { fixCardsInPlayerHand } from './Player/fixCardsInPlayerHand';
 import { Player } from './Player/Player';
 
@@ -213,6 +213,27 @@ export class Game {
     });
   }
 
+  createPlayer() {
+    const mapHeal = this.map.mapHeal;
+    let playerHitPoints = 10;
+
+    if (mapHeal !== 0) {
+      playerHitPoints += mapHeal;
+    }
+
+    this.player = new Player({
+      cardInHand: fixCardsInPlayerHand,
+      x: 20,
+      y: 100,
+      width: 140,
+      height: 190,
+      hitPoints: playerHitPoints,
+      initialActionPoints: 2,
+      characterSkin: '/character.png',
+      game: this,
+    });
+  }
+
   beginGame(nodeType: NodeKeyofType) {
     this.isGameEnd = false;
     this.currentGameStage = 'battle';
@@ -228,18 +249,7 @@ export class Game {
     this.music.stopEndGameSong();
     this.music.playBackgroundSong();
 
-    this.player = new Player({
-      cardInHand: fixCardsInPlayerHand,
-      x: 20,
-      y: 100,
-      width: 140,
-      height: 190,
-      hitPoints: 10,
-      initialActionPoints: 2,
-      characterSkin: '/character.png',
-      game: this,
-    });
-
+    this.createPlayer();
     this.createEnemyByNodeType(nodeType);
 
     this.whosTurn = 'player';

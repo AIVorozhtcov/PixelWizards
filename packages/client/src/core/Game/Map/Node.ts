@@ -18,13 +18,15 @@ export class Node {
   changeActiveNode: (id: number) => void;
   createBattle: (x?: NodeKeyofType) => void;
   setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  getHealFromMap: (heal?: number) => void;
 
   constructor(
     { id, x, y, type, src, visited, connectedToActive, active }: NodeType,
     ctx: CanvasRenderingContext2D,
     changeActiveNode: (id: number) => void,
     createBattle: (x?: NodeKeyofType) => void,
-    setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    getHealFromMap: (heal?: number) => void
   ) {
     this.id = id;
     this.x = x;
@@ -40,6 +42,7 @@ export class Node {
     this.changeActiveNode = changeActiveNode;
     this.createBattle = createBattle;
     this.setIsMapOpen = setIsMapOpen;
+    this.getHealFromMap = getHealFromMap;
   }
 
   drawNode(backgroundColor = 'black', strokeColor = 'black') {
@@ -132,7 +135,9 @@ export class Node {
         this.createBattle('boss');
         break;
       case NODE_TYPES.heal:
-        alert('Максимальное здоровье персонажа +5!');
+        alert('Максимальное здоровье персонажа +3!');
+        this.setIsMapOpen(true);
+        this.getHealFromMap();
         break;
       case NODE_TYPES.treasure:
         alert('Получена карта восстановления здоровья!');
