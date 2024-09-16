@@ -9,8 +9,10 @@ export async function resultFromSchema<
   response: Response
 ) {
   const result = safeSchema.safeParse(await response.json());
+  console.log(',', result);
 
   if (!result.success) {
+    console.log('asd');
     return errorSchema.parse(result);
   } else {
     return result.data;
@@ -25,7 +27,8 @@ export async function resultFromArraySchema<
   errorSchema: ZodObject<ErrorSchema>,
   response: Response
 ) {
-  const result = safeSchema.safeParse(await response.json());
+  const data = await response.json();
+  const result = safeSchema.safeParse(data);
 
   if (!result.success) {
     return errorSchema.parse(result);

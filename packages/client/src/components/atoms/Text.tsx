@@ -8,6 +8,7 @@ const textVariants = cva('text-[#94a3b8]', {
       description:
         'max-w-[900px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed',
       custom: '',
+      caption: 'text-[10px]',
     },
   },
   defaultVariants: {

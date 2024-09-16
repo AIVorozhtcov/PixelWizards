@@ -28,6 +28,7 @@ interface FormProps<T extends FieldValues>
   buttonVariant?: VariantProps<ButtonVariants>['variant'];
   buttonClass?: string;
   fields: Field[];
+  formClass?: string;
 }
 
 const Form = <T extends FieldValues>({
@@ -43,6 +44,7 @@ const Form = <T extends FieldValues>({
   labelVariant,
   inputVariant,
   inputAcept,
+  formClass,
 }: FormProps<T>) => {
   const methods = useForm<T>({
     resolver: zodResolver(zodSchema),
@@ -51,7 +53,10 @@ const Form = <T extends FieldValues>({
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} noValidate>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        noValidate
+        className={formClass}>
         {fields.map(field => (
           <FormField
             key={String(field.name)}

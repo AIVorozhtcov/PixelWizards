@@ -164,10 +164,12 @@ export const TopicSchema = z.object({
   id: z.number(),
   title: z.string(),
   content: z.string(),
-  createdAt: z.date(),
+  createdAt: z.string(),
   userId: z.number(),
-  updatedAt: z.date(),
+  updatedAt: z.string(),
 });
+
+export type TopicArray = z.infer<typeof TopicSchema>;
 
 export const TopicsSchema = z.array(TopicSchema);
 
@@ -176,6 +178,7 @@ export const CommentSchema = z.object({
   content: z.string(),
   userId: z.number(),
   topicId: z.number(),
+  reaction: z.string().optional().or(z.null()),
 });
 
 export const CommentsSchema = z.array(CommentSchema);
@@ -206,3 +209,18 @@ export const SignInSchema = z.object({
 export const AvatarIdSchema = SignUpSchema.merge(AvatarSchema);
 
 export const UserInfoSchema = ProfileUpdateDataSchema.merge(AvatarIdSchema);
+
+export const ForumCreateTopicSchema = z.object({
+  title: z
+    .string()
+    .min(3, 'Заголовок не может быть короче 3 символов')
+    .max(20, 'Заголовок не может быть длиннее 20 символов'),
+  content: z
+    .string()
+    .min(8, 'Контент не может быть короче 5 символов')
+    .max(40, 'Контент не может быть длиннее 400 символов'),
+});
+
+export const ForumCreateCommentSchema = z.object({
+  content: z.string().min(1, 'Заголовок не может быть короче 3 символов'),
+});

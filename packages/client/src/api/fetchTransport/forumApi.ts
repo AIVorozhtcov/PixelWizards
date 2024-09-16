@@ -41,6 +41,7 @@ class ForumApi extends BaseApi {
     const response = await this.get(`${FORUM_PATHS.topics}`, {
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
     return resultFromArraySchema(TopicsSchema, ErrorSchema, response);
@@ -50,6 +51,7 @@ class ForumApi extends BaseApi {
     const response = await this.get(`${FORUM_PATHS.topics}/${id}`, {
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
     return resultFromSchema(TopicSchema, ErrorSchema, response);
@@ -60,6 +62,7 @@ class ForumApi extends BaseApi {
       data,
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
     return resultFromSchema(TopicSchema, ErrorSchema, response);
@@ -73,6 +76,7 @@ class ForumApi extends BaseApi {
       data,
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
     return resultFromSchema(TopicSchema, ErrorSchema, response);
@@ -82,9 +86,9 @@ class ForumApi extends BaseApi {
     const response = await this.delete(`${FORUM_PATHS.topics}/${id}`, {
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
-
     return resultFromSchema(MessageSchema, ErrorSchema, response);
   }
 
@@ -92,6 +96,7 @@ class ForumApi extends BaseApi {
     const response = await this.get(`${FORUM_PATHS.comments}/${topicId}`, {
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
     return resultFromArraySchema(CommentsSchema, ErrorSchema, response);
@@ -105,6 +110,7 @@ class ForumApi extends BaseApi {
       data,
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
     return resultFromSchema(CommentSchema, ErrorSchema, response);
@@ -120,6 +126,7 @@ class ForumApi extends BaseApi {
         data,
         headers: {
           authorization: `Bearer ${token}`,
+          extends: true,
         },
       }
     );
@@ -130,6 +137,7 @@ class ForumApi extends BaseApi {
     const response = await this.delete(`${FORUM_PATHS.comments}/${topicId}`, {
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
 
@@ -140,6 +148,7 @@ class ForumApi extends BaseApi {
     const response = await this.get(`${FORUM_PATHS.reply}/${commentId}`, {
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
     return resultFromArraySchema(RepliesSchema, ErrorSchema, response);
@@ -153,6 +162,7 @@ class ForumApi extends BaseApi {
       data,
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
     return resultFromSchema(ReplySchema, ErrorSchema, response);
@@ -166,6 +176,7 @@ class ForumApi extends BaseApi {
       data,
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
     return resultFromSchema(ReplySchema, ErrorSchema, response);
@@ -175,6 +186,7 @@ class ForumApi extends BaseApi {
     const response = await this.delete(`${FORUM_PATHS.reply}/${commentId}`, {
       headers: {
         authorization: `Bearer ${token}`,
+        extends: true,
       },
     });
 

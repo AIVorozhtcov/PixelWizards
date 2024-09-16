@@ -18,6 +18,7 @@ export default abstract class BaseApi {
     options.headers = installedOptions?.headers ?? this.defaultHeaders;
 
     if (installedOptions?.headers?.extends) {
+      delete options.headers.extends;
       options.headers = {
         ...this.defaultHeaders,
         ...options.headers,

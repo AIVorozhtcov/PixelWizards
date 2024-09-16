@@ -31,6 +31,15 @@ export const LOGIN_INPUTS_DATA = [
   createInput('Пароль', FORM_INPUT_NAMES.password, 'password'),
 ];
 
+export const FORUM_CREATE_TOPICS_INPUTS_DATA = [
+  createInput('Заголовок', 'title'),
+  createInput('Контент', 'content', 'textarea'),
+];
+
+export const FORUM_CREATE_COMMENT_INPUTS_DATA = [
+  createInput('Текст комментария', 'content'),
+];
+
 export const PROFILE_CHANGE_PASSWORD_INPUTS = [
   createInput('Старый пароль', FORM_INPUT_NAMES.oldPassword, 'password'),
   createInput('Новый пароль', FORM_INPUT_NAMES.newPassword, 'password'),

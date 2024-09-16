@@ -31,7 +31,7 @@ const RegistrationSection = () => {
           response?.reason ?? response.error + '. Ошибка при логине'
         );
       } else {
-        localStorage.setItem(forumTokenLocalStorageKey, responseLogin);
+        localStorage.setItem(forumTokenLocalStorageKey, responseLogin.token);
         navigate('/forum');
       }
     } catch (error) {
