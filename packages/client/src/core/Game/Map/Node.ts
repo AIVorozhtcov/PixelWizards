@@ -1,5 +1,5 @@
 import { NODE_TYPES } from './mapConstants';
-import { NodeType } from './types';
+import { NodeKeyofType, NodeType } from './types';
 
 export class Node {
   private imageOffset = 40;
@@ -16,14 +16,14 @@ export class Node {
   active: boolean;
   connectedToActive: boolean;
   changeActiveNode: (id: number) => void;
-  createBattle: () => void;
+  createBattle: (x?: NodeKeyofType) => void;
   setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   constructor(
     { id, x, y, type, src, visited, connectedToActive, active }: NodeType,
     ctx: CanvasRenderingContext2D,
     changeActiveNode: (id: number) => void,
-    createBattle: () => void,
+    createBattle: (x?: NodeKeyofType) => void,
     setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>
   ) {
     this.id = id;
@@ -103,7 +103,6 @@ export class Node {
       this.startNodeLevel();
       this.visited = true;
       this.changeActiveNode(this.id);
-      alert(this.type);
     }
   }
 
@@ -123,14 +122,20 @@ export class Node {
     //TODO дописать действия
     switch (this.type) {
       case NODE_TYPES.battle:
+        alert('Бой начинается!');
         this.setIsMapOpen(false);
         this.createBattle();
         break;
       case NODE_TYPES.boss:
+        alert('Финальный бой начинается!');
+        this.setIsMapOpen(false);
+        this.createBattle('boss');
         break;
       case NODE_TYPES.heal:
+        alert('Максимальное здоровье персонажа +5!');
         break;
       case NODE_TYPES.treasure:
+        alert('Получена карта восстановления здоровья!');
         break;
       case NODE_TYPES.start:
         break;

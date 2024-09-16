@@ -1,5 +1,6 @@
 import { NODES, NODE_CONNECTION_TABLE } from './mapConstants';
 import { Node } from './Node';
+import { NodeKeyofType } from './types';
 
 export class Map {
   nodes: Node[];
@@ -12,7 +13,7 @@ export class Map {
 
   constructor(
     ctx: CanvasRenderingContext2D,
-    createBattle: () => void,
+    createBattle: (x?: NodeKeyofType) => void,
     setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>,
     width: number,
     height: number
@@ -41,23 +42,6 @@ export class Map {
     } else {
       this.setConnectedToActive(activeNode.id);
     }
-  }
-
-  reInitMapNode(
-    ctx: CanvasRenderingContext2D,
-    createBattle: () => void,
-    setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>
-  ) {
-    this.nodes = NODES.map(
-      node =>
-        new Node(
-          { ...node },
-          ctx,
-          this.changeActiveNode.bind(this),
-          createBattle,
-          setIsMapOpen
-        )
-    );
   }
 
   drawNodes() {

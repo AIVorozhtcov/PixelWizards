@@ -4,6 +4,7 @@ import { cardsInEnemyHand } from './Enemy/cardsInEnemyHand';
 import { Enemy } from './Enemy/Enemy';
 import Gameover from './Gameover/Gameover';
 import { Map as GameMap } from './Map/Map';
+import { NodeKeyofType, NodeType } from './Map/types';
 import { fixCardsInPlayerHand } from './Player/fixCardsInPlayerHand';
 import { Player } from './Player/Player';
 
@@ -38,7 +39,7 @@ export class Game {
     this.map = new GameMap(
       this.context,
       this.beginAndDrawGame.bind(this),
-      setIsMapOpen,
+      this.setIsMapOpen,
       this.width,
       this.height
     );
@@ -66,10 +67,12 @@ export class Game {
     if (this.player.state.hitPoints <= 0) {
       this.endGame();
       //При проигрыше сбрасываем прогресс на начало карты
-      this.map.reInitMapNode(
+      this.map = new GameMap(
         this.context,
         this.beginAndDrawGame.bind(this),
-        this.setIsMapOpen
+        this.setIsMapOpen,
+        this.width,
+        this.height
       );
       return false;
     } else if (this.enemy.state.hitPoints <= 0) {
@@ -184,7 +187,33 @@ export class Game {
     new Gameover(this, isWin, 50);
   }
 
-  beginGame() {
+  createEnemyByNodeType(nodeType: NodeKeyofType) {
+    let enemySkin = '/enemy.png';
+    let enemyHitPoints = 10;
+    let enemyWidth = 180;
+    let enemyX = 800;
+
+    if (nodeType === 'boss') {
+      enemySkin = '/boss.png';
+      enemyHitPoints = 13;
+      enemyWidth = 260;
+      enemyX = 720;
+    }
+
+    this.enemy = this.createEnemy({
+      cardInHand: cardsInEnemyHand,
+      x: enemyX,
+      y: 100,
+      width: enemyWidth,
+      height: 210,
+      hitPoints: enemyHitPoints,
+      initialActionPoints: 2,
+      characterSkin: enemySkin,
+      game: this,
+    });
+  }
+
+  beginGame(nodeType: NodeKeyofType) {
     this.isGameEnd = false;
     this.currentGameStage = 'battle';
 
@@ -203,7 +232,7 @@ export class Game {
       cardInHand: fixCardsInPlayerHand,
       x: 20,
       y: 100,
-      width: 120,
+      width: 140,
       height: 190,
       hitPoints: 10,
       initialActionPoints: 2,
@@ -211,24 +240,14 @@ export class Game {
       game: this,
     });
 
-    this.enemy = this.createEnemy({
-      cardInHand: cardsInEnemyHand,
-      x: 860,
-      y: 100,
-      width: 120,
-      height: 190,
-      hitPoints: 10,
-      initialActionPoints: 2,
-      characterSkin: '/enemy.png',
-      game: this,
-    });
+    this.createEnemyByNodeType(nodeType);
 
     this.whosTurn = 'player';
     this.gameAnimation = requestAnimationFrame(this.initialDraw.bind(this));
   }
 
-  beginAndDrawGame() {
-    this.beginGame();
+  beginAndDrawGame(nodeType: NodeKeyofType = 'battle') {
+    this.beginGame(nodeType);
     this.draw(this.context);
   }
 
