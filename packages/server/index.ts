@@ -5,6 +5,8 @@ import topicRouter from './routers/topic-router';
 import userRouter from './routers/user-router';
 import { dbConnect } from './db';
 import replyRouter from './routers/reply-router';
+import themeRouter from './routers/theme-router';
+import userThemeRouter from './routers/user-theme-router';
 import authMiddleware from './middlewares/auth-middleware';
 import cors from 'cors';
 
@@ -21,6 +23,8 @@ dbConnect().then(() => {
   app.use('/api/topics', authMiddleware, topicRouter);
   app.use('/api/comments', authMiddleware, commentRouter);
   app.use('/api/replies', authMiddleware, replyRouter);
+  app.use('/api/theme', themeRouter);
+  app.use('/api/user-theme', userThemeRouter);
 
   // Обработка ошибок
   app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
