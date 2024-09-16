@@ -8,7 +8,7 @@ class Comment extends Model {
   public content!: string;
   public userId!: number;
   public topicId!: number;
-  public reaction: string | null = null;
+  public reaction!: string | null;
 }
 
 Comment.init(
@@ -30,9 +30,10 @@ Comment.init(
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
     },
-    // reaction: {
-    //   type: new DataTypes.STRING(),
-    // },
+    reaction: {
+      type: new DataTypes.STRING(),
+      allowNull: true,
+    },
   },
   {
     sequelize,

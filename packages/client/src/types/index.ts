@@ -125,6 +125,7 @@ export type FormFieldProps = FormFields &
 export interface ITopicMessages {
   id: number;
   text: string;
+  reaction: string | null;
 }
 
 export interface ITopicMessagesState {

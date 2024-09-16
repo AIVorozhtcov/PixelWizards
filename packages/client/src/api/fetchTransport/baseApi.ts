@@ -46,6 +46,15 @@ export default abstract class BaseApi {
     return response;
   };
 
+  protected patch: APIMethod = async (endpoint, options) => {
+    const response = await this.http.patch(
+      endpoint,
+      this.checkOptions(options)
+    );
+
+    return response;
+  };
+
   protected delete: APIMethod = async (endpoint, options) => {
     const response = await this.http.delete(
       endpoint,

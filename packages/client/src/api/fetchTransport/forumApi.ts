@@ -120,7 +120,21 @@ class ForumApi extends BaseApi {
     data: { topicId: number; content: string },
     token: string
   ) {
-    const response = await this.post(
+    const response = await this.put(`${FORUM_PATHS.comments}/${data.topicId}`, {
+      data,
+      headers: {
+        authorization: `Bearer ${token}`,
+        extends: true,
+      },
+    });
+    return resultFromSchema(CommentSchema, ErrorSchema, response);
+  }
+
+  async updateReaction(
+    data: { topicId: number; reaction: string },
+    token: string
+  ) {
+    const response = await this.patch(
       `${FORUM_PATHS.comments}/${data.topicId}`,
       {
         data,
