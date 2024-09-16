@@ -5,7 +5,10 @@ import { Enemy } from './Enemy/Enemy';
 import Gameover from './Gameover/Gameover';
 import { Map as GameMap } from './Map/Map';
 import { NodeKeyofType } from './Map/types';
-import { fixCardsInPlayerHand } from './Player/fixCardsInPlayerHand';
+import {
+  fixCardsInPlayerHand,
+  optionalHealCardInHand,
+} from './Player/fixCardsInPlayerHand';
 import { Player } from './Player/Player';
 
 export class Game {
@@ -215,14 +218,22 @@ export class Game {
 
   createPlayer() {
     const mapHeal = this.map.mapHeal;
+    const numOptionCard = this.map.numOptionCard;
+    const cardInHand = fixCardsInPlayerHand;
     let playerHitPoints = 10;
 
     if (mapHeal !== 0) {
       playerHitPoints += mapHeal;
     }
 
+    if (numOptionCard !== 0) {
+      for (let i = 0; i < numOptionCard; i++) {
+        cardInHand.push(optionalHealCardInHand);
+      }
+    }
+
     this.player = new Player({
-      cardInHand: fixCardsInPlayerHand,
+      cardInHand,
       x: 20,
       y: 100,
       width: 140,

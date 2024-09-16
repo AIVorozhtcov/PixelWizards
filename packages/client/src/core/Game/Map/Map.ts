@@ -11,6 +11,7 @@ export class Map {
 
   background = new Image();
   mapHeal = 0;
+  numOptionCard = 0;
 
   constructor(
     ctx: CanvasRenderingContext2D,
@@ -27,7 +28,8 @@ export class Map {
           this.changeActiveNode.bind(this),
           createBattle,
           setIsMapOpen,
-          this.getHealFromMap.bind(this)
+          this.getHealFromMap.bind(this),
+          this.getOptionCardFromMap.bind(this)
         )
     );
     this.width = width;
@@ -112,5 +114,9 @@ export class Map {
 
   getHealFromMap(heal = 3) {
     this.mapHeal += heal;
+  }
+
+  getOptionCardFromMap(numOptionCard = 1) {
+    this.numOptionCard += numOptionCard;
   }
 }

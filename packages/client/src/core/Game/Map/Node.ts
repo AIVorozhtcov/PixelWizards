@@ -18,7 +18,8 @@ export class Node {
   changeActiveNode: (id: number) => void;
   createBattle: (x?: NodeKeyofType) => void;
   setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  getHealFromMap: (heal?: number) => void;
+  getHealFromMap: (x?: number) => void;
+  getOptionalCardFromMAp: (x?: number) => void;
 
   constructor(
     { id, x, y, type, src, visited, connectedToActive, active }: NodeType,
@@ -26,7 +27,8 @@ export class Node {
     changeActiveNode: (id: number) => void,
     createBattle: (x?: NodeKeyofType) => void,
     setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    getHealFromMap: (heal?: number) => void
+    getHealFromMap: (x?: number) => void,
+    getOptionalCardFromMAp: (x?: number) => void
   ) {
     this.id = id;
     this.x = x;
@@ -43,6 +45,7 @@ export class Node {
     this.createBattle = createBattle;
     this.setIsMapOpen = setIsMapOpen;
     this.getHealFromMap = getHealFromMap;
+    this.getOptionalCardFromMAp = getOptionalCardFromMAp;
   }
 
   drawNode(backgroundColor = 'black', strokeColor = 'black') {
@@ -122,7 +125,6 @@ export class Node {
   }
 
   startNodeLevel() {
-    //TODO дописать действия
     switch (this.type) {
       case NODE_TYPES.battle:
         alert('Бой начинается!');
@@ -141,6 +143,8 @@ export class Node {
         break;
       case NODE_TYPES.treasure:
         alert('Получена карта восстановления здоровья!');
+        this.setIsMapOpen(true);
+        this.getOptionalCardFromMAp();
         break;
       case NODE_TYPES.start:
         break;
