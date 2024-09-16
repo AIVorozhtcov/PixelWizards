@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
 import Topic from '../models/topic';
+import Comment from '../models/comment';
+import Reply from '../models/reply';
+import { Op } from 'sequelize';
 
 export const createTopic = async (req: Request, res: Response) => {
   const { title, content } = req.body;
@@ -59,6 +62,12 @@ export const deleteTopic = async (req: Request, res: Response) => {
     const userId = (req as any).user.id;
 
     if (topic && topic.userId === userId) {
+      const comments = await Comment.findAll({ where: { topicId: topic.id } });
+      const replies = await Reply.findAll({
+        where: { commentId: { [Op.in]: comments.map(x => x.id) } },
+      });
+      replies.forEach(async reply => await reply.destroy());
+      comments.forEach(async comment => await comment.destroy());
       await topic.destroy();
       res.json({ message: 'Топик удален' });
     } else {
