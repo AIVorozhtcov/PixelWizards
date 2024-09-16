@@ -17,12 +17,14 @@ export class Node {
   connectedToActive: boolean;
   changeActiveNode: (id: number) => void;
   createBattle: () => void;
+  setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   constructor(
     { id, x, y, type, src, visited, connectedToActive, active }: NodeType,
     ctx: CanvasRenderingContext2D,
     changeActiveNode: (id: number) => void,
-    createBattle: () => void
+    createBattle: () => void,
+    setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>
   ) {
     this.id = id;
     this.x = x;
@@ -37,6 +39,7 @@ export class Node {
     this.onClick = this.onClick.bind(this);
     this.changeActiveNode = changeActiveNode;
     this.createBattle = createBattle;
+    this.setIsMapOpen = setIsMapOpen;
   }
 
   drawNode(backgroundColor = 'black', strokeColor = 'black') {
@@ -120,6 +123,7 @@ export class Node {
     //TODO дописать действия
     switch (this.type) {
       case NODE_TYPES.battle:
+        this.setIsMapOpen(false);
         this.createBattle();
         break;
       case NODE_TYPES.boss:

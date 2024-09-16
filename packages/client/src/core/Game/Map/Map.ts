@@ -13,6 +13,7 @@ export class Map {
   constructor(
     ctx: CanvasRenderingContext2D,
     createBattle: () => void,
+    setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>,
     width: number,
     height: number
   ) {
@@ -22,7 +23,8 @@ export class Map {
           { ...node },
           ctx,
           this.changeActiveNode.bind(this),
-          createBattle
+          createBattle,
+          setIsMapOpen
         )
     );
     this.width = width;
@@ -39,6 +41,23 @@ export class Map {
     } else {
       this.setConnectedToActive(activeNode.id);
     }
+  }
+
+  reInitMapNode(
+    ctx: CanvasRenderingContext2D,
+    createBattle: () => void,
+    setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>
+  ) {
+    this.nodes = NODES.map(
+      node =>
+        new Node(
+          { ...node },
+          ctx,
+          this.changeActiveNode.bind(this),
+          createBattle,
+          setIsMapOpen
+        )
+    );
   }
 
   drawNodes() {

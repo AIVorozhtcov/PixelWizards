@@ -16,7 +16,8 @@ export class Game {
   whosTurn: 'player' | 'enemy' = 'player';
   isGameEnd = false;
   gameAnimation: number | undefined = undefined;
-  changeGameStateFunc: () => void;
+  setIsGameEnd: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>;
   background = new Image();
   music = new AudioPlayer();
   map: GameMap;
@@ -26,16 +27,18 @@ export class Game {
     width: number,
     height: number,
     ctx: CanvasRenderingContext2D,
-    changeGameStateFunc: () => void
+    setIsGameEnd: React.Dispatch<React.SetStateAction<boolean>>,
+    setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>
   ) {
     this.width = width;
     this.height = height;
-    this.changeGameStateFunc = changeGameStateFunc;
-
+    this.setIsGameEnd = setIsGameEnd;
+    this.setIsMapOpen = setIsMapOpen;
     this.context = ctx;
     this.map = new GameMap(
       this.context,
       this.beginAndDrawGame.bind(this),
+      setIsMapOpen,
       this.width,
       this.height
     );
@@ -62,6 +65,12 @@ export class Game {
   isGameContinue() {
     if (this.player.state.hitPoints <= 0) {
       this.endGame();
+      //При проигрыше сбрасываем прогресс на начало карты
+      this.map.reInitMapNode(
+        this.context,
+        this.beginAndDrawGame.bind(this),
+        this.setIsMapOpen
+      );
       return false;
     } else if (this.enemy.state.hitPoints <= 0) {
       this.endGame(true);
@@ -170,7 +179,7 @@ export class Game {
 
     this.isGameEnd = true;
 
-    this.changeGameStateFunc();
+    this.setIsGameEnd(true);
 
     new Gameover(this, isWin, 50);
   }
@@ -182,7 +191,7 @@ export class Game {
     if (this.gameAnimation) {
       window.cancelAnimationFrame(this.gameAnimation);
       this.gameAnimation = undefined;
-      this.changeGameStateFunc();
+      this.setIsGameEnd(false);
     }
 
     this.context.clearRect(0, 0, this.width, this.height);
@@ -221,7 +230,6 @@ export class Game {
   beginAndDrawGame() {
     this.beginGame();
     this.draw(this.context);
-    console.log(this.currentGameStage);
   }
 
   private initialDraw() {
