@@ -1,42 +1,17 @@
-import { useEffect, useState } from 'react';
-import { useErrorBoundary } from 'react-error-boundary';
+import { useEffect } from 'react';
+import MessageList from '../../components/organisms/MessageList';
+import { useAppDispatch } from '../../lib/hooks';
+import { fetchTopicMessages } from '../../store/slices/topicMessages';
 
-export default function TestComponent({
-  withError = false,
-  withFetchError = false,
-}) {
-  if (withError) throw new Error('Cannot display Component');
-
-  const [data, setData] = useState([] as any[]);
-  const { showBoundary } = useErrorBoundary();
+export default function TestComponent() {
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = withFetchError
-          ? await fetch(
-              'https://jsonplace12412sadasholder.typicode.com/todos?_limit=5'
-            )
-          : await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5');
-
-        const data = await response.json();
-
-        setData(data);
-      } catch (error) {
-        showBoundary(error);
-        throw new Error('Fetch error');
-      }
-    };
-
-    fetchData();
+    dispatch(fetchTopicMessages(123));
   }, []);
-
   return (
-    <div>
-      Component works fine
-      {data.map(item => (
-        <p className="text-blue-500">{item.title}</p>
-      ))}
+    <div className="flex justify-center items-center w-screen h-screen">
+      <MessageList />
     </div>
   );
 }

@@ -1,12 +1,9 @@
-import React from 'react';
 import RegistrationSection from '../components/organisms/RegistrationSection';
 
-const Registration: React.FC = () => {
+export default function Registration() {
   return (
-    <main className="flex flex-col min-h-dvh bg-[#0c1b2a] py-5">
-      <RegistrationSection></RegistrationSection>
+    <main className="flex flex-col min-h-dvh dark:bg-[#0c1b2a] bg-white py-5">
+      <RegistrationSection />
     </main>
   );
-};
-
-export default Registration;
+}

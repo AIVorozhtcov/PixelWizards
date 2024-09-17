@@ -5,7 +5,7 @@ import JoinForumSection from '../components/organisms/JoinForumSection';
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-dvh bg-[#0c1b2a]">
+    <main className="flex flex-col min-h-dvh dark:bg-[#0c1b2a] bg-white">
       <HeroSection />
       <DescriptionSection />
       <GameplaySection />

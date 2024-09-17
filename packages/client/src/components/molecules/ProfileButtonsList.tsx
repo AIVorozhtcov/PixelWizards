@@ -1,6 +1,6 @@
 import Button from '../atoms/Button';
 import { Dispatch, SetStateAction } from 'react';
-import { ProfileModeType } from '../../types/types';
+import { ProfileModeType } from '../../types';
 
 type ProfileButtonType = {
   text: string;

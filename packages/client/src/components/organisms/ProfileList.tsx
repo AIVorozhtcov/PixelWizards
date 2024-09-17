@@ -1,9 +1,9 @@
-import { ProfileDataType, ProfileFormData, UserData } from '../../types/types';
+import { ProfileDataType, ProfileFormData, UserData } from '../../types';
 import ProfileListItem from '../molecules/ProfileListItem';
 
 type ProfileListProps = {
   profileData: ProfileDataType[];
-  userInfo: UserData;
+  userInfo: UserData | null;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const ProfileList = ({ profileData, userInfo }: ProfileListProps) => {
@@ -12,7 +12,7 @@ const ProfileList = ({ profileData, userInfo }: ProfileListProps) => {
       {profileData.map((item, idx) => (
         <ProfileListItem
           label={item.label}
-          data={userInfo[item.name as keyof ProfileFormData]}
+          data={userInfo && userInfo[item.name as keyof ProfileFormData]}
           key={idx}
         />
       ))}

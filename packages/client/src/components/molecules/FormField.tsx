@@ -1,17 +1,7 @@
 import Input from '../atoms/Input';
 import { useFormContext } from 'react-hook-form';
 import Label from '../atoms/Label';
-
-interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  error?: string;
-  name: string;
-  labelClass?: string;
-  formFieldClass?: string;
-  labelVariant?: 'default' | 'basic' | 'profile';
-  inputVariant?: 'default' | 'basic' | 'profile' | 'typeFile';
-  inputAcept?: string;
-}
+import { FormFieldProps } from '../../types';
 
 const FormField = ({
   label,

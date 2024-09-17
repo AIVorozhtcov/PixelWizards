@@ -4,6 +4,7 @@ import Link from '../atoms/Link';
 import Button from '../atoms/Button';
 import generalAPI from '../../api/fetchTransport/generalApi';
 import { toast } from 'sonner';
+import ThemeButton from './ThemeButton';
 
 export default function Navbar() {
   const { pathname } = useLocation();
@@ -20,11 +21,14 @@ export default function Navbar() {
         variant="acent"
         onClick={async () => {
           toast.info('Выходим из системы');
-          await generalAPI.logout();
+          await generalAPI.logout().catch(error => {
+            toast.error('Не удалось выйти из системы, из-за ' + error.message);
+          });
           navigate('/login');
         }}>
         Выйти из профиля
       </Button>
+      <ThemeButton />
     </nav>
   );
 }

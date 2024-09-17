@@ -6,7 +6,7 @@ import IntroductionBlock from '../molecules/IntroductionBlock';
 export default function JoinForumSection() {
   return (
     <Section>
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center gap-4 mb-10">
         <IntroductionBlock
           className="text-start"
           subtitle="Join the Cosmic Battle"

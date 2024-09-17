@@ -1,9 +1,5 @@
-import FetchTransport, {
-  APIMethod,
-  BaseAPIConfig,
-  Headers,
-  Options,
-} from './fetchTransport';
+import { APIMethod, BaseAPIConfig, Headers, Options } from '../../types';
+import FetchTransport from './fetchTransport';
 
 export default abstract class BaseApi {
   private http: FetchTransport;

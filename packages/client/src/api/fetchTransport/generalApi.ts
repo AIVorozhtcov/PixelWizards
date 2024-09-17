@@ -1,9 +1,15 @@
 import {
   AUTH_PATHS,
+  FORUM_PATHS,
   USER_PATHS,
   OAUTH_PATHS,
 } from '../../constants/apiConstants';
-import { FormAvatarType, OauthSignin, RedirectUri } from '../../types/types';
+import {
+  Data,
+  FormAvatarType,
+  OauthSignin,
+  RedirectUri,
+} from '../../types/types';
 import {
   ErrorSchema,
   SignUpSchema,
@@ -12,8 +18,6 @@ import {
 } from '../../types/validationSchemas';
 import resultFromSchema from '../../utils/resultFromSchema';
 import BaseApi from './baseApi';
-
-type Data = Record<string, string | null>;
 
 class GeneralApi extends BaseApi {
   constructor() {
@@ -73,6 +77,7 @@ class GeneralApi extends BaseApi {
   async updateUserAvatar(data: FormAvatarType) {
     const response = await this.put(USER_PATHS.updateAvatar, {
       data,
+      headers: {},
     });
 
     return resultFromSchema(UserInfoSchema, ErrorSchema, response);
@@ -100,6 +105,23 @@ class GeneralApi extends BaseApi {
 
   async logout() {
     await this.post(AUTH_PATHS.logout);
+  }
+
+  async topicMessages(id: number) {
+    // TODO replace
+    const url = FORUM_PATHS.topicMessages.replace(
+      ':id',
+      String(id)
+    ) as `/${string}`;
+    const response = await this.post(url);
+
+    return await response.json();
+  }
+
+  async setEmoji(id: number, emoji: string) {
+    // TODO make fetch
+
+    return {};
   }
 }
 

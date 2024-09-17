@@ -2,28 +2,8 @@ import Character from '../Character/Character';
 import { CharacterInitProps } from '../Character/types';
 
 export class Enemy extends Character {
-  constructor({
-    game,
-    initialActionPoints,
-    characterSkin,
-    hitPoints,
-    cardInHand,
-    width,
-    height,
-    x,
-    y,
-  }: CharacterInitProps) {
-    super({
-      game,
-      initialActionPoints,
-      characterSkin,
-      hitPoints,
-      cardInHand,
-      width,
-      height,
-      x,
-      y,
-    });
+  constructor(props: CharacterInitProps) {
+    super(props);
   }
 
   beginTurn() {

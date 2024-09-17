@@ -2,9 +2,9 @@ import getRandomColor from '../../../utils/getRandomColor';
 import { Game } from '../Game';
 
 export default class Gameover {
-  game: Game;
-  text: string;
-  fontSize: number;
+  private game: Game;
+  private text: string;
+  private fontSize: number;
 
   constructor(game: Game, isWin: boolean, fontSize: number) {
     this.game = game;
