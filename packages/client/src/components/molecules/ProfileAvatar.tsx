@@ -23,7 +23,7 @@ const ProfileAvatar = ({ handleClick }: ProfileAvatarProps) => {
 
       <Image
         src={
-          userInfo.avatar
+          userInfo?.avatar
             ? `${URLS.resources}/${userInfo.avatar}`
             : MOCK_AVATAR_PATH
         }
