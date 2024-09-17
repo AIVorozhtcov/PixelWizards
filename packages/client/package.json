@@ -5,12 +5,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest ./ --passWithNoTests",
-    "dev": "vite",
-    "build": "tsc && vite build && npm run updateSW",
-    "preview": "vite preview",
-    "ssr:dev": "tsc --project tsconfig.server.json && cross-env NODE_ENV=development node server/index.js",
-    "ssr:build": "tsc --project tsconfig.server.json && vite build && vite build --ssr src/entry-server.tsx --outDir dist/server",
-    "ssr:preview": "node server/index.js",
+    "dev": "tsc --project tsconfig.server.json && cross-env NODE_ENV=development node server/index.js",
+    "build": "tsc --project tsconfig.server.json && vite build && vite build --ssr src/entry-server.tsx --outDir dist/server",
+    "preview": "node server/index.js",
     "updateSW": "node dist/updateServiceWorker.cjs"
   },
   "dependencies": {

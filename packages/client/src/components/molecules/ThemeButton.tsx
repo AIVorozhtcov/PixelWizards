@@ -1,12 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { THEMES } from '../../constants/themeConstants';
-import { useTheme } from '../../templates/ThemeContext/ThemeContext';
+import { useTheme } from '../../templates/ThemeProvider/ThemeProvider';
 import Button from '../atoms/Button';
 
 const ThemeButton = () => {
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
+  if (!mounted) {
+    return null;
+  }
+
   useEffect(() => {
+    setMounted(true);
     if (theme === THEMES.dark) {
       document.documentElement.classList.add('dark');
     }
