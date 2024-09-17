@@ -16,7 +16,7 @@ const app: Application = express();
 
 // Настройка промежуточного ПО
 app.use(bodyParser.json());
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors({ credentials: true, origin: 'http://localhost' }));
 
 app.get('/user', (_, res) => {
   res.json(MOCK_FORM_DEFAULT_VALUES);

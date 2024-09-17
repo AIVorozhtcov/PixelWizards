@@ -1,7 +1,9 @@
+import { SERVER_HOST } from './serverHost';
+
 export const URLS = {
   base: 'https://ya-praktikum.tech/api/v2',
   resources: 'https://ya-praktikum.tech/api/v2/resources',
-  api: 'http://localhost:3001/api',
+  api: `${SERVER_HOST}/api`,
 } as const;
 
 export const USER_PATHS = {

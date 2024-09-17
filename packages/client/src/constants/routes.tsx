@@ -12,6 +12,8 @@ import NotFound from '../pages/NotFound';
 import Profile from '../pages/Profile';
 import Registration from '../pages/Registration';
 import ForumTopic from '../pages/ForumTopic';
+import ForumLogin from '../pages/ForumLogin';
+import ForumRegistration from '../pages/ForumRegistration';
 
 export const routes = [
   {
@@ -47,14 +49,6 @@ export const routes = [
         path: LINKS.leaderboard,
         element: <LeaderBoard />,
       },
-      {
-        path: LINKS.forum,
-        element: <Forum />,
-      },
-      {
-        path: LINKS.forumTopic,
-        element: <ForumTopic />,
-      },
     ],
   },
   {
@@ -72,6 +66,22 @@ export const routes = [
       {
         path: LINKS.test,
         element: <Test />,
+      },
+      {
+        path: LINKS.forum,
+        element: <Forum />,
+      },
+      {
+        path: LINKS.forumTopic,
+        element: <ForumTopic />,
+      },
+      {
+        path: LINKS.forumLogin,
+        element: <ForumLogin />,
+      },
+      {
+        path: LINKS.forumRegistration,
+        element: <ForumRegistration />,
       },
     ],
   },
