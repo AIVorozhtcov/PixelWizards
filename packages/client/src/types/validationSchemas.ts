@@ -98,8 +98,9 @@ export const ProfileUpdateDataSchema = z.object({
   login: z
     .string()
     .min(3, 'Логин не может быть короче 3 символов')
-    .max(20, 'Логин не может быть длиннее 20 символов')
-    .regex(loginRegex, 'Логин не соответствует требованиям'),
+    .max(20, 'Логин не может быть длиннее 20 символов'),
+  //.regex(loginRegex, 'Логин не соответствует требованиям'),
+  //Убрал требование по regex-у, так как в яндексовских учетках его нет и после логина через Oauth приходят юзеры, фейлящиеся на ней
   email: z.string().email('Адрес почты не соответствует требованиям'),
   display_name: z
     .string()
@@ -108,7 +109,8 @@ export const ProfileUpdateDataSchema = z.object({
     .nullable(),
   phone: z
     .string()
-    .regex(phoneRegex, 'Номер телефона не соответствует требованиям'),
+    .regex(phoneRegex, 'Номер телефона не соответствует требованиям')
+    .nullable(),
 });
 
 export const ProfileUpdatePasswordSchema = z
@@ -205,6 +207,10 @@ export const AvatarSchema = z.object({
 export const SignInSchema = z.object({
   login: z.string(),
   password: z.string(),
+});
+
+export const ServiceIdSchema = z.object({
+  service_id: z.string(),
 });
 
 export const AvatarIdSchema = SignUpSchema.merge(AvatarSchema);

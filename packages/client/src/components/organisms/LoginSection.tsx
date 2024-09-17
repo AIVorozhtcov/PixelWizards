@@ -8,6 +8,7 @@ import { LoginFormData } from '../../types';
 import { LoginValidationSchema } from '../../types/validationSchemas';
 import Link from '../atoms/Link';
 import Subtitle from '../atoms/Subtitle';
+import OauthButton from '../molecules/OauthButton';
 import Form from './Form';
 import Image from '../atoms/Image';
 import LINKS from '../../constants/links';
@@ -55,7 +56,8 @@ const LoginSection = () => {
         inputVariant="basic"
         fields={LOGIN_INPUTS_DATA}
       />
-      <Link className="self-center mt-10" to={LINKS.registration}>
+      <OauthButton className="self-center mt-24 w-80" />
+      <Link className="self-center mt-3" to={LINKS.registration}>
         Зарегистрироваться
       </Link>
       <Link className="self-center mt-5" to={LINKS.forum}>

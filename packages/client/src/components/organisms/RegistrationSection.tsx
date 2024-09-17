@@ -1,3 +1,7 @@
+import Form from './Form';
+import OauthButton from '../molecules/OauthButton';
+import Subtitle from '../atoms/Subtitle';
+import Link from '../atoms/Link';
 import { useNavigate } from 'react-router-dom';
 import generalAPI from '../../api/fetchTransport/generalApi';
 import { REGISTRATION_INPUTS_DATA } from '../../constants/profilePageData';
@@ -6,9 +10,6 @@ import { setUserData } from '../../store/slices/user';
 import { RegistrationFormData } from '../../types';
 import { RegistrationValidationSchema } from '../../types/validationSchemas';
 import Image from '../atoms/Image';
-import Link from '../atoms/Link';
-import Subtitle from '../atoms/Subtitle';
-import Form from './Form';
 import { toast } from 'sonner';
 
 const RegistrationSection = () => {
@@ -50,8 +51,9 @@ const RegistrationSection = () => {
         inputVariant="basic"
         fields={REGISTRATION_INPUTS_DATA}
       />
+      <OauthButton className="self-center mt-24 w-80" />
       <Link
-        className="self-center mt-5 dark:text-white text-[#0c1b2a]"
+        className="self-center mt-3 dark:text-white text-[#0c1b2a]"
         to="/login">
         Войти
       </Link>

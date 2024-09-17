@@ -19,6 +19,11 @@ export const AUTH_PATHS = {
   getUserInfo: '/auth/user',
 } as const;
 
+export const OAUTH_PATHS = {
+  getServiceId: '/oauth/yandex/service-id',
+  signIn: '/oauth/yandex',
+} as const
+
 export const FORUM_PATHS = {
   register: '/users/register',
   login: '/users/login',

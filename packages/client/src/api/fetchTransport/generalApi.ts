@@ -2,12 +2,19 @@ import {
   AUTH_PATHS,
   FORUM_PATHS,
   USER_PATHS,
+  OAUTH_PATHS,
 } from '../../constants/apiConstants';
-import { Data, FormAvatarType } from '../../types';
+import {
+  Data,
+  FormAvatarType,
+  OauthSignin,
+  RedirectUri,
+} from '../../types/types';
 import {
   ErrorSchema,
   SignUpSchema,
   UserInfoSchema,
+  ServiceIdSchema,
 } from '../../types/validationSchemas';
 import { resultFromSchema } from '../../utils/resultFromSchema';
 import BaseApi from './baseApi';
@@ -74,6 +81,26 @@ class GeneralApi extends BaseApi {
     });
 
     return resultFromSchema(UserInfoSchema, ErrorSchema, response);
+  }
+
+  async getClientId(data: RedirectUri) {
+    const response = await this.get(OAUTH_PATHS.getServiceId, {
+      data,
+    });
+
+    return resultFromSchema(ServiceIdSchema, ErrorSchema, response);
+  }
+
+  async oauthSignin(data: OauthSignin) {
+    const response = await this.post(OAUTH_PATHS.signIn, {
+      data,
+    });
+
+    if (response.status === 200) {
+      return true;
+    } else {
+      return ErrorSchema.parse(await response.json());
+    }
   }
 
   async logout() {

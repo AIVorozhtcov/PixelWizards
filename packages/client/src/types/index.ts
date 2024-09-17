@@ -56,7 +56,7 @@ export type UserData = {
   first_name: string;
   second_name: string;
   display_name: string | null;
-  phone: string;
+  phone: string | null;
   login: string;
   avatar: string | null;
   email: string;
@@ -65,6 +65,15 @@ export type UserData = {
 export type SignInData = {
   login: string;
   password: string;
+};
+
+export type RedirectUri = {
+  redirect_uri: string;
+};
+
+export type OauthSignin = {
+  code: string;
+  redirect_uri: string;
 };
 
 export type Profile = ProfileFormData & {

@@ -17,7 +17,7 @@ declare global {
 
 export const reducer = combineReducers({
   user: userReducer,
-  topicMessagesSlice
+  topicMessagesSlice,
 });
 
 export const store = configureStore({
