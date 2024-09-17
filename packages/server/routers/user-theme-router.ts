@@ -6,7 +6,7 @@ import {
 
 const userThemeRouter = Router();
 
-userThemeRouter.get('/:id', getUserThemeByUserId);
-userThemeRouter.put('/:id', updateUserTheme);
+userThemeRouter.get('/:userId', getUserThemeByUserId);
+userThemeRouter.put('/:userId', updateUserTheme);
 
 export default userThemeRouter;

@@ -18,7 +18,6 @@ UserTheme.init(
     theme: {
       type: new DataTypes.TEXT(),
       allowNull: false,
-      unique: true,
     },
     userId: {
       type: DataTypes.INTEGER.UNSIGNED,
