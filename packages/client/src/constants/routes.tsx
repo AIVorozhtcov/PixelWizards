@@ -11,7 +11,7 @@ const LeaderBoard = lazy(() => import('../pages/LeaderBoard'));
 const Login = lazy(() => import('../pages/Login'));
 const Profile = lazy(() => import('../pages/Profile'));
 const Registration = lazy(() => import('../pages/Registration'));
-const Topic = lazy(() => import('../pages/Topic'));
+const Topic = lazy(() => import('../pages/ForumTopic'));
 const ServerErrorPage = lazy(() => import('../pages/505'));
 const Test = lazy(() => import('../__test__/Test'));
 
@@ -54,7 +54,7 @@ export const routes = [
         element: <Forum />,
       },
       {
-        path: LINKS.topic,
+        path: LINKS.forumTopic,
         element: <Topic />,
       },
     ],

@@ -9,7 +9,7 @@ import themeRouter from './routers/theme-router';
 import userThemeRouter from './routers/user-theme-router';
 import authMiddleware from './middlewares/auth-middleware';
 import cors from 'cors';
-
+import { MOCK_FORM_DEFAULT_VALUES } from './mockProfileFormDefaultValues';
 
 // Инициализация Express приложения
 const app: Application = express();
