@@ -10,7 +10,7 @@ type ProfileAvatarProps = {
 };
 
 const ProfileAvatar = ({ handleClick }: ProfileAvatarProps) => {
-  const userInfo = useAppSelector(state => state.userSlice.user);
+  const userInfo = useAppSelector(state => state.user.user);
 
   return (
     <div
