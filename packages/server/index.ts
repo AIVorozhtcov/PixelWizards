@@ -10,12 +10,17 @@ import userThemeRouter from './routers/user-theme-router';
 import authMiddleware from './middlewares/auth-middleware';
 import cors from 'cors';
 
+
 // Инициализация Express приложения
 const app: Application = express();
 
 // Настройка промежуточного ПО
 app.use(bodyParser.json());
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+
+app.get('/user', (_, res) => {
+  res.json(MOCK_FORM_DEFAULT_VALUES);
+});
 
 dbConnect().then(() => {
   // Настройка маршрутов

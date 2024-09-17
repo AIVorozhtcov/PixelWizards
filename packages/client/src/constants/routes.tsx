@@ -1,5 +1,7 @@
-import { createBrowserRouter } from 'react-router-dom';
-import { routes } from './routes';
+import { lazy } from 'react';
+import ProtectedLayout from '../templates/Layout/ProtectedLayout';
+import UnprotectedLayout from '../templates/Layout/UnprotectedLayout';
+import LINKS from './links';
 
 const NotFound = lazy(() => import('../pages/NotFound'));
 const Home = lazy(() => import('../pages/Home'));
@@ -9,13 +11,11 @@ const LeaderBoard = lazy(() => import('../pages/LeaderBoard'));
 const Login = lazy(() => import('../pages/Login'));
 const Profile = lazy(() => import('../pages/Profile'));
 const Registration = lazy(() => import('../pages/Registration'));
-const Topic = lazy(() => import('../pages/ForumTopic'));
-const ForumLogin = lazy(() => import('../pages/ForumLogin'));
-const ForumRegistration = lazy(() => import('../pages/ForumRegistration'));
+const Topic = lazy(() => import('../pages/Topic'));
 const ServerErrorPage = lazy(() => import('../pages/505'));
 const Test = lazy(() => import('../__test__/Test'));
 
-const router = createBrowserRouter([
+export const routes = [
   {
     element: <ProtectedLayout />,
     errorElement: <ServerErrorPage />,
@@ -36,6 +36,7 @@ const router = createBrowserRouter([
         path: LINKS.home,
         element: <Home />,
       },
+
       {
         path: LINKS.game,
         element: <Game />,
@@ -48,28 +49,20 @@ const router = createBrowserRouter([
         path: LINKS.leaderboard,
         element: <LeaderBoard />,
       },
+      {
+        path: LINKS.forum,
+        element: <Forum />,
+      },
+      {
+        path: LINKS.topic,
+        element: <Topic />,
+      },
     ],
   },
   {
     element: <UnprotectedLayout />,
     errorElement: <ServerErrorPage />,
     children: [
-      {
-        path: LINKS.forum,
-        element: <Forum />,
-      },
-      {
-        path: LINKS.forumTopic,
-        element: <Topic />,
-      },
-      {
-        path: LINKS.forumLogin,
-        element: <ForumLogin />,
-      },
-      {
-        path: LINKS.forumRegistration,
-        element: <ForumRegistration />,
-      },
       {
         path: LINKS.login,
         element: <Login />,
@@ -84,6 +77,4 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
-
-export default router;
+];
