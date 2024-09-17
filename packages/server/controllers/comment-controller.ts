@@ -6,7 +6,12 @@ export const createComment = async (req: Request, res: Response) => {
   const userId = (req as any).user.id;
   try {
     if (!userId) res.status(403).json({ error: 'Пользователь не авторизован' });
-    const newComment = await Comment.create({ content, topicId, userId });
+    const newComment = await Comment.create({
+      content,
+      topicId,
+      userId,
+      reaction: null,
+    });
     res.status(201).json(newComment);
   } catch (err) {
     res.status(500).json({ error: 'Ошибка при создании комментария' });
@@ -19,6 +24,7 @@ export const getCommentsByTopic = async (req: Request, res: Response) => {
     const comments = await Comment.findAll({ where: { topicId } });
     res.json(comments);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: 'Ошибка при получении комментариев' });
   }
 };

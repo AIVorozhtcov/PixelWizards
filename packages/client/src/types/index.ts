@@ -2,6 +2,12 @@ import { IMETHOD, URLS } from '../constants/apiConstants';
 import { PROFILE_MODE } from '../constants/profilePageData';
 import { THEMES } from '../constants/themeConstants';
 
+export type ForumRegistrationFormData = {
+  login: string;
+  password: string;
+  passwordAgain: string;
+};
+
 export type RegistrationFormData = {
   first_name: string;
   second_name: string;
@@ -123,10 +129,6 @@ export type ThemeType = keyof typeof THEMES;
 export interface ITopicMessages {
   id: number;
   text: string;
-  reactions: {
-    current: string | null;
-    available: string[];
-  };
 }
 
 export interface ITopicMessagesState {

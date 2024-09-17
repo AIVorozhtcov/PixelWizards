@@ -3,8 +3,8 @@ import { ITopicMessages } from '../../types';
 import Emoji from '../atoms/Emoji';
 import EmojiList from './EmojiList';
 
-function Message({ id, text, reactions }: ITopicMessages) {
-  const [emoji, setEmoji] = useState(reactions.current ?? '➕');
+function Message({ id, text }: ITopicMessages) {
+  const [emoji, setEmoji] = useState('➕');
   const [showAvailableEmoji, setShowAvailableEmoji] = useState(false);
 
   const handleShowAbailableEmoji = useCallback(() => {
@@ -21,7 +21,7 @@ function Message({ id, text, reactions }: ITopicMessages) {
       </div>
       {showAvailableEmoji && (
         <EmojiList
-          abailableEmoji={reactions.available}
+          abailableEmoji={['👍', '❤️', '😂']}
           setEmoji={setEmoji}
           id={id}
           handleShowAbailableEmoji={handleShowAbailableEmoji}

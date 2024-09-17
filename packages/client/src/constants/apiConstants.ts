@@ -1,6 +1,7 @@
 export const URLS = {
   base: 'https://ya-praktikum.tech/api/v2',
   resources: 'https://ya-praktikum.tech/api/v2/resources',
+  api: 'http://localhost:3001/api',
 } as const;
 
 export const USER_PATHS = {
@@ -16,14 +17,19 @@ export const AUTH_PATHS = {
   getUserInfo: '/auth/user',
 } as const;
 
+export const FORUM_PATHS = {
+  register: '/users/register',
+  login: '/users/login',
+  checkToken: '/users/token',
+  topics: '/topics',
+  comments: '/comments',
+  reply: '/reply',
+} as const;
+
 export const IMETHOD = {
   GET: 'GET',
   POST: 'POST',
   PUT: 'PUT',
   PATCH: 'PATCH',
   DELETE: 'DELETE',
-} as const;
-
-export const FORUM_PATHS = {
-  topicMessages: '/forum/:id/messages',
 } as const;

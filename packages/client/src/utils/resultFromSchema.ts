@@ -1,6 +1,6 @@
-import { ZodObject, ZodRawShape } from 'zod';
+import { ZodArray, ZodObject, ZodRawShape } from 'zod';
 
-export default async function resultFromSchema<
+export async function resultFromSchema<
   SafeSchema extends ZodRawShape,
   ErrorSchema extends ZodRawShape
 >(
@@ -9,6 +9,26 @@ export default async function resultFromSchema<
   response: Response
 ) {
   const result = safeSchema.safeParse(await response.json());
+  console.log(',', result);
+
+  if (!result.success) {
+    console.log('asd');
+    return errorSchema.parse(result);
+  } else {
+    return result.data;
+  }
+}
+
+export async function resultFromArraySchema<
+  SafeSchema extends ZodRawShape,
+  ErrorSchema extends ZodRawShape
+>(
+  safeSchema: ZodArray<ZodObject<SafeSchema>>,
+  errorSchema: ZodObject<ErrorSchema>,
+  response: Response
+) {
+  const data = await response.json();
+  const result = safeSchema.safeParse(data);
 
   if (!result.success) {
     return errorSchema.parse(result);

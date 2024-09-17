@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
-import MessageList from '../../components/organisms/MessageList';
-import { useAppDispatch } from '../../lib/hooks';
-import { fetchTopicMessages } from '../../store/slices/topicMessages';
+import forumApi from '../../api/fetchTransport/forumApi';
+import { forumTokenLocalStorageKey } from '../../constants/forumConsts';
 
 export default function TestComponent() {
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
-    dispatch(fetchTopicMessages(123));
+    const fetchTest = async () => {
+      const response = await forumApi.getTopics(forumTokenLocalStorageKey);
+
+      console.log(response);
+    };
+
+    fetchTest();
   }, []);
   return (
-    <div className="flex justify-center items-center w-screen h-screen">
-      <MessageList />
-    </div>
+    <div className="flex justify-center items-center w-screen h-screen"></div>
   );
 }

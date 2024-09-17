@@ -7,7 +7,9 @@ const LINKS = {
   profile: '/profile',
   leaderboard: '/leaderboard',
   forum: '/forum',
-  topic: '/topic/:id',
+  forumLogin: '/forum/login',
+  forumRegistration: '/forum/registration',
+  forumTopic: '/forum/topic/:id',
   serverErrorPage: '/500',
   test: '/test',
 } as const;

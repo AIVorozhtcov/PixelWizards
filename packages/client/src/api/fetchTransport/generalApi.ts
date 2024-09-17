@@ -9,7 +9,7 @@ import {
   SignUpSchema,
   UserInfoSchema,
 } from '../../types/validationSchemas';
-import resultFromSchema from '../../utils/resultFromSchema';
+import { resultFromSchema } from '../../utils/resultFromSchema';
 import BaseApi from './baseApi';
 
 class GeneralApi extends BaseApi {
