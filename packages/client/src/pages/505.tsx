@@ -11,7 +11,7 @@ type ErrorResponse = {
 export default function ServerErrorPage() {
   const error = useRouteError();
   return (
-    <main className="flex flex-col min-h-dvh bg-[#0c1b2a]">
+    <main className="flex flex-col min-h-dvh dark:bg-[#0c1b2a] bg-white">
       <Title>
         Упс, ошибка на сервере:{' '}
         <i>

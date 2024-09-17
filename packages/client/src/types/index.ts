@@ -1,5 +1,6 @@
 import { IMETHOD, URLS } from '../constants/apiConstants';
 import { PROFILE_MODE } from '../constants/profilePageData';
+import { THEMES } from '../constants/themeConstants';
 
 export type ForumRegistrationFormData = {
   login: string;
@@ -72,7 +73,7 @@ export type Profile = ProfileFormData & {
 };
 
 export interface IUserState {
-  user: UserData;
+  user: UserData | null;
 }
 
 export type Data = Record<string, string | null>;
@@ -121,6 +122,9 @@ export interface FormFields {
 }
 export type FormFieldProps = FormFields &
   React.InputHTMLAttributes<HTMLInputElement>;
+
+
+export type ThemeType = keyof typeof THEMES;
 
 export interface ITopicMessages {
   id: number;

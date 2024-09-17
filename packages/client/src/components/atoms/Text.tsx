@@ -1,7 +1,7 @@
 import { VariantProps, cva } from 'class-variance-authority';
 import { cn } from './../../lib/utils';
 
-const textVariants = cva('text-[#94a3b8]', {
+const textVariants = cva('dark:text-[#94a3b8] text-[#738392]', {
   variants: {
     variant: {
       default: 'text-sm',
