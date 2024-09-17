@@ -26,7 +26,7 @@ export default function Forum() {
   }, []);
 
   return (
-    <div className="text-white w-full h-screen p-5 bg-[#0c1b2a] flex flex-col gap-4">
+    <div className="text-white w-full h-screen p-5 dark:bg-[#0c1b2a] flex flex-col gap-4">
       <div>
         <h1 className="text-5xl font-bold p-2">Форум</h1>
         <hr />

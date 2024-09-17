@@ -27,7 +27,6 @@ const ProfileModeManager = () => {
   const [mode, setMode] = useState<ProfileModeType>('base');
   const handleClick = () => setMode(PROFILE_MODE.base);
   const userInfo = useAppSelector(state => {
-    console.log(state);
     return state.user.user;
   });
   const dispatch = useAppDispatch();

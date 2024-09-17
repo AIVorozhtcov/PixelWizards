@@ -8,7 +8,7 @@ type ThemeContextType = {
 };
 
 const defaultContext: ThemeContextType = {
-  theme: 'light',
+  theme: 'dark',
   setTheme: () => {},
 };
 

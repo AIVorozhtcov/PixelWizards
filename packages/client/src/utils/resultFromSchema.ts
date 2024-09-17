@@ -9,10 +9,8 @@ export async function resultFromSchema<
   response: Response
 ) {
   const result = safeSchema.safeParse(await response.json());
-  console.log(',', result);
 
   if (!result.success) {
-    console.log('asd');
     return errorSchema.parse(result);
   } else {
     return result.data;

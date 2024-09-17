@@ -17,7 +17,6 @@ function EmojiList({
   setEmoji: React.Dispatch<React.SetStateAction<string>>;
   handleShowAbailableEmoji: () => void;
 }) {
-  console.log('render');
   const dispatch = useAppDispatch();
 
   const handleChangeCurrentEmoji = async (event: React.MouseEvent) => {

@@ -24,9 +24,7 @@ export default function ForumTopic() {
   >([]);
 
   const handleCreateComment = async ({ content }: { content: string }) => {
-    console.log('???????????????');
     try {
-      console.log('Pressed');
       const comment = await forumApi.createComment(
         {
           content,
@@ -34,7 +32,6 @@ export default function ForumTopic() {
         },
         localStorage.getItem(forumTokenLocalStorageKey) ?? ''
       );
-      console.log(comment);
 
       if ('reason' in comment) {
         throw new Error(comment.reason);
