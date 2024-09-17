@@ -12,6 +12,31 @@ const acceptedImageTypes = [
   'image/webp',
 ];
 
+export const ForumRegistrationValidationSchema = z
+  .object({
+    login: z
+      .string()
+      .min(3, 'Логин не может быть короче 3 символов')
+      .max(20, 'Логин не может быть длиннее 20 символов')
+      .regex(loginRegex, 'Логин не соответствует требованиям'),
+    password: z
+      .string()
+      .min(8, 'Пароль не может быть короче 8 символов')
+      .max(40, 'Пароль не может быть длиннее 40 символов')
+      .regex(
+        passwordRegex,
+        'Пароль должен содержать хотя бы одну заглавную букву и одну цифру'
+      ),
+    passwordAgain: z
+      .string()
+      .min(8, 'Пароль не может быть короче 8 символов')
+      .max(40, 'Пароль не может быть длиннее 40 символов'),
+  })
+  .refine(data => data.password === data.passwordAgain, {
+    message: 'Пароли не совпадают',
+    path: ['passwordAgain'],
+  });
+
 export const RegistrationValidationSchema = z
   .object({
     first_name: z
@@ -138,6 +163,43 @@ export const SignUpSchema = z.object({
   id: z.number(),
 });
 
+export const TopicSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  content: z.string(),
+  createdAt: z.string(),
+  userId: z.number(),
+  updatedAt: z.string(),
+});
+
+export type TopicArray = z.infer<typeof TopicSchema>;
+
+export const TopicsSchema = z.array(TopicSchema);
+
+export const CommentSchema = z.object({
+  id: z.number(),
+  content: z.string(),
+  userId: z.number(),
+  topicId: z.number(),
+  reaction: z.string().optional().or(z.null()),
+});
+
+export const CommentsSchema = z.array(CommentSchema);
+
+export const ReplySchema = z.object({
+  id: z.number(),
+  content: z.string(),
+  userId: z.number(),
+  commentId: z.number(),
+  parentId: z.number(),
+});
+
+export const RepliesSchema = z.array(ReplySchema);
+
+export const MessageSchema = z.object({
+  message: z.string(),
+});
+
 export const AvatarSchema = z.object({
   avatar: z.string().nullable(),
 });
@@ -154,3 +216,18 @@ export const ServiceIdSchema = z.object({
 export const AvatarIdSchema = SignUpSchema.merge(AvatarSchema);
 
 export const UserInfoSchema = ProfileUpdateDataSchema.merge(AvatarIdSchema);
+
+export const ForumCreateTopicSchema = z.object({
+  title: z
+    .string()
+    .min(3, 'Заголовок не может быть короче 3 символов')
+    .max(20, 'Заголовок не может быть длиннее 20 символов'),
+  content: z
+    .string()
+    .min(8, 'Контент не может быть короче 5 символов')
+    .max(40, 'Контент не может быть длиннее 400 символов'),
+});
+
+export const ForumCreateCommentSchema = z.object({
+  content: z.string().min(1, 'Заголовок не может быть короче 3 символов'),
+});

@@ -10,7 +10,7 @@ type ProfileAvatarProps = {
 };
 
 const ProfileAvatar = ({ handleClick }: ProfileAvatarProps) => {
-  const userInfo = useAppSelector(state => state.userSlice.user);
+  const userInfo = useAppSelector(state => state.user.user);
 
   return (
     <div
@@ -23,7 +23,7 @@ const ProfileAvatar = ({ handleClick }: ProfileAvatarProps) => {
 
       <Image
         src={
-          userInfo.avatar
+          userInfo?.avatar
             ? `${URLS.resources}/${userInfo.avatar}`
             : MOCK_AVATAR_PATH
         }

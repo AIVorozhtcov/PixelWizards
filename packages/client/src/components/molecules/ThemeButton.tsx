@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { THEMES } from '../../constants/themeConstants';
-import { useTheme } from '../../templates/ThemeContext/ThemeContext';
+import { useTheme } from '../../templates/ThemeProvider/ThemeProvider';
 import Button from '../atoms/Button';
 
 const ThemeButton = () => {

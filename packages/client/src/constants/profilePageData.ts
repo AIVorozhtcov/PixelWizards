@@ -11,6 +11,12 @@ export const REGISTRATION_INPUTS_DATA = [
   createInput('Телефон', FORM_INPUT_NAMES.phone, 'tel'),
 ];
 
+export const FORUM_REGISTRATION_INPUTS_DATA = [
+  createInput('Логин', FORM_INPUT_NAMES.login),
+  createInput('Пароль', FORM_INPUT_NAMES.password, 'password'),
+  createInput('Повторите пароль', FORM_INPUT_NAMES.passwordAgain, 'password'),
+];
+
 export const PROFILE_INPUTS_DATA = [
   createInput('Имя', FORM_INPUT_NAMES.firstName),
   createInput('Фамилия', FORM_INPUT_NAMES.secondName),
@@ -23,6 +29,15 @@ export const PROFILE_INPUTS_DATA = [
 export const LOGIN_INPUTS_DATA = [
   createInput('Логин', FORM_INPUT_NAMES.login),
   createInput('Пароль', FORM_INPUT_NAMES.password, 'password'),
+];
+
+export const FORUM_CREATE_TOPICS_INPUTS_DATA = [
+  createInput('Заголовок', 'title'),
+  createInput('Контент', 'content', 'textarea'),
+];
+
+export const FORUM_CREATE_COMMENT_INPUTS_DATA = [
+  createInput('Текст комментария', 'content'),
 ];
 
 export const PROFILE_CHANGE_PASSWORD_INPUTS = [

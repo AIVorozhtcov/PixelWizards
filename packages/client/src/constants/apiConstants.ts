@@ -1,6 +1,9 @@
+import { SERVER_HOST } from './serverHost';
+
 export const URLS = {
   base: 'https://ya-praktikum.tech/api/v2',
   resources: 'https://ya-praktikum.tech/api/v2/resources',
+  api: `${SERVER_HOST}/api`,
 } as const;
 
 export const USER_PATHS = {
@@ -19,6 +22,15 @@ export const AUTH_PATHS = {
 export const OAUTH_PATHS = {
   getServiceId: '/oauth/yandex/service-id',
   signIn: '/oauth/yandex',
+} as const
+
+export const FORUM_PATHS = {
+  register: '/users/register',
+  login: '/users/login',
+  checkToken: '/users/token',
+  topics: '/topics',
+  comments: '/comments',
+  reply: '/reply',
 } as const;
 
 export const IMETHOD = {
@@ -27,8 +39,4 @@ export const IMETHOD = {
   PUT: 'PUT',
   PATCH: 'PATCH',
   DELETE: 'DELETE',
-} as const;
-
-export const FORUM_PATHS = {
-  topicMessages: '/forum/:id/messages',
 } as const;

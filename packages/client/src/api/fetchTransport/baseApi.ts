@@ -18,6 +18,7 @@ export default abstract class BaseApi {
     options.headers = installedOptions?.headers ?? this.defaultHeaders;
 
     if (installedOptions?.headers?.extends) {
+      delete options.headers.extends;
       options.headers = {
         ...this.defaultHeaders,
         ...options.headers,
@@ -41,6 +42,24 @@ export default abstract class BaseApi {
 
   protected put: APIMethod = async (endpoint, options) => {
     const response = await this.http.put(endpoint, this.checkOptions(options));
+
+    return response;
+  };
+
+  protected patch: APIMethod = async (endpoint, options) => {
+    const response = await this.http.patch(
+      endpoint,
+      this.checkOptions(options)
+    );
+
+    return response;
+  };
+
+  protected delete: APIMethod = async (endpoint, options) => {
+    const response = await this.http.delete(
+      endpoint,
+      this.checkOptions(options)
+    );
 
     return response;
   };

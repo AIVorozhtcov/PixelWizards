@@ -7,19 +7,20 @@ type ThemeContextType = {
   setTheme: (theme: ThemeType) => void;
 };
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const defaultContext: ThemeContextType = {
+  theme: 'dark',
+  setTheme: () => {},
+};
+
+const ThemeContext = createContext<ThemeContextType>(defaultContext);
 
 export const useTheme = () => {
   const context = useContext(ThemeContext);
 
-  if (!context) {
-    throw new Error('Can not get context');
-  }
-
-  return context;
+  return context ?? defaultContext;
 };
 
-export const Theme = (props: { children: React.ReactNode }) => {
+export const ThemeProvider = (props: { children: React.ReactNode }) => {
   const themeInStorage = getThemeFromStorage();
   const [theme, setTheme] = useState<ThemeType>(themeInStorage);
 

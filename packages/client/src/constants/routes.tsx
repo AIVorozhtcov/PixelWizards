@@ -1,19 +1,19 @@
-import { lazy } from 'react';
 import ProtectedLayout from '../templates/Layout/ProtectedLayout';
 import UnprotectedLayout from '../templates/Layout/UnprotectedLayout';
 import LINKS from './links';
-
-const NotFound = lazy(() => import('../pages/NotFound'));
-const Home = lazy(() => import('../pages/Home'));
-const Forum = lazy(() => import('../pages/Forum'));
-const Game = lazy(() => import('../pages/Game'));
-const LeaderBoard = lazy(() => import('../pages/LeaderBoard'));
-const Login = lazy(() => import('../pages/Login'));
-const Profile = lazy(() => import('../pages/Profile'));
-const Registration = lazy(() => import('../pages/Registration'));
-const Topic = lazy(() => import('../pages/Topic'));
-const ServerErrorPage = lazy(() => import('../pages/505'));
-const Test = lazy(() => import('../__test__/Test'));
+import Test from '../__test__/Test';
+import ServerErrorPage from '../pages/505';
+import Forum from '../pages/Forum';
+import Game from '../pages/Game';
+import Home from '../pages/Home';
+import LeaderBoard from '../pages/LeaderBoard';
+import Login from '../pages/Login';
+import NotFound from '../pages/NotFound';
+import Profile from '../pages/Profile';
+import Registration from '../pages/Registration';
+import ForumTopic from '../pages/ForumTopic';
+import ForumLogin from '../pages/ForumLogin';
+import ForumRegistration from '../pages/ForumRegistration';
 
 export const routes = [
   {
@@ -49,14 +49,6 @@ export const routes = [
         path: LINKS.leaderboard,
         element: <LeaderBoard />,
       },
-      {
-        path: LINKS.forum,
-        element: <Forum />,
-      },
-      {
-        path: LINKS.topic,
-        element: <Topic />,
-      },
     ],
   },
   {
@@ -74,6 +66,22 @@ export const routes = [
       {
         path: LINKS.test,
         element: <Test />,
+      },
+      {
+        path: LINKS.forum,
+        element: <Forum />,
+      },
+      {
+        path: LINKS.forumTopic,
+        element: <ForumTopic />,
+      },
+      {
+        path: LINKS.forumLogin,
+        element: <ForumLogin />,
+      },
+      {
+        path: LINKS.forumRegistration,
+        element: <ForumRegistration />,
       },
     ],
   },
