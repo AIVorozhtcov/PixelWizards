@@ -10,6 +10,7 @@ import { forumTokenLocalStorageKey } from '../constants/forumConsts';
 import { FORUM_CREATE_COMMENT_INPUTS_DATA } from '../constants/profilePageData';
 import { ForumCreateCommentSchema } from '../types/validationSchemas';
 import Message from '../components/molecules/Message';
+import Button from '../components/atoms/Button';
 
 export default function ForumTopic() {
   const { state } = useLocation();
@@ -20,6 +21,7 @@ export default function ForumTopic() {
       content: string;
       userId: number;
       topicId: number;
+      reaction?: string | null;
     }[]
   >([]);
 
@@ -69,7 +71,20 @@ export default function ForumTopic() {
         </div>
 
         <div>
-          <Text onClick={() => navigate(-1)}>{'Назад'}</Text>
+          <Button
+            onClick={async () => {
+              const data = await forumApi.getCommentsByTopic(
+                state.id,
+                localStorage.getItem(forumTokenLocalStorageKey) ?? ''
+              );
+
+              console.log('data', data);
+            }}>
+            Click
+          </Button>
+          <Button variant="acent" onClick={() => navigate(-1)}>
+            {'Назад'}
+          </Button>
         </div>
       </div>
       <hr />
@@ -78,7 +93,12 @@ export default function ForumTopic() {
       </Subtitle>
       {comments.length > 0
         ? comments.map(comment => (
-            <Message key={comment.id} id={comment.id} text={comment.content} />
+            <Message
+              key={comment.id}
+              id={comment.id}
+              text={comment.content}
+              reaction={comment?.reaction ?? null}
+            />
           ))
         : 'Пока комментариев нет'}
       <Form<{ topicId: string; content: string }>

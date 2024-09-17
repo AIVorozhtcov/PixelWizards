@@ -1,10 +1,7 @@
 import { toast } from 'sonner';
-import { useAppDispatch } from '../../lib/hooks';
-import {
-  setCurrentEmoji,
-  setEmojiForBackend,
-} from '../../store/slices/topicMessages';
 import Emoji from '../atoms/Emoji';
+import forumApi from '../../api/fetchTransport/forumApi';
+import { forumTokenLocalStorageKey } from '../../constants/forumConsts';
 
 function EmojiList({
   abailableEmoji,
@@ -17,31 +14,25 @@ function EmojiList({
   setEmoji: React.Dispatch<React.SetStateAction<string>>;
   handleShowAbailableEmoji: () => void;
 }) {
-  const dispatch = useAppDispatch();
-
   const handleChangeCurrentEmoji = async (event: React.MouseEvent) => {
-    if (event.target instanceof HTMLParagraphElement) {
-      if (event.target.textContent) {
-        try {
-          await dispatch(
-            setEmojiForBackend({
-              messageId: id,
-              emoji: event.target.textContent,
-            })
-          );
+    if (
+      event.target instanceof HTMLParagraphElement &&
+      event.target.textContent
+    ) {
+      try {
+        await forumApi.updateReaction(
+          {
+            topicId: id,
+            reaction: event.target.textContent,
+          },
+          localStorage.getItem(forumTokenLocalStorageKey) ?? ''
+        );
 
-          dispatch(
-            setCurrentEmoji({
-              id,
-              currentEmoji: event.target.textContent,
-            })
-          );
-          setEmoji(event.target.textContent);
-          handleShowAbailableEmoji();
-        } catch (error) {
-          if (error instanceof Error) {
-            toast.error(error.message);
-          }
+        setEmoji(event.target.textContent);
+        handleShowAbailableEmoji();
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message);
         }
       }
     }

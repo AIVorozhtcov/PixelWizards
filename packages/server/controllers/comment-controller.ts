@@ -48,6 +48,26 @@ export const updateComment = async (req: Request, res: Response) => {
   }
 };
 
+export const updateReaction = async (req: Request, res: Response) => {
+  const { topicId } = req.params;
+  const { reaction } = req.body;
+
+  const userId = (req as any).user.id;
+  if (!userId) res.status(403).json({ error: 'Неавторизованы' });
+
+  try {
+    const comment = await Comment.findByPk(topicId);
+    if (comment) {
+      await comment.update({ reaction });
+      res.json(comment);
+    } else {
+      res.status(403).json({ error: 'Нет прав на обновление реакции' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Ошибка при обновлении реакции' });
+  }
+};
+
 export const deleteComment = async (req: Request, res: Response) => {
   const { topicId } = req.params;
   const userId = (req as any).user.id;

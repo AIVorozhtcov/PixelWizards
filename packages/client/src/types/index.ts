@@ -123,12 +123,12 @@ export interface FormFields {
 export type FormFieldProps = FormFields &
   React.InputHTMLAttributes<HTMLInputElement>;
 
-
 export type ThemeType = keyof typeof THEMES;
 
 export interface ITopicMessages {
   id: number;
   text: string;
+  reaction: string | null;
 }
 
 export interface ITopicMessagesState {
