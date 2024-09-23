@@ -1,4 +1,4 @@
-import { NODES, NODE_CONNECTION_TABLE } from './mapConstants';
+import { AVAILABLE_EVENTS, NODES, NODE_CONNECTION_TABLE } from './mapConstants';
 import { Node } from './Node';
 import { NodeKeyofType } from './types';
 
@@ -12,6 +12,7 @@ export class Map {
   background = new Image();
   mapHeal = 0;
   numOptionCard = 0;
+  availableEvents = [...AVAILABLE_EVENTS];
 
   constructor(
     ctx: CanvasRenderingContext2D,
@@ -20,7 +21,21 @@ export class Map {
     width: number,
     height: number
   ) {
-    this.nodes = NODES.map(
+    const randomEventNodes = NODES.map((node, index) => {
+      if (index === 0 || index === NODES.length - 1) {
+        return node;
+      }
+
+      const event = { ...this.getRandomEvent() };
+      delete event?.count;
+
+      return {
+        ...node,
+        ...event,
+      };
+    });
+
+    this.nodes = randomEventNodes.map(
       node =>
         new Node(
           { ...node },
@@ -118,5 +133,20 @@ export class Map {
 
   getOptionCardFromMap(numOptionCard = 1) {
     this.numOptionCard += numOptionCard;
+  }
+
+  private getRandomEvent() {
+    const randomIndex = Math.floor(Math.random() * this.availableEvents.length);
+    const event = this.availableEvents[randomIndex];
+    console.log(event);
+
+    if ('count' in event && event.count !== 0) {
+      event.count!--;
+      return this.availableEvents[randomIndex];
+    } else if (event.type === 'battle') {
+      return this.availableEvents[randomIndex];
+    } else {
+      return this.availableEvents[0];
+    }
   }
 }

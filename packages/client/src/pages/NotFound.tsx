@@ -1,10 +1,11 @@
 import Link from '../components/atoms/Link';
+import MainSection from '../components/atoms/MainSection';
 import Title from '../components/atoms/Title';
 import LINKS from '../constants/links';
 
 export default function NotFound() {
   return (
-    <main className="flex flex-col min-h-dvh dark:bg-[#0c1b2a] bg-white">
+    <MainSection>
       <Title>Упс, такой страницы нет</Title>
       <img
         src="/heroImage.webp"
@@ -16,6 +17,6 @@ export default function NotFound() {
       <Link to={LINKS.home} variant="acent">
         На главную
       </Link>
-    </main>
+    </MainSection>
   );
 }

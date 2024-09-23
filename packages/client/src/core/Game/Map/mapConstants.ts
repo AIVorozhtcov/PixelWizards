@@ -17,6 +17,19 @@ export const NODE_CONNECTION_TABLE = {
   6: [7],
 };
 
+export const AVAILABLE_EVENTS: {
+  type: NodeType['type'];
+  src: NodeType['src'];
+  count?: number;
+}[] = [
+  {
+    type: 'battle',
+    src: '/map-battle-01.png',
+  },
+  { type: 'treasure', src: '/map-treasure.png', count: 1 },
+  { type: 'heal', src: '/map-heal.png', count: 2 },
+];
+
 export const NODES: NodeType[] = [
   {
     id: 1,
@@ -32,8 +45,6 @@ export const NODES: NodeType[] = [
     id: 2,
     x: 350,
     y: 180,
-    type: 'battle',
-    src: '/map-battle-01.png',
     visited: false,
     active: false,
     connectedToActive: false,
@@ -42,8 +53,6 @@ export const NODES: NodeType[] = [
     id: 3,
     x: 350,
     y: 300,
-    type: 'treasure',
-    src: '/map-treasure.png',
     visited: false,
     active: false,
     connectedToActive: false,
@@ -52,8 +61,6 @@ export const NODES: NodeType[] = [
     id: 4,
     x: 350,
     y: 420,
-    type: 'battle',
-    src: '/map-battle-01.png',
     visited: false,
     active: false,
     connectedToActive: false,
@@ -62,8 +69,6 @@ export const NODES: NodeType[] = [
     id: 5,
     x: 600,
     y: 180,
-    type: 'heal',
-    src: '/map-heal.png',
     visited: false,
     active: false,
     connectedToActive: false,
@@ -72,8 +77,6 @@ export const NODES: NodeType[] = [
     id: 6,
     x: 600,
     y: 360,
-    type: 'battle',
-    src: '/map-battle-01.png',
     visited: false,
     active: false,
     connectedToActive: false,

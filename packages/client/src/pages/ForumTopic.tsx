@@ -11,6 +11,7 @@ import { FORUM_CREATE_COMMENT_INPUTS_DATA } from '../constants/profilePageData';
 import { ForumCreateCommentSchema } from '../types/validationSchemas';
 import Message from '../components/molecules/Message';
 import Button from '../components/atoms/Button';
+import MainSection from '../components/atoms/MainSection';
 
 export default function ForumTopic() {
   const { state } = useLocation();
@@ -63,13 +64,12 @@ export default function ForumTopic() {
   }, []);
 
   return (
-    <main className="flex flex-col min-h-dvh bg-[#0c1b2a] py-5 gap-3 text-white p-4">
+    <MainSection>
       <div className="flex justify-between items-center">
         <div>
           <Title>{state.title}</Title>
           <Text>{state.content}</Text>
         </div>
-
         <div>
           <Button
             onClick={async () => {
@@ -113,6 +113,6 @@ export default function ForumTopic() {
         inputVariant="basic"
         fields={FORUM_CREATE_COMMENT_INPUTS_DATA}
       />
-    </main>
+    </MainSection>
   );
 }

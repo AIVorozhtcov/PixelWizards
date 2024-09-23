@@ -205,6 +205,8 @@ export class Game {
       enemyHitPoints = 13;
       enemyWidth = 260;
       enemyX = 720;
+
+      // TODO isLastBattle
     }
 
     this.enemy = this.createEnemy({

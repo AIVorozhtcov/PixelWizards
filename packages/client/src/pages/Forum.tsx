@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ForumCreate from '../components/molecules/ForumCreate';
 import { TopicArray } from '../types/validationSchemas';
 import ForumTopic from '../components/molecules/ForumTopic';
+import MainSection from '../components/atoms/MainSection';
 
 export default function Forum() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function Forum() {
   }, []);
 
   return (
-    <div className="text-white w-full h-screen p-5 dark:bg-[#0c1b2a] flex flex-col gap-4">
+    <MainSection>
       <div>
         <h1 className="text-5xl font-bold p-2">Форум</h1>
         <hr />
@@ -39,6 +40,6 @@ export default function Forum() {
             ))
           : 'Здесь пусто... Даже слишком'}
       </div>
-    </div>
+    </MainSection>
   );
 }
