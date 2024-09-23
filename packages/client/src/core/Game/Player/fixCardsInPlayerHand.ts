@@ -29,3 +29,17 @@ export const fixCardsInPlayerHand: OmitedCardInHand[] = [
     actionValue: 2,
   },
 ];
+
+export const optionalHealCardInHand: CardInHand = {
+  name: '',
+  src: '/heal.png',
+  x: 750,
+  y: 600,
+  width: 150,
+  height: 200,
+  action: {
+    type: 'heal',
+    points: 2,
+  },
+  actionValue: 1,
+};

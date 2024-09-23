@@ -3,7 +3,12 @@ import { CharacterInitProps } from './Character/types';
 import { cardsInEnemyHand } from './Enemy/cardsInEnemyHand';
 import { Enemy } from './Enemy/Enemy';
 import Gameover from './Gameover/Gameover';
-import { fixCardsInPlayerHand } from './Player/fixCardsInPlayerHand';
+import { Map as GameMap } from './Map/Map';
+import { NodeKeyofType } from './Map/types';
+import {
+  fixCardsInPlayerHand,
+  optionalHealCardInHand,
+} from './Player/fixCardsInPlayerHand';
 import { Player } from './Player/Player';
 
 export class Game {
@@ -15,27 +20,46 @@ export class Game {
   whosTurn: 'player' | 'enemy' = 'player';
   isGameEnd = false;
   gameAnimation: number | undefined = undefined;
-  changeGameStateFunc: () => void;
+  setIsGameEnd: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>;
   background = new Image();
   music = new AudioPlayer();
+  map: GameMap;
+  currentGameStage: 'battle' | 'map' = 'map';
 
   constructor(
     width: number,
     height: number,
     ctx: CanvasRenderingContext2D,
-    changeGameStateFunc: () => void
+    setIsGameEnd: React.Dispatch<React.SetStateAction<boolean>>,
+    setIsMapOpen: React.Dispatch<React.SetStateAction<boolean>>
   ) {
     this.width = width;
     this.height = height;
-    this.changeGameStateFunc = changeGameStateFunc;
-
+    this.setIsGameEnd = setIsGameEnd;
+    this.setIsMapOpen = setIsMapOpen;
     this.context = ctx;
+    this.map = new GameMap(
+      this.context,
+      this.beginAndDrawGame.bind(this),
+      this.setIsMapOpen,
+      this.width,
+      this.height
+    );
 
     this.background.src = '/backgroundGame.webp';
+  }
 
-    this.background.onload = () => {
-      this.beginGame();
-    };
+  showMap() {
+    if (this.gameAnimation) {
+      window.cancelAnimationFrame(this.gameAnimation);
+      this.gameAnimation = undefined;
+    }
+    this.currentGameStage = 'map';
+
+    this.context.clearRect(0, 0, this.width, this.height);
+
+    this.map.drawMap();
   }
 
   private createEnemy(props: CharacterInitProps) {
@@ -49,6 +73,14 @@ export class Game {
   private isGameContinue() {
     if (this.player.hitPoints <= 0) {
       this.endGame();
+      //При проигрыше сбрасываем прогресс на начало карты
+      this.map = new GameMap(
+        this.context,
+        this.beginAndDrawGame.bind(this),
+        this.setIsMapOpen,
+        this.width,
+        this.height
+      );
       return false;
     } else if (this.enemy.hitPoints <= 0) {
       this.endGame(true);
@@ -69,7 +101,6 @@ export class Game {
   draw(context: CanvasRenderingContext2D) {
     if (!this.isGameEnd) {
       context.clearRect(0, 0, this.width, this.height);
-
       this.drawEverything(context);
     }
   }
@@ -158,18 +189,75 @@ export class Game {
 
     this.isGameEnd = true;
 
-    this.changeGameStateFunc();
+    this.setIsGameEnd(true);
 
     new Gameover(this, isWin, 50);
   }
 
-  beginGame() {
+  createEnemyByNodeType(nodeType: NodeKeyofType) {
+    let enemySkin = '/enemy.png';
+    let enemyHitPoints = 10;
+    let enemyWidth = 180;
+    let enemyX = 800;
+
+    if (nodeType === 'boss') {
+      enemySkin = '/boss.png';
+      enemyHitPoints = 13;
+      enemyWidth = 260;
+      enemyX = 720;
+    }
+
+    this.enemy = this.createEnemy({
+      cardInHand: cardsInEnemyHand,
+      x: enemyX,
+      y: 100,
+      width: enemyWidth,
+      height: 210,
+      hitPoints: enemyHitPoints,
+      initialActionPoints: 2,
+      characterSkin: enemySkin,
+      game: this,
+    });
+  }
+
+  createPlayer() {
+    const mapHeal = this.map.mapHeal;
+    const numOptionCard = this.map.numOptionCard;
+    const cardInHand = fixCardsInPlayerHand;
+    let playerHitPoints = 10;
+
+    if (mapHeal !== 0) {
+      playerHitPoints += mapHeal;
+    }
+
+    if (numOptionCard !== 0) {
+      for (let i = 0; i < numOptionCard; i++) {
+        cardInHand.push(optionalHealCardInHand);
+      }
+      this.map.numOptionCard--;
+    }
+
+    this.player = new Player({
+      cardInHand,
+      x: 20,
+      y: 100,
+      width: 140,
+      height: 190,
+      hitPoints: playerHitPoints,
+      initialActionPoints: 2,
+      characterSkin: '/character.png',
+      game: this,
+    });
+  }
+
+  beginGame(nodeType: NodeKeyofType) {
     this.isGameEnd = false;
+    this.currentGameStage = 'battle';
 
     if (this.gameAnimation) {
       window.cancelAnimationFrame(this.gameAnimation);
       this.gameAnimation = undefined;
-      this.changeGameStateFunc();
+      this.setIsGameEnd(false);
     }
 
     this.context.clearRect(0, 0, this.width, this.height);
@@ -177,32 +265,16 @@ export class Game {
     this.music.stopEndGameSong();
     this.music.playBackgroundSong();
 
-    this.player = this.createHero({
-      cardInHand: fixCardsInPlayerHand,
-      x: 20,
-      y: 100,
-      width: 120,
-      height: 190,
-      hitPoints: 10,
-      initialActionPoints: 2,
-      characterSkin: '/character.png',
-      game: this,
-    });
-
-    this.enemy = this.createEnemy({
-      cardInHand: cardsInEnemyHand,
-      x: 860,
-      y: 100,
-      width: 120,
-      height: 190,
-      hitPoints: 10,
-      initialActionPoints: 2,
-      characterSkin: '/enemy.png',
-      game: this,
-    });
+    this.createPlayer();
+    this.createEnemyByNodeType(nodeType);
 
     this.whosTurn = 'player';
     this.gameAnimation = requestAnimationFrame(this.initialDraw.bind(this));
+  }
+
+  beginAndDrawGame(nodeType: NodeKeyofType = 'battle') {
+    this.beginGame(nodeType);
+    this.draw(this.context);
   }
 
   private initialDraw() {
