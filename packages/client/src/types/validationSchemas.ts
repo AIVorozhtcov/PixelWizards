@@ -143,8 +143,7 @@ export const ProfileUpdatePasswordSchema = z
 
 export const ProfileUpdateAvatarSchema = z.object({
   avatar: z
-    .instanceof(File)
-    .array()
+    .custom<FileList>()
     .refine(
       avatar => acceptedImageTypes.includes(avatar[0]?.type),
       'Разрешены форматы изображения: .jpg, .jpeg, .png и .webp'

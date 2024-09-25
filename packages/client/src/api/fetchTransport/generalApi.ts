@@ -4,12 +4,7 @@ import {
   USER_PATHS,
   OAUTH_PATHS,
 } from '../../constants/apiConstants';
-import {
-  Data,
-  FormAvatarType,
-  OauthSignin,
-  RedirectUri,
-} from '../../types/types';
+import { Data, FormAvatarType, OauthSignin, RedirectUri } from '../../types';
 import {
   ErrorSchema,
   SignUpSchema,
@@ -75,8 +70,11 @@ class GeneralApi extends BaseApi {
   }
 
   async updateUserAvatar(data: FormAvatarType) {
+    const formData = new FormData();
+    formData.append('avatar', data.avatar[0]);
+
     const response = await this.put(USER_PATHS.updateAvatar, {
-      data,
+      data: formData,
       headers: {},
     });
 

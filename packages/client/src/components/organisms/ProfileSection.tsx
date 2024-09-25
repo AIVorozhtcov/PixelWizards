@@ -35,7 +35,7 @@ const ProfileSection = ({ children }: { children: React.ReactNode }) => {
           popup={PROFILE_POPUP}
         />
       )}
-      <div className="flex flex-col items-center gap-6 max-w-lg min-w-80 my-0 mx-auto">
+      <div className="flex flex-col items-center gap-6 max-w-lg min-w-80 w-full my-0 mx-auto">
         <ProfileAvatar handleClick={() => setPopupDisplay(true)} />
         {children}
       </div>
