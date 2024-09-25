@@ -138,7 +138,6 @@ export class Map {
   private getRandomEvent() {
     const randomIndex = Math.floor(Math.random() * this.availableEvents.length);
     const event = this.availableEvents[randomIndex];
-    console.log(event);
 
     if ('count' in event && event.count !== 0) {
       event.count!--;
