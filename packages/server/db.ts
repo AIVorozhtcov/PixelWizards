@@ -21,7 +21,7 @@ export async function dbConnect() {
     await sequelize.authenticate(); // Проверка аутентификации в БД
     await sequelize.sync({ alter: true }).then(async () => {
       await seedThemes();
-    }); // Синхронизация базы данных
+    });
     console.log('Connection has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);

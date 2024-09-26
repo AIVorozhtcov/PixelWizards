@@ -14,7 +14,7 @@ const ProfileAvatar = ({ handleClick }: ProfileAvatarProps) => {
 
   return (
     <div
-      className="group w-44 h-44 relative rounded-full overflow-hidden border-2"
+      className="group w-44 h-44 relative rounded-full overflow-hidden border-2 dark:border-white border-red-700"
       onClick={handleClick}>
       <Span className="absolute w-full h-full group-hover:bg-black opacity-40 cursor-pointer" />
       <Span className="absolute w-full h-full my-20 mx-6 text-white hidden group-hover:block cursor-pointer">

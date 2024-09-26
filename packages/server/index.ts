@@ -17,6 +17,10 @@ const app: Application = express();
 app.use(bodyParser.json());
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
+app.get('/user', (_, res) => {
+  res.json(MOCK_FORM_DEFAULT_VALUES);
+});
+
 dbConnect().then(() => {
   // Настройка маршрутов
   app.use('/api/users', userRouter);

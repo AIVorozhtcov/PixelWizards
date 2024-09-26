@@ -27,7 +27,7 @@ UserTheme.init(
   },
   {
     sequelize,
-    modelName: 'user-theme42w2',
+    modelName: 'user-theme',
   }
 );
 
