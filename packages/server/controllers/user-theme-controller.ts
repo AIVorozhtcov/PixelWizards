@@ -61,7 +61,7 @@ export const createUserTheme = async (theme: string, userId: number) => {
   console.log('func entered');
   try {
     console.log('user theme creation entered');
-    await UserTheme.create({ theme, userId });
+    await UserTheme.create({ userId, theme });
     console.log('User theme created');
     return true;
   } catch (err) {

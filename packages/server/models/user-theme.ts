@@ -1,6 +1,7 @@
+import { sequelize } from '../db';
 import { Model, DataTypes } from 'sequelize';
 import User from './user';
-import { sequelize } from '../db';
+import Theme from './theme';
 
 class UserTheme extends Model {
   public id!: number;
@@ -26,9 +27,11 @@ UserTheme.init(
   },
   {
     sequelize,
-    modelName: 'user-theme',
+    modelName: 'user-theme42w2',
   }
 );
 
+UserTheme.belongsTo(Theme, { foreignKey: 'theme' });
 UserTheme.belongsTo(User, { foreignKey: 'userId' });
+
 export default UserTheme;
