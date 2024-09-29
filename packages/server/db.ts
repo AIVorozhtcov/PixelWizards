@@ -1,6 +1,5 @@
 import { Sequelize } from 'sequelize';
 import { SequelizeOptions } from 'sequelize-typescript';
-import { seedThemes } from './models/theme';
 import path from 'path';
 import dotenv from 'dotenv';
 
@@ -20,6 +19,7 @@ export async function dbConnect() {
   try {
     await sequelize.authenticate(); // Проверка аутентификации в БД
     await sequelize.sync({ alter: true }).then(async () => {
+      const { seedThemes } = await import('./utils/seedThemes');
       await seedThemes();
     });
     console.log('Connection has been established successfully.');

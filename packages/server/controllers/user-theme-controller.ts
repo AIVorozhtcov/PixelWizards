@@ -3,18 +3,13 @@ import UserTheme from '../models/user-theme';
 
 export const getUserThemeByUserId = async (req: Request, res: Response) => {
   const { userId } = req.params;
-  console.log('userId is ' + userId);
   const userIdInt = parseInt(userId, 10);
-  console.log('userIdInt is ' + userIdInt);
   try {
     const userTheme = await UserTheme.findOne({ where: { userId } });
-    console.log(' here is found theme ' + userTheme);
     if (userTheme) {
       res.json(userTheme);
     } else {
-      console.log('entry point');
       const creationResult = await createUserTheme('dark', userIdInt);
-      console.log(creationResult);
       if (creationResult) {
         const newUserTheme = await UserTheme.findOne({ where: { userId } });
         if (newUserTheme) {
@@ -38,7 +33,7 @@ export const updateUserTheme = async (req: Request, res: Response) => {
   try {
     const themeToUpdate = await UserTheme.findOne({ where: { userId } });
     if (themeToUpdate) {
-      await themeToUpdate.update({ theme: theme });
+      await themeToUpdate.update({ themeName: theme });
       res.json(themeToUpdate);
     } else {
       if (await createUserTheme(theme, userIdInt)) {
@@ -58,11 +53,8 @@ export const updateUserTheme = async (req: Request, res: Response) => {
 };
 
 export const createUserTheme = async (theme: string, userId: number) => {
-  console.log('func entered');
   try {
-    console.log('user theme creation entered');
-    await UserTheme.create({ userId, theme });
-    console.log('User theme created');
+    await UserTheme.create({ userId, themeName: theme });
     return true;
   } catch (err) {
     console.error('Ошибка при создании темы пользователя');

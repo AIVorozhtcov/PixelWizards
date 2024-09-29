@@ -35,6 +35,6 @@
     "db.ts",
     "index.ts",
     "mockProfileFormDefaultValues.ts"
-  ],
+, "utils/seedThemes.ts"  ],
   "exclude": ["node_modules", "dist"]
 }
