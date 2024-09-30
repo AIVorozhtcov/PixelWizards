@@ -12,11 +12,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: set lower case owner name
+      - name: Add change lower case 
+        uses: ASzc/change-string-case-action@v6
+        with: 
+          owner: '${{ github.repository_owner }}'          
+      - name: Set lower case owner name
         run: |
-          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
-        env:
-          OWNER: '${{ github.repository_owner }}'
+          echo "OWNER_LC=${steps.owner.outputs.lowercase,,}" >>${GITHUB_ENV}
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
