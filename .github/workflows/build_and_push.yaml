@@ -1,0 +1,61 @@
+name: Push to GitHub Container Registry
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: Log Level
+        required: true
+        default: warning
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: set lower case owner name
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+        env:
+          OWNER: '${{ github.repository_owner }}'
+      - name: set lower case repository name
+        run: | 
+          echo "REPOSITORY_NAME_LC=${REPOSITORY_NAME,,}" >> ${GITHUB_ENV}
+        env:
+          REPOSITORY_NAME: '${{ github.event.repository.name }}'  
+      - name: Set NODE_VERSION
+        run: |
+          echo "NODE_VERSION=16" >> ${GITHUB_ENV}
+          
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push client image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile.client
+          push: true
+          tags: ghcr.io/${{ env.OWNER_LC }}/${{ env.REPOSITORY_NAME_LC }}/client:${{ github.sha }}
+
+      - name: Build and push server image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile.server
+          push: true
+          tags: ghcr.io/${{ env.OWNER_LC }}/${{ env.REPOSITORY_NAME_LC }}/server:${{ github.sha }}
