@@ -1,12 +1,11 @@
 import { toast } from 'sonner';
+import forumApi from '../../api/fetchTransport/forumApi';
 import { FORUM_CREATE_TOPICS_INPUTS_DATA } from '../../constants/profilePageData';
 import {
   ForumCreateTopicSchema,
   TopicArray,
 } from '../../types/validationSchemas';
 import Form from '../organisms/Form';
-import forumApi from '../../api/fetchTransport/forumApi';
-import { forumTokenLocalStorageKey } from '../../constants/forumConsts';
 
 function ForumCreate({
   setTopics,
@@ -18,10 +17,7 @@ function ForumCreate({
     content: string;
   }) => {
     try {
-      const response = await forumApi.createTopic(
-        data,
-        localStorage.getItem(forumTokenLocalStorageKey) ?? ''
-      );
+      const response = await forumApi.createTopic(data);
 
       if ('reason' in response) {
         throw new Error(response.reason);

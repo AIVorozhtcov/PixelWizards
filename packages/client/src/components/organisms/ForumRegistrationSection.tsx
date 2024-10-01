@@ -9,6 +9,7 @@ import Form from './Form';
 import { toast } from 'sonner';
 import forumApi from '../../api/fetchTransport/forumApi';
 import { forumTokenLocalStorageKey } from '../../constants/forumConsts';
+import LINKS from '../../constants/links';
 
 const RegistrationSection = () => {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const RegistrationSection = () => {
         inputVariant="basic"
         fields={FORUM_REGISTRATION_INPUTS_DATA}
       />
-      <Link className="self-center mt-10" to="/login">
+      <Link className="self-center mt-10" to={LINKS.forumLogin}>
         Войти
       </Link>
       <Image

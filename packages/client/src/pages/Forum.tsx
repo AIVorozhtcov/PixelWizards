@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react';
-import forumApi from '../api/fetchTransport/forumApi';
-import { forumTokenLocalStorageKey } from '../constants/forumConsts';
 import { useNavigate } from 'react-router-dom';
-import ForumCreate from '../components/molecules/ForumCreate';
-import { TopicArray } from '../types/validationSchemas';
-import ForumTopic from '../components/molecules/ForumTopic';
+import forumApi from '../api/fetchTransport/forumApi';
 import MainSection from '../components/atoms/MainSection';
+import ForumCreate from '../components/molecules/ForumCreate';
+import ForumTopic from '../components/molecules/ForumTopic';
+import { TopicArray } from '../types/validationSchemas';
 
 export default function Forum() {
   const navigate = useNavigate();
   const [topics, setTopics] = useState<TopicArray[]>([]);
 
   useEffect(() => {
-    const token = localStorage.getItem(forumTokenLocalStorageKey);
-    if (!token) navigate('/forum/login');
     forumApi
-      .getTopics(token as string)
+      .getTopics()
       .then(topics => {
         if ('reason' in topics) {
           throw new Error(topics.reason);
@@ -23,7 +20,10 @@ export default function Forum() {
 
         setTopics(topics);
       })
-      .catch(console.error);
+      .catch(err => {
+        console.error(err);
+        navigate('/forum/login');
+      });
   }, []);
 
   return (

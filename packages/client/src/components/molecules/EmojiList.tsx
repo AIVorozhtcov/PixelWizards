@@ -1,7 +1,6 @@
 import { toast } from 'sonner';
-import Emoji from '../atoms/Emoji';
 import forumApi from '../../api/fetchTransport/forumApi';
-import { forumTokenLocalStorageKey } from '../../constants/forumConsts';
+import Emoji from '../atoms/Emoji';
 
 function EmojiList({
   abailableEmoji,
@@ -20,13 +19,10 @@ function EmojiList({
       event.target.textContent
     ) {
       try {
-        await forumApi.updateReaction(
-          {
-            topicId: id,
-            reaction: event.target.textContent,
-          },
-          localStorage.getItem(forumTokenLocalStorageKey) ?? ''
-        );
+        await forumApi.updateReaction({
+          topicId: id,
+          reaction: event.target.textContent,
+        });
 
         setEmoji(event.target.textContent);
         handleShowAbailableEmoji();

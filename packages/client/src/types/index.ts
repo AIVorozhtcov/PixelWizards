@@ -88,7 +88,10 @@ export interface IUserState {
 export type Data = Record<string, string | null>;
 
 export type Path = `/${string}` | '';
-export type Headers = { extends?: boolean } & Record<string, string | boolean>;
+export type Headers = { extends?: boolean; withToken?: boolean } & Record<
+  string,
+  string | boolean
+>;
 
 export type MethodKeys = typeof IMETHOD[keyof typeof IMETHOD];
 
