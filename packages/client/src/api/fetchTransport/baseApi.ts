@@ -1,3 +1,4 @@
+import { forumTokenLocalStorageKey } from '../../constants/forumConsts';
 import { APIMethod, BaseAPIConfig, Headers, Options } from '../../types';
 import FetchTransport from './fetchTransport';
 
@@ -25,6 +26,10 @@ export default abstract class BaseApi {
       };
     }
 
+    if (installedOptions?.headers?.withToken) {
+      delete options.headers.withToken;
+      options.headers.authorization = `Bearer ${this.getToken()}`;
+    }
     return options as Options;
   }
 
@@ -63,4 +68,8 @@ export default abstract class BaseApi {
 
     return response;
   };
+
+  private getToken() {
+    return localStorage.getItem(forumTokenLocalStorageKey) ?? '';
+  }
 }

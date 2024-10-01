@@ -2,16 +2,15 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import forumApi from '../api/fetchTransport/forumApi';
+import Button from '../components/atoms/Button';
+import MainSection from '../components/atoms/MainSection';
 import Subtitle from '../components/atoms/Subtitle';
 import Text from '../components/atoms/Text';
 import Title from '../components/atoms/Title';
+import Message from '../components/molecules/Message';
 import Form from '../components/organisms/Form';
-import { forumTokenLocalStorageKey } from '../constants/forumConsts';
 import { FORUM_CREATE_COMMENT_INPUTS_DATA } from '../constants/profilePageData';
 import { ForumCreateCommentSchema } from '../types/validationSchemas';
-import Message from '../components/molecules/Message';
-import Button from '../components/atoms/Button';
-import MainSection from '../components/atoms/MainSection';
 
 export default function ForumTopic() {
   const { state } = useLocation();
@@ -28,13 +27,10 @@ export default function ForumTopic() {
 
   const handleCreateComment = async ({ content }: { content: string }) => {
     try {
-      const comment = await forumApi.createComment(
-        {
-          content,
-          topicId: state.id,
-        },
-        localStorage.getItem(forumTokenLocalStorageKey) ?? ''
-      );
+      const comment = await forumApi.createComment({
+        content,
+        topicId: state.id,
+      });
 
       if ('reason' in comment) {
         throw new Error(comment.reason);
@@ -48,10 +44,7 @@ export default function ForumTopic() {
 
   useEffect(() => {
     const fetchTopicComments = async () => {
-      const data = await forumApi.getCommentsByTopic(
-        state.id,
-        localStorage.getItem(forumTokenLocalStorageKey) ?? ''
-      );
+      const data = await forumApi.getCommentsByTopic(state.id);
 
       if ('reason' in data) {
         throw new Error(data.reason);
@@ -73,10 +66,7 @@ export default function ForumTopic() {
         <div>
           <Button
             onClick={async () => {
-              const data = await forumApi.getCommentsByTopic(
-                state.id,
-                localStorage.getItem(forumTokenLocalStorageKey) ?? ''
-              );
+              const data = await forumApi.getCommentsByTopic(state.id);
 
               console.log('data', data);
             }}>

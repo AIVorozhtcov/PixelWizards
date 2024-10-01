@@ -1,11 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import forumApi from '../../api/fetchTransport/forumApi';
 import { TopicArray } from '../../types/validationSchemas';
 import Button from '../atoms/Button';
 import Subtitle from '../atoms/Subtitle';
 import Text from '../atoms/Text';
-import { forumTokenLocalStorageKey } from '../../constants/forumConsts';
-import { useNavigate } from 'react-router-dom';
 
 function ForumTopic(
   props: TopicArray & {
@@ -36,10 +35,7 @@ function ForumTopic(
   const handleDeleteTopic = async (event: React.MouseEvent) => {
     try {
       event.stopPropagation();
-      await forumApi.deleteTopic(
-        String(props.id),
-        localStorage.getItem(forumTokenLocalStorageKey) ?? ''
-      );
+      await forumApi.deleteTopic(String(props.id));
       props.setTopics(prev => prev.filter(topic => topic.id !== props.id));
     } catch (error) {
       toast.error('Возникла ошибка при удалении топика');
