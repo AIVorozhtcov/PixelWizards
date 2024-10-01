@@ -10,7 +10,7 @@ export default function StartGameScreen({
   setIsMapOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   return (
-    <div className="p-3 min-h-dvh flex flex-col items-center justify-center gap-2 text-white">
+    <div className="p-3 h-full flex flex-col items-center justify-center gap-2 text-white">
       <Subtitle as="h2" className="text-3xl font-bold" variant="h2">
         Начало игры
       </Subtitle>

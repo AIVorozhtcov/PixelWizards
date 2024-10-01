@@ -6,8 +6,8 @@ export type NodeType = {
   id: number;
   x: number;
   y: number;
-  type: NodeKeyofType;
-  src: string;
+  type?: NodeKeyofType;
+  src?: string;
   visited: boolean;
   active: boolean;
   connectedToActive: boolean;

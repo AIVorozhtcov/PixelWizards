@@ -26,6 +26,8 @@ export class Game {
   music = new AudioPlayer();
   map: GameMap;
   currentGameStage: 'battle' | 'map' = 'map';
+  gameStatusText: 'Выбрать следующий этап' | 'Начать заново' =
+    'Выбрать следующий этап';
 
   constructor(
     width: number,
@@ -46,7 +48,6 @@ export class Game {
       this.width,
       this.height
     );
-
     this.background.src = '/backgroundGame.webp';
   }
 
@@ -66,14 +67,14 @@ export class Game {
     return new Enemy(props);
   }
 
-  private createHero(props: CharacterInitProps) {
-    return new Player(props);
-  }
-
   private isGameContinue() {
     if (this.player.hitPoints <= 0) {
       this.endGame();
-      //При проигрыше сбрасываем прогресс на начало карты
+
+      this.gameStatusText = 'Начать заново';
+
+      this.createPlayer(false);
+
       this.map = new GameMap(
         this.context,
         this.beginAndDrawGame.bind(this),
@@ -81,8 +82,25 @@ export class Game {
         this.width,
         this.height
       );
+
       return false;
     } else if (this.enemy.hitPoints <= 0) {
+      if (this.gameStatusText === 'Начать заново') {
+        this.endGame(true);
+
+        this.createPlayer(false);
+
+        this.map = new GameMap(
+          this.context,
+          this.beginAndDrawGame.bind(this),
+          this.setIsMapOpen,
+          this.width,
+          this.height
+        );
+
+        return false;
+      }
+
       this.endGame(true);
       return false;
     } else {
@@ -206,7 +224,7 @@ export class Game {
       enemyWidth = 260;
       enemyX = 720;
 
-      // TODO isLastBattle
+      this.gameStatusText = 'Начать заново';
     }
 
     this.enemy = this.createEnemy({
@@ -222,17 +240,17 @@ export class Game {
     });
   }
 
-  createPlayer() {
+  createPlayer(isCardInHandDefault = true) {
     const mapHeal = this.map.mapHeal;
     const numOptionCard = this.map.numOptionCard;
-    const cardInHand = fixCardsInPlayerHand;
+    const cardInHand = [...fixCardsInPlayerHand];
     let playerHitPoints = 10;
 
     if (mapHeal !== 0) {
       playerHitPoints += mapHeal;
     }
 
-    if (numOptionCard !== 0) {
+    if (numOptionCard !== 0 && isCardInHandDefault) {
       for (let i = 0; i < numOptionCard; i++) {
         cardInHand.push(optionalHealCardInHand);
       }

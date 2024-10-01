@@ -39,7 +39,7 @@ export default function Gameplay() {
         className="m-auto"
         ref={canvasRef}
         width={1000}
-        height={800}
+        height={600}
         onMouseDown={e => {
           if (gameRef.current?.currentGameStage === 'battle') {
             gameRef.current?.player?.onMouseDown(e);
@@ -75,7 +75,7 @@ export default function Gameplay() {
             }
           }}
           className="text-white bg-red-400 w-full h-20">
-          {isGameEnd ? 'Выбрать следующий этап' : 'Закончить ход'}
+          {isGameEnd ? gameRef.current?.gameStatusText : 'Закончить ход'}
         </Button>
       )}
       <FullscreenToggle className="absolute top-20 left-5 opacity-50 w-20"></FullscreenToggle>

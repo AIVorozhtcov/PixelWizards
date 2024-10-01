@@ -10,8 +10,8 @@ export class Node {
   id: number;
   x: number;
   y: number;
-  type: keyof typeof NODE_TYPES;
-  src: string;
+  type?: keyof typeof NODE_TYPES;
+  src?: string;
   visited: boolean;
   active: boolean;
   connectedToActive: boolean;
@@ -50,7 +50,7 @@ export class Node {
 
   drawNode(backgroundColor = 'black', strokeColor = 'black') {
     const image = new Image();
-    image.src = this.src;
+    image.src = this.src ?? '';
 
     if (this.active || this.visited) {
       backgroundColor = 'DarkGray';
