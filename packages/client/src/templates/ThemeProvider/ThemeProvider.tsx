@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { ThemeType } from '../../types';
 import { getThemeFromStorage, setThemeInStorage } from '../../lib/theme';
+import { ThemeType } from '../../types';
 
 type ThemeContextType = {
   theme: ThemeType;

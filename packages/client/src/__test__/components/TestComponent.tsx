@@ -1,17 +1,20 @@
-import { useEffect } from 'react';
-import forumApi from '../../api/fetchTransport/forumApi';
+import { useLayoutEffect, useRef } from 'react';
 
-export default function TestComponent() {
-  useEffect(() => {
-    const fetchTest = async () => {
-      const response = await forumApi.getTopics();
+import gsap from 'gsap'; // <-- import GSAP
 
-      console.log(response);
-    };
+export default function App() {
+  const container = useRef(null);
 
-    fetchTest();
-  }, []);
+  useLayoutEffect(() => {
+    // gsap code here...
+    gsap.to('.box', { rotation: 180 }); // <-- automatically reverted
+  }, []); // <-- scope for selector text (optional)
+
   return (
-    <div className="flex justify-center items-center w-screen h-screen"></div>
+    <div
+      ref={container}
+      className="app h-screen text-black flex justify-center items-center">
+      <div className="box">Hello</div>
+    </div>
   );
 }

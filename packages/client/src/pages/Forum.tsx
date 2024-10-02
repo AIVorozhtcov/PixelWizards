@@ -5,6 +5,7 @@ import MainSection from '../components/atoms/MainSection';
 import ForumCreate from '../components/molecules/ForumCreate';
 import ForumTopic from '../components/molecules/ForumTopic';
 import { TopicArray } from '../types/validationSchemas';
+import { toast } from 'sonner';
 
 export default function Forum() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function Forum() {
       })
       .catch(err => {
         console.error(err);
+        toast.error('Неудалось подтвердить аккаунт');
         navigate('/forum/login');
       });
   }, []);

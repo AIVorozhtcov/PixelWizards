@@ -38,28 +38,28 @@ const ForumLoginSection = () => {
       <Form<LoginFormData>
         zodSchema={LoginValidationSchema}
         onSubmit={handleSubmit}
-        buttonText="Submit"
+        buttonText="Залогинеться"
         buttonVariant="acentNotTransparent"
-        buttonClass="bg-[#ffc107]"
+        buttonClass="bg-[#ffc107] w-full"
         formFieldClass="mb-4 w-80"
         labelVariant="basic"
         inputVariant="basic"
         fields={LOGIN_INPUTS_DATA}
       />
       <Link className="self-center mt-10" to={LINKS.forumRegistration}>
-        Зарегистрироваться
+        Нет аккаунта? Кликай и регистрируйся
       </Link>
-      <Image
-        src="/registrationCapibara.webp"
-        width="225"
-        alt="Космическая капибара!"
-        className="mx-auto aspect-square overflow-hidden rounded-xl object-cover absolute top-0 right-0 opacity-50"
-      />
       <Image
         src="/registrationCapibara2.webp"
         width="225"
         alt="Космическая капибара!"
-        className="absolute top-10 left-0 opacity-50"
+        className="absolute top-2/4 right-0 opacity-50"
+      />
+      <Image
+        src="/registrationCapibara.webp"
+        width="225"
+        alt="Космическая капибара!"
+        className="mx-auto aspect-square overflow-hidden rounded-xl object-cover absolute top-2/4 left-0 opacity-50"
       />
     </div>
   );

@@ -45,10 +45,6 @@ export const routes = [
         path: LINKS.profile,
         element: <Profile />,
       },
-      {
-        path: LINKS.leaderboard,
-        element: <LeaderBoard />,
-      },
     ],
   },
   {

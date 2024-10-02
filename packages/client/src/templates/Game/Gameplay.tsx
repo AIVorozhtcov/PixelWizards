@@ -78,7 +78,7 @@ export default function Gameplay() {
           {isGameEnd ? gameRef.current?.gameStatusText : 'Закончить ход'}
         </Button>
       )}
-      <FullscreenToggle className="absolute top-20 left-5 opacity-50 w-20"></FullscreenToggle>
+      <FullscreenToggle className="absolute top-5 left-3 opacity-50 w-10"></FullscreenToggle>
     </>
   );
 }

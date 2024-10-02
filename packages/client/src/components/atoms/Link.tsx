@@ -39,7 +39,8 @@ export default function Link({
   return (
     <LinkCustom
       className={cn(linkVariants({ variant: isActiveVariant }), className)}
-      {...props}>
+      {...props}
+      unstable_viewTransition>
       {children}
     </LinkCustom>
   );

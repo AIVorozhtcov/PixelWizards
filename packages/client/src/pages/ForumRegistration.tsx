@@ -3,7 +3,7 @@ import ForumRegistrationSection from '../components/organisms/ForumRegistrationS
 
 export default function ForumRegistration() {
   return (
-    <MainSection>
+    <MainSection className="items-center justify-center">
       <ForumRegistrationSection />
     </MainSection>
   );

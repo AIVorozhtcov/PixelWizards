@@ -3,20 +3,20 @@ import { createImageWithText } from '../utils/helpers';
 export const arrayOfImagesWithText = [
   createImageWithText(
     '/capCapibara.webp',
-    'Capybara Character',
-    'Captain Capybara',
-    'The fearless leader of the Capybara Crusaders, skilled in both combat and strategy.'
+    'Капибара',
+    'Капитан Капибара',
+    'Бесстрашный лидер Capybara Crusaders, искусный в бою и стратегии.'
   ),
   createImageWithText(
     '/sneakEnemy.webp',
-    'Snake Character',
-    'Slithering Serpent',
-    'The cunning and devious leader of the Snake Syndicate, always plotting their next move.'
+    'Змея',
+    'Скользящая змея',
+    'Хитрый и коварный лидер Змеиного синдиката, всегда продумывающий свой следующий шаг.'
   ),
   createImageWithText(
     '/mechanicCapibara.webp',
-    'Mechanic Character',
-    'Gadget Guru',
-    'The brilliant mechanic who keeps the Capybara Crusaders ships and weapons in top shape.'
+    'Механик',
+    'Гуру гаджетов',
+    'Гениальный механик, который поддерживает корабли и оружие крестоносцев Капибары в отличной форме.'
   ),
 ];

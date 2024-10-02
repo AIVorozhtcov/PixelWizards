@@ -2,15 +2,15 @@ import { createGameplayText } from '../utils/helpers';
 
 export const arrayOfGameplayText = [
   createGameplayText(
-    'Diverse Playable Characters',
-    'Choose from a roster of unique capibaras and sneaks, each with their own specialized abilities and playstyles.'
+    'Разнообразные играбельные персонажи',
+    'Выбирайте из списка уникальных капибар и кроссовок, каждая из которых обладает своими особыми способностями и стилем игры.'
   ),
   createGameplayText(
-    'Stunning Battlegrounds',
-    'Explore a variety of captivating cosmic environments, each with their own environmental hazards and strategic elements.'
+    'Ошеломляющие сражения',
+    'Исследуйте множество захватывающих космических сред, каждая из которых имеет свои собственные экологические опасности и стратегические элементы.'
   ),
   createGameplayText(
-    'Unique Abilities and Upgrades',
-    'Unlock and upgrade a wide array of devastating abilities,from powerful energy beams to mind-bending illusions.'
+    'Уникальные способности и улучшения',
+    'Разблокируйте и улучшайте широкий спектр разрушительных способностей, от мощных энергетических лучей до иллюзий.'
   ),
 ];

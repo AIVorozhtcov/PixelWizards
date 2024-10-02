@@ -6,10 +6,9 @@ export default function DescriptionSection() {
   return (
     <Section>
       <IntroductionBlock
-        title="Meet the Characters"
-        subtitle="Capybaras and Snakes"
-        text="Explore the diverse cast of characters in the Capybara Crusaders
-          universe, each with their own unique abilities and backstories."
+        title="Знакомство с персонажами"
+        subtitle="Капибары и змеи"
+        text="Познакомьтесь с разнообразным составом персонажей во вселенной Capybara Crusaders вселенной, каждый из которых обладает уникальными способностями и предысторией."
       />
       <CharacterBlock />
     </Section>
