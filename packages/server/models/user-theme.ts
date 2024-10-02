@@ -1,6 +1,7 @@
+import { sequelize } from '../db';
 import { Model, DataTypes } from 'sequelize';
 import User from './user';
-import { sequelize } from '../db';
+import Theme from './theme';
 
 class UserTheme extends Model {
   public id!: number;
@@ -15,9 +16,8 @@ UserTheme.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    theme: {
+    themeName: {
       type: new DataTypes.TEXT(),
-      allowNull: false,
     },
     userId: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -30,5 +30,7 @@ UserTheme.init(
   }
 );
 
+UserTheme.belongsTo(Theme, { foreignKey: 'themeName', targetKey: 'theme' });
 UserTheme.belongsTo(User, { foreignKey: 'userId' });
+
 export default UserTheme;

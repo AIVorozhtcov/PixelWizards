@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../db';
+import { Model, DataTypes } from 'sequelize';
 
 class Theme extends Model {
   public id!: number;
