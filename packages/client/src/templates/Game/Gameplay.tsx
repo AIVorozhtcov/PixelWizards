@@ -34,7 +34,7 @@ export default function Gameplay() {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-col max-w-[1000px] mx-auto h-full items-center">
       <canvas
         className="m-auto"
         ref={canvasRef}
@@ -74,11 +74,11 @@ export default function Gameplay() {
               gameRef.current?.endTurn();
             }
           }}
-          className="text-white bg-red-400 w-full h-20">
+          className="text-white hover:bg-[#b05656] bg-red-400 w-full h-20 mx-auto">
           {isGameEnd ? gameRef.current?.gameStatusText : 'Закончить ход'}
         </Button>
       )}
-      <FullscreenToggle className="absolute top-5 left-3 opacity-50 w-10"></FullscreenToggle>
-    </>
+      <FullscreenToggle className="absolute top-5 left-3 opacity-50 w-10 dark:bg-opacity-0 bg-red-700"></FullscreenToggle>
+    </div>
   );
 }

@@ -27,3 +27,11 @@
   opacity: 0;
   pointer-events: none;
 }
+
+.dark {
+  background-color: #0c1b2a;
+}
+
+html {
+  background-color: white;
+}
