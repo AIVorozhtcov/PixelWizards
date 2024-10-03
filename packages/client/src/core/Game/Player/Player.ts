@@ -109,7 +109,7 @@ export class Player extends Character {
   }
 
   onMouseDown(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
-    if (this.game.whosTurn === 'player') {
+    if (this.game.whosTurn === 'player' && !this.animation.animating) {
       const { offsetX, offsetY } = event.nativeEvent;
 
       this.cards.currentCardsInHand.forEach(card => {
@@ -140,7 +140,11 @@ export class Player extends Character {
   }
 
   onMouseUp() {
-    if (this.game.whosTurn === 'player' && this.draggingCard) {
+    if (
+      this.game.whosTurn === 'player' &&
+      this.draggingCard &&
+      !this.animation.animating
+    ) {
       this.animation.particlesAnimation.createParticles(
         this.draggingCard,
         this.draggingCard.x,
