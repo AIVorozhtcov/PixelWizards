@@ -5,9 +5,7 @@ import { Suspense } from 'react';
 export default function UnprotectedLayout() {
   return (
     <ErrorBoundaryDefault>
-      <Suspense>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </ErrorBoundaryDefault>
   );
 }

@@ -10,7 +10,6 @@ import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
 import Profile from '../pages/Profile';
 import Registration from '../pages/Registration';
-import ErrorBoundaryDefault from '../templates/ErrorBoundary';
 import ProtectedLayout from '../templates/Layout/ProtectedLayout';
 import UnprotectedLayout from '../templates/Layout/UnprotectedLayout';
 import LINKS from './links';
