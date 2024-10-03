@@ -12,7 +12,7 @@ self.addEventListener('install', event => {
     caches
       .open(CACHE_NAME)
       .then(cache => cache.addAll(CACHE_URLS))
-      .catch(error => console.log(error))
+      .catch(console.error)
   );
 
   event.waitUntil(self.skipWaiting());
@@ -53,7 +53,7 @@ self.addEventListener('fetch', event => {
         return response;
       })
       .catch(async () => {
-        console.log('Оффлайн');
+        console.warn('Оффлайн');
 
         return await caches
           .open(CACHE_NAME)

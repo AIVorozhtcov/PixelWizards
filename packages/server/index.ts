@@ -40,6 +40,6 @@ dbConnect().then(() => {
   // Запуск сервера
   const PORT = process.env.SERVER_PORT || 3001;
   app.listen(PORT, () => {
-    console.log(`Сервер запущен на порту ${PORT}`);
+    console.info(`Сервер запущен на порту ${PORT}`);
   });
 });

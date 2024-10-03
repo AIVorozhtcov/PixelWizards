@@ -22,7 +22,7 @@ export async function dbConnect() {
       const { seedThemes } = await import('./utils/seedThemes');
       await seedThemes();
     });
-    console.log('Connection has been established successfully.');
+    console.info('Connection has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }

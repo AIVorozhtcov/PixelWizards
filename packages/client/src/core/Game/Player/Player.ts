@@ -50,7 +50,7 @@ export class Player extends Character {
     Promise.all(imagePromises)
       .then(() => {
         this.isCardsLoaded = true;
-        console.log('All card images loaded.');
+        console.info('All card images loaded.');
       })
       .catch(err => {
         this.isCardsLoaded = new Error(err);

@@ -6,7 +6,6 @@ import { Op } from 'sequelize';
 
 export const createTopic = async (req: Request, res: Response) => {
   const { title, content } = req.body;
-  console.log('adsdsadsadsadasadsdasdasdsadas', req.body);
   const userId = (req as any).user.id;
   try {
     const newTopic = await Topic.create({ title, content, userId });

@@ -64,14 +64,6 @@ export default function ForumTopic() {
           <Text>{state.content}</Text>
         </div>
         <div>
-          <Button
-            onClick={async () => {
-              const data = await forumApi.getCommentsByTopic(state.id);
-
-              console.log('data', data);
-            }}>
-            Click
-          </Button>
           <Button variant="acent" onClick={() => navigate(-1)}>
             {'Назад'}
           </Button>

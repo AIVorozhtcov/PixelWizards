@@ -10,9 +10,9 @@ fs.readFile(`${BUILD_FOLDER}/${SW_FILE}`, 'utf-8', (err, data) => {
 
   fs.writeFile(`${BUILD_FOLDER}/${SW_FILE}`, urlsForCache, error => {
     if (error) {
-      console.log(`Ошибка при добавлении файлов в service worker: ${error}`);
+      console.error(`Ошибка при добавлении файлов в service worker: ${error}`);
     } else {
-      console.log(`Файлы в service worker добавлены`);
+      console.info('Файлы в service worker добавлены');
     }
   });
 });

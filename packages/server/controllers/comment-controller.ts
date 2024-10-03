@@ -24,7 +24,7 @@ export const getCommentsByTopic = async (req: Request, res: Response) => {
     const comments = await Comment.findAll({ where: { topicId } });
     res.json(comments);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ error: 'Ошибка при получении комментариев' });
   }
 };

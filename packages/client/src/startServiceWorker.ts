@@ -3,8 +3,8 @@ export default function startServiceWorker() {
     window.addEventListener('load', () => {
       navigator.serviceWorker
         .register('cacheServiceWorker.js', { scope: '/' })
-        .then(() => console.log('[SW] register'))
-        .catch(error => console.log('[SW] register failed: ', error));
+        .then(() => console.info('[SW] register'))
+        .catch(error => console.error('[SW] register failed: ', error));
     });
   }
 }

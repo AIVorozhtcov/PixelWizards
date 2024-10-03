@@ -149,7 +149,7 @@ export class Node {
       case NODE_TYPES.start:
         break;
       default:
-        console.log('default level');
+        return;
     }
   }
 }
