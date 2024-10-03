@@ -36,7 +36,6 @@ const RegistrationSection = () => {
         navigate('/forum');
       }
     } catch (error) {
-      console.dir({ error });
       if (error instanceof Error) {
         toast.error(error.message);
       } else {

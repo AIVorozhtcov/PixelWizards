@@ -7,7 +7,7 @@ import Subtitle from '../atoms/Subtitle';
 import Text from '../atoms/Text';
 
 function ForumTopic(
-  props: TopicArray & {
+  props: TopicArray & { currentUserId?: number } & {
     setTopics: React.Dispatch<
       React.SetStateAction<
         {
@@ -23,6 +23,7 @@ function ForumTopic(
   }
 ) {
   const navigate = useNavigate();
+
   const handleOpenTopic = () => {
     navigate(`/forum/topic/${props.id}`, {
       state: {
@@ -32,6 +33,7 @@ function ForumTopic(
       },
     });
   };
+
   const handleDeleteTopic = async (event: React.MouseEvent) => {
     try {
       event.stopPropagation();
@@ -41,6 +43,7 @@ function ForumTopic(
       toast.error('Возникла ошибка при удалении топика');
     }
   };
+
   return (
     <div
       className="flex flex-col gap-4 border border-white rounded cursor-pointer p-4 min-w-60"
@@ -49,9 +52,11 @@ function ForumTopic(
         <Subtitle as="h3" variant="h3">
           {props.title}
         </Subtitle>
-        <Button onClick={handleDeleteTopic} className="text-[red]">
-          X
-        </Button>
+        {props.currentUserId && props.currentUserId === props.userId && (
+          <Button onClick={handleDeleteTopic} className="text-[red]">
+            X
+          </Button>
+        )}
       </div>
       <Text>{props.content}</Text>
       <Text variant="caption">{props.createdAt}</Text>
