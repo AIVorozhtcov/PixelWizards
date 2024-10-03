@@ -1,5 +1,5 @@
 import { gsap, Power3, Power4 } from 'gsap';
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
 
 function TransitionLayer({ children }: { children: React.ReactNode }) {
@@ -7,7 +7,7 @@ function TransitionLayer({ children }: { children: React.ReactNode }) {
   const screen = useRef<HTMLDivElement | null>(null);
   const body = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const tl = gsap.timeline();
 
     tl.to(screen.current, {
