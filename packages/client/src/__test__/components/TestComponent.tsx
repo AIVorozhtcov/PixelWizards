@@ -1,19 +1,25 @@
-import { useLayoutEffect, useRef } from 'react';
-
-import gsap from 'gsap'; // <-- import GSAP
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { selectUserForum, setUserForum } from '../../store/slices/userForum';
 
 export default function App() {
-  const container = useRef(null);
+  const userId = useAppSelector(selectUserForum);
+  const dispatch = useAppDispatch();
 
-  useLayoutEffect(() => {
-    // gsap code here...
-    gsap.to('.box', { rotation: 180 }); // <-- automatically reverted
-  }, []); // <-- scope for selector text (optional)
+  console.log(userId);
 
+  useEffect(() => {
+    dispatch(
+      setUserForum({
+        userForum: {
+          id: 1,
+          login: '2',
+        },
+      })
+    );
+  }, []);
   return (
-    <div
-      ref={container}
-      className="app h-screen text-black flex justify-center items-center">
+    <div className="app h-screen text-black flex justify-center items-center">
       <div className="box">Hello</div>
     </div>
   );

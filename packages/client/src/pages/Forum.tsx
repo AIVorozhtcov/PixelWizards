@@ -26,7 +26,7 @@ export default function Forum() {
 
         if (!user) throw new Error('Не удалось найти пользователя');
 
-        dispatch(setUserForum(user));
+        dispatch(setUserForum({ userForum: user }));
 
         const topics = await forumApi.getTopics();
 

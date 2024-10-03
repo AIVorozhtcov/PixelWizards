@@ -36,7 +36,14 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-export const logoutUser = async (res: Response) => {
+export const logoutUser = async (req: Request, res: Response) => {
+  const userId = (req as any).user.id;
+
+  if (!userId) {
+    res.status(500).json({ error: 'Ошибка при выходе' });
+    return;
+  }
+
   res.status(200).json({ message: 'Успешный выход из системы' });
 };
 
