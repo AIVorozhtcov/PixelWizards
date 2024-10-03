@@ -7,11 +7,13 @@ import ForumTopic from '../components/molecules/ForumTopic';
 import { TopicArray } from '../types/validationSchemas';
 import { toast } from 'sonner';
 import { useAppSelector } from '../lib/hooks';
+import ThemeButton from '../components/molecules/ThemeButton';
+import { selectUser } from '../store/slices/user';
 
 export default function Forum() {
   const navigate = useNavigate();
   const [topics, setTopics] = useState<TopicArray[]>([]);
-  const userId = useAppSelector(user => user.user.user?.id);
+  const userId = useAppSelector(selectUser);
 
   useEffect(() => {
     forumApi
@@ -31,9 +33,10 @@ export default function Forum() {
   }, []);
 
   return (
-    <MainSection>
-      <div>
+    <MainSection className="p-2">
+      <div className="flex flex-row justify-between">
         <h1 className="text-5xl font-bold p-2">Форум</h1>
+        <ThemeButton />
         <hr />
       </div>
       <ForumCreate setTopics={setTopics} />
@@ -42,7 +45,7 @@ export default function Forum() {
           ? topics.map(topic => (
               <ForumTopic
                 key={topic.id}
-                currentUserId={userId}
+                currentUserId={userId?.id}
                 setTopics={setTopics}
                 {...topic}
               />

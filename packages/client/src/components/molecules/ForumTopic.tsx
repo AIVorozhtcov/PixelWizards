@@ -46,7 +46,7 @@ function ForumTopic(
 
   return (
     <div
-      className="flex flex-col gap-4 border border-white rounded cursor-pointer p-4 min-w-60"
+      className="flex flex-col gap-4 border dark:border-white border-black rounded cursor-pointer p-4 min-w-60"
       onClick={handleOpenTopic}>
       <div className="flex justify-between">
         <Subtitle as="h3" variant="h3">
