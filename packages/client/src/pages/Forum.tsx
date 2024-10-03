@@ -51,6 +51,7 @@ export default function Forum() {
         <h1 className="text-5xl font-bold p-2">Форум</h1>
         <Button
           variant="acent"
+          className="ml-auto"
           onClick={async () => {
             try {
               await forumApi.logout();
@@ -60,7 +61,7 @@ export default function Forum() {
           }}>
           Выйти из профиля
         </Button>
-        <ThemeButton className="ml-auto" />
+        <ThemeButton />
         <hr />
       </div>
       <ForumCreate setTopics={setTopics} />

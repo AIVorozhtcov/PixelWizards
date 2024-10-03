@@ -24,7 +24,7 @@ app.get('/user', (_, res) => {
 
 dbConnect().then(() => {
   // Настройка маршрутов
-  app.use('/api/users', userRouter);
+  app.use('/api/users', authMiddleware, userRouter);
   app.use('/api/topics', authMiddleware, topicRouter);
   app.use('/api/comments', authMiddleware, commentRouter);
   app.use('/api/replies', authMiddleware, replyRouter);
