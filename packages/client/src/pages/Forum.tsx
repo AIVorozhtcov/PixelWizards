@@ -1,42 +1,66 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import forumApi from '../api/fetchTransport/forumApi';
+import Button from '../components/atoms/Button';
 import MainSection from '../components/atoms/MainSection';
 import ForumCreate from '../components/molecules/ForumCreate';
 import ForumTopic from '../components/molecules/ForumTopic';
-import { TopicArray } from '../types/validationSchemas';
-import { toast } from 'sonner';
-import { useAppSelector } from '../lib/hooks';
 import ThemeButton from '../components/molecules/ThemeButton';
-import { selectUser } from '../store/slices/user';
+import { useAppDispatch, useAppSelector } from '../lib/hooks';
+import { selectUserForum, setUserForum } from '../store/slices/userForum';
+import { TopicArray } from '../types/validationSchemas';
 
 export default function Forum() {
   const navigate = useNavigate();
   const [topics, setTopics] = useState<TopicArray[]>([]);
-  const userId = useAppSelector(selectUser);
+  const userId = useAppSelector(selectUserForum);
+  const dispatch = useAppDispatch();
+
+  console.log('userId', userId);
 
   useEffect(() => {
-    forumApi
-      .getTopics()
-      .then(topics => {
+    const fetchData = async () => {
+      try {
+        const user = await forumApi.getUser();
+
+        if (!user) throw new Error('Не удалось найти пользователя');
+
+        dispatch(setUserForum(user));
+
+        const topics = await forumApi.getTopics();
+
         if ('reason' in topics) {
           throw new Error(topics.reason);
         }
 
         setTopics(topics);
-      })
-      .catch(err => {
-        console.error(err);
-        toast.error('Неудалось подтвердить аккаунт');
+      } catch (error) {
+        toast.error(
+          (error as Error).message ?? 'Ошибка верификации пользователя!'
+        );
         navigate('/forum/login');
-      });
+      }
+    };
+    fetchData();
   }, []);
 
   return (
     <MainSection className="p-2">
       <div className="flex flex-row justify-between">
         <h1 className="text-5xl font-bold p-2">Форум</h1>
-        <ThemeButton />
+        <Button
+          variant="acent"
+          onClick={async () => {
+            try {
+              await forumApi.logout();
+            } catch (error) {
+              toast.error('Ошибка при выходе!');
+            }
+          }}>
+          Выйти из профиля
+        </Button>
+        <ThemeButton className="ml-auto" />
         <hr />
       </div>
       <ForumCreate setTopics={setTopics} />

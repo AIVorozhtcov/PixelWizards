@@ -1,4 +1,5 @@
 import { FORUM_PATHS, URLS } from '../../constants/apiConstants';
+import { forumTokenLocalStorageKey } from '../../constants/forumConsts';
 import { Data } from '../../types';
 import {
   CommentSchema,
@@ -32,9 +33,28 @@ class ForumApi extends BaseApi {
   async login(data: Data) {
     const response = await this.post(FORUM_PATHS.login, {
       data,
-      /*headers: {
+    });
+
+    return await response.json();
+  }
+
+  async logout() {
+    const response = await this.post(FORUM_PATHS.logout, {
+      headers: {
         withToken: true,
-      },*/
+      },
+    });
+
+    localStorage.removeItem(forumTokenLocalStorageKey);
+
+    return response.status === 200;
+  }
+
+  async getUser() {
+    const response = await this.post(FORUM_PATHS.getUser, {
+      headers: {
+        withToken: true,
+      },
     });
 
     return await response.json();

@@ -1,13 +1,13 @@
+import { configureStore } from '@reduxjs/toolkit';
 import {
+  TypedUseSelectorHook,
   useDispatch as useDispatchBase,
   useSelector as useSelectorBase,
-  TypedUseSelectorHook,
   useStore as useStoreBase,
 } from 'react-redux';
 import { combineReducers } from 'redux';
-import { configureStore } from '@reduxjs/toolkit';
-import topicMessagesSlice from './slices/topicMessages';
 import userReducer from './slices/user';
+import userForumReducer from './slices/userForum';
 
 declare global {
   interface Window {
@@ -17,7 +17,7 @@ declare global {
 
 export const reducer = combineReducers({
   user: userReducer,
-  topicMessagesSlice,
+  userForum: userForumReducer,
 });
 
 export const store = configureStore({

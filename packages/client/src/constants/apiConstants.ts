@@ -22,12 +22,14 @@ export const AUTH_PATHS = {
 export const OAUTH_PATHS = {
   getServiceId: '/oauth/yandex/service-id',
   signIn: '/oauth/yandex',
-} as const
+} as const;
 
 export const FORUM_PATHS = {
   register: '/users/register',
   login: '/users/login',
+  logout: '/users/logout',
   checkToken: '/users/token',
+  getUser: '/users/getUser',
   topics: '/topics',
   comments: '/comments',
   reply: '/reply',
