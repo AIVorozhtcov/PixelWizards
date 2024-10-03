@@ -28,6 +28,7 @@ export class Game {
   currentGameStage: 'battle' | 'map' = 'map';
   gameStatusText: 'Выбрать следующий этап' | 'Начать заново' =
     'Выбрать следующий этап';
+  enemyType: 'enemy' | 'boss' = 'enemy';
 
   constructor(
     width: number,
@@ -68,11 +69,13 @@ export class Game {
   }
 
   private isGameContinue() {
+    const isBossLosed = this.enemyType === 'boss' && this.enemy.hitPoints <= 0;
+    const isEnemyLosed =
+      this.enemyType === 'enemy' && this.enemy.hitPoints <= 0;
+
     if (this.player.hitPoints <= 0) {
-      this.endGame();
-
       this.gameStatusText = 'Начать заново';
-
+      this.endGame();
       this.createPlayer(false);
 
       this.map = new GameMap(
@@ -84,24 +87,20 @@ export class Game {
       );
 
       return false;
-    } else if (this.enemy.hitPoints <= 0) {
-      if (this.gameStatusText === 'Начать заново') {
-        this.endGame(true);
-
-        this.createPlayer(false);
-
-        this.map = new GameMap(
-          this.context,
-          this.beginAndDrawGame.bind(this),
-          this.setIsMapOpen,
-          this.width,
-          this.height
-        );
-
-        return false;
-      }
-
+    } else if (isBossLosed) {
+      this.createPlayer(false);
       this.endGame(true);
+
+      this.map = new GameMap(
+        this.context,
+        this.beginAndDrawGame.bind(this),
+        this.setIsMapOpen,
+        this.width,
+        this.height
+      );
+    } else if (isEnemyLosed) {
+      this.endGame(true);
+
       return false;
     } else {
       return true;
@@ -218,12 +217,16 @@ export class Game {
     let enemyWidth = 180;
     let enemyX = 800;
 
+    this.enemyType = 'enemy';
+    this.gameStatusText = 'Выбрать следующий этап';
+
     if (nodeType === 'boss') {
       enemySkin = '/boss.png';
       enemyHitPoints = 13;
       enemyWidth = 260;
       enemyX = 720;
 
+      this.enemyType = 'boss';
       this.gameStatusText = 'Начать заново';
     }
 
