@@ -32,9 +32,9 @@ class ForumApi extends BaseApi {
   async login(data: Data) {
     const response = await this.post(FORUM_PATHS.login, {
       data,
-      headers: {
+      /*headers: {
         withToken: true,
-      },
+      },*/
     });
 
     return await response.json();
