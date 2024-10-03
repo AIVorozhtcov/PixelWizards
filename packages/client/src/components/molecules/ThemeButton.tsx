@@ -3,7 +3,7 @@ import { THEMES } from '../../constants/themeConstants';
 import { useTheme } from '../../templates/ThemeProvider/ThemeProvider';
 import Button from '../atoms/Button';
 
-const ThemeButton = () => {
+const ThemeButton = ({ className }: { className?: string }) => {
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const ThemeButton = () => {
   };
 
   return (
-    <Button onClick={e => onClickHandler(e)}>
+    <Button onClick={e => onClickHandler(e)} className={className ?? ''}>
       <svg
         fill="none"
         height="24"

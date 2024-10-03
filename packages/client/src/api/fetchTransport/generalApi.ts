@@ -1,15 +1,14 @@
 import {
   AUTH_PATHS,
-  FORUM_PATHS,
-  USER_PATHS,
   OAUTH_PATHS,
+  USER_PATHS,
 } from '../../constants/apiConstants';
 import { Data, FormAvatarType, OauthSignin, RedirectUri } from '../../types';
 import {
   ErrorSchema,
+  ServiceIdSchema,
   SignUpSchema,
   UserInfoSchema,
-  ServiceIdSchema,
 } from '../../types/validationSchemas';
 import { resultFromSchema } from '../../utils/resultFromSchema';
 import BaseApi from './baseApi';
@@ -103,23 +102,6 @@ class GeneralApi extends BaseApi {
 
   async logout() {
     await this.post(AUTH_PATHS.logout);
-  }
-
-  async topicMessages(id: number) {
-    // TODO replace
-    const url = FORUM_PATHS.topicMessages.replace(
-      ':id',
-      String(id)
-    ) as `/${string}`;
-    const response = await this.post(url);
-
-    return await response.json();
-  }
-
-  async setEmoji(id: number, emoji: string) {
-    // TODO make fetch
-
-    return {};
   }
 }
 

@@ -78,7 +78,7 @@ async function createServer() {
   });
 
   app.listen(port, () => {
-    console.log(`Client is listening on port: ${port}`);
+    console.info(`Client is listening on port: ${port}`);
   });
 }
 

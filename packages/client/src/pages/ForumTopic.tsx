@@ -11,6 +11,7 @@ import Message from '../components/molecules/Message';
 import Form from '../components/organisms/Form';
 import { FORUM_CREATE_COMMENT_INPUTS_DATA } from '../constants/profilePageData';
 import { ForumCreateCommentSchema } from '../types/validationSchemas';
+import ThemeButton from '../components/molecules/ThemeButton';
 
 export default function ForumTopic() {
   const { state } = useLocation();
@@ -64,17 +65,10 @@ export default function ForumTopic() {
           <Text>{state.content}</Text>
         </div>
         <div>
-          <Button
-            onClick={async () => {
-              const data = await forumApi.getCommentsByTopic(state.id);
-
-              console.log('data', data);
-            }}>
-            Click
-          </Button>
           <Button variant="acent" onClick={() => navigate(-1)}>
             {'Назад'}
           </Button>
+          <ThemeButton className="absolute top-2 right-5" />
         </div>
       </div>
       <hr />

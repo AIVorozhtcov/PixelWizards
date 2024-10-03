@@ -16,7 +16,7 @@ const app: Application = express();
 
 // Настройка промежуточного ПО
 app.use(bodyParser.json());
-app.use(cors({ credentials: true, origin: 'http://localhost' }));
+app.use(cors({ credentials: true, origin: 'http://158.160.21.142:3000' }));
 
 app.get('/user', (_, res) => {
   res.json(MOCK_FORM_DEFAULT_VALUES);
@@ -40,6 +40,6 @@ dbConnect().then(() => {
   // Запуск сервера
   const PORT = process.env.SERVER_PORT || 3001;
   app.listen(PORT, () => {
-    console.log(`Сервер запущен на порту ${PORT}`);
+    console.info(`Сервер запущен на порту ${PORT}`);
   });
 });

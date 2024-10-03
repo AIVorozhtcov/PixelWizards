@@ -1,5 +1,10 @@
 import { Outlet } from 'react-router-dom';
+import ErrorBoundaryDefault from '../ErrorBoundary';
 
 export default function UnprotectedLayout() {
-  return <Outlet />;
+  return (
+    <ErrorBoundaryDefault>
+      <Outlet />
+    </ErrorBoundaryDefault>
+  );
 }
