@@ -36,7 +36,7 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-export const logoutUser = async (req: Request, res: Response) => {
+export const logoutUser = async (res: Response) => {
   res.status(200).json({ message: 'Успешный выход из системы' });
 };
 
@@ -47,10 +47,11 @@ export const getUser = async (req: Request, res: Response) => {
     const user = await User.findByPk(userId);
 
     if (!user) {
-      return res.status(404).json({ error: 'Пользователь не найден' });
+      res.status(404).json({ error: 'Пользователь не найден' });
+      return;
     }
 
-    res.json({ id: user.id, username: user.username });
+    res.status(200).json({ id: user.id, username: user.username });
   } catch (error) {
     res.status(500).json({ error: 'Ошибка при получении данных пользователя' });
   }
