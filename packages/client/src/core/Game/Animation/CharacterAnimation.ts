@@ -14,7 +14,7 @@ export default class CharacterAnimation {
 
     const targetX = target.x + target.width / 2 - self.width / 2;
 
-    const targetY = target.y - 50;
+    const targetY = target.y - 15;
     const attackY = target.y;
     const duration = 60;
     let frame = 0;

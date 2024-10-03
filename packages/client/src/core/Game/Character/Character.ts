@@ -93,8 +93,14 @@ export default abstract class Character {
         this.height
       );
 
-      this.charInfo.drawHealthBar(context, this.x, this.y * 3, this.width, 20);
-      this.charInfo.drawShield(context, this.x, this.y * 3.3, 50, 50);
+      this.charInfo.drawHealthBar(
+        context,
+        this.x,
+        this.y * 3.15,
+        this.width,
+        20
+      );
+      this.charInfo.drawShield(context, this.x, this.y * 3.45, 50, 50);
     }
   }
 
