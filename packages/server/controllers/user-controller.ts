@@ -32,6 +32,6 @@ export const loginUser = async (req: Request, res: Response) => {
         .json({ error: 'Неправильное имя пользователя или пароль' });
     }
   } catch (err) {
-    res.status(500).json({ error: 'Ошибка при аутентификации' });
+    res.status(500).json({ error: err });
   }
 };
