@@ -1,4 +1,5 @@
 import { cn } from '../../lib/utils';
+import TransitionLayer from '../../templates/TransitionLayer/TransitionLayer';
 
 function MainSection({
   children,
@@ -8,13 +9,15 @@ function MainSection({
   className?: string;
 }) {
   return (
-    <main
-      className={cn(
-        'flex flex-col min-h-dvh dark:bg-[#0c1b2a] bg-white py-5 relative w-full',
-        className
-      )}>
-      {children}
-    </main>
+    <TransitionLayer>
+      <main
+        className={cn(
+          'flex flex-col min-h-dvh dark:bg-[#0c1b2a] bg-white py-5 relative w-full',
+          className
+        )}>
+        {children}
+      </main>
+    </TransitionLayer>
   );
 }
 

@@ -1,19 +1,19 @@
-import ProtectedLayout from '../templates/Layout/ProtectedLayout';
-import UnprotectedLayout from '../templates/Layout/UnprotectedLayout';
-import LINKS from './links';
 import Test from '../__test__/Test';
 import ServerErrorPage from '../pages/505';
 import Forum from '../pages/Forum';
+import ForumLogin from '../pages/ForumLogin';
+import ForumRegistration from '../pages/ForumRegistration';
+import ForumTopic from '../pages/ForumTopic';
 import Game from '../pages/Game';
 import Home from '../pages/Home';
-import LeaderBoard from '../pages/LeaderBoard';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
 import Profile from '../pages/Profile';
 import Registration from '../pages/Registration';
-import ForumTopic from '../pages/ForumTopic';
-import ForumLogin from '../pages/ForumLogin';
-import ForumRegistration from '../pages/ForumRegistration';
+import ErrorBoundaryDefault from '../templates/ErrorBoundary';
+import ProtectedLayout from '../templates/Layout/ProtectedLayout';
+import UnprotectedLayout from '../templates/Layout/UnprotectedLayout';
+import LINKS from './links';
 
 export const routes = [
   {
