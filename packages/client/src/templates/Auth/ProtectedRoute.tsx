@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import { checkAuth } from '../../lib/hooks';
+import { useCheckAuth } from '../../lib/hooks';
 
 export default function ProtectedRoute() {
-  checkAuth();
+  useCheckAuth();
 
   return <Outlet />;
 }

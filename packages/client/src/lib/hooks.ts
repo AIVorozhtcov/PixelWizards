@@ -9,7 +9,7 @@ import LINKS from '../constants/links';
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();
 
-export function checkAuth() {
+export function useCheckAuth() {
   const accessTokenRegex = /code=([^&]+)/;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
