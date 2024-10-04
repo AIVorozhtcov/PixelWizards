@@ -6,9 +6,19 @@ export default class Gameover {
   private text: string;
   private fontSize: number;
 
-  constructor(game: Game, isWin: boolean, fontSize: number) {
+  constructor(
+    game: Game,
+    isWin: boolean,
+    fontSize: number,
+    isLastBossВefeated: boolean
+  ) {
     this.game = game;
     this.text = isWin ? 'YOU WIN!' : 'GAME OVER';
+
+    if (isLastBossВefeated) {
+      this.text = 'Вы спасли апельсины и ваших друзей!';
+    }
+
     this.fontSize = fontSize;
 
     const background = new Image();

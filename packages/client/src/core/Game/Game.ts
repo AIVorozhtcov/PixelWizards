@@ -89,7 +89,7 @@ export class Game {
       return false;
     } else if (isBossLosed) {
       this.createPlayer(false);
-      this.endGame(true);
+      this.endGame(true, true);
 
       this.map = new GameMap(
         this.context,
@@ -193,7 +193,7 @@ export class Game {
     }
   }
 
-  private endGame(isWin = false) {
+  private endGame(isWin = false, isLastBossВefeated = false) {
     if (this.gameAnimation) {
       window.cancelAnimationFrame(this.gameAnimation);
       this.gameAnimation = undefined;
@@ -208,7 +208,7 @@ export class Game {
 
     this.setIsGameEnd(true);
 
-    new Gameover(this, isWin, 50);
+    new Gameover(this, isWin, 50, isLastBossВefeated);
   }
 
   createEnemyByNodeType(nodeType: NodeKeyofType) {
