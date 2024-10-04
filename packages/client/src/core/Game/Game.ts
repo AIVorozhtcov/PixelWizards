@@ -212,7 +212,7 @@ export class Game {
   }
 
   createEnemyByNodeType(nodeType: NodeKeyofType) {
-    let enemySkin = '/enemy.png';
+    let enemySkin = '/enemy-01.png';
     let enemyHitPoints = 10;
     let enemyWidth = 180;
     let enemyX = 800;
