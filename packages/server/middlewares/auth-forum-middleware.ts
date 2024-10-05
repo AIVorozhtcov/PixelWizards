@@ -7,8 +7,7 @@ const authForumMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(req);
-  if (req.url.includes('login') || req.url.includes('registration')) {
+  if (req.url.includes('login') || req.url.includes('register')) {
     next();
     return;
   }
