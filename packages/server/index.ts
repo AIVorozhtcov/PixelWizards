@@ -10,6 +10,7 @@ import userThemeRouter from './routers/user-theme-router';
 import authMiddleware from './middlewares/auth-middleware';
 import cors from 'cors';
 import { MOCK_FORM_DEFAULT_VALUES } from './mockProfileFormDefaultValues';
+import authForumMiddleware from 'middlewares/auth-forum-middleware';
 
 // Инициализация Express приложения
 const app: Application = express();
@@ -24,7 +25,7 @@ app.get('/user', (_, res) => {
 
 dbConnect().then(() => {
   // Настройка маршрутов
-  app.use('/api/users', authMiddleware, userRouter);
+  app.use('/api/users', authForumMiddleware, userRouter);
   app.use('/api/topics', authMiddleware, topicRouter);
   app.use('/api/comments', authMiddleware, commentRouter);
   app.use('/api/replies', authMiddleware, replyRouter);
