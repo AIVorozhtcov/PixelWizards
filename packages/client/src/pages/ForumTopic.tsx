@@ -81,15 +81,15 @@ export default function ForumTopic() {
         </div>
 
         <div className="flex flex-col gap-3 pb-3 mb-10">
-          <Title>{'state.title'}</Title>
-          <Text>{'state.content'}</Text>
+          <Title>{state.title}</Title>
+          <Text>{state.content}</Text>
         </div>
 
         <Subtitle as="h3" variant="h3" className="text-2xl mb-3">
           Комментарии
         </Subtitle>
-        <hr />
-        <div className="flex flex-col gap-3 justify-start align-start mt-3">
+        <hr className="dark:border-[#364354]" />
+        <div className="flex flex-col gap-4 justify-start align-start mt-3">
           {comments.length > 0 ? (
             comments.map(comment => (
               <Message
