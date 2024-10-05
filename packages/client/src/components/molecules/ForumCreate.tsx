@@ -40,7 +40,7 @@ function ForumCreate({
       onSubmit={handleCreateTopic}
       buttonText="Создать"
       buttonVariant="acentNotTransparent"
-      buttonClass="bg-[#ffc107] h-[50px]"
+      buttonClass="bg-[#ffc107] h-[50px] text-[#0c1b2a]"
       formFieldClass="mb-4 w-80"
       labelVariant="basic"
       inputVariant="basic"

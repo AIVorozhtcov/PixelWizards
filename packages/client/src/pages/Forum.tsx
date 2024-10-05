@@ -10,6 +10,9 @@ import ThemeButton from '../components/molecules/ThemeButton';
 import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import { selectUserForum, setUserForum } from '../store/slices/userForum';
 import { TopicArray } from '../types/validationSchemas';
+import RocketIcon from '../components/atoms/icon/RocketIcon';
+import LINKS from '../constants/links';
+import Link from '../components/atoms/Link';
 
 export default function Forum() {
   const navigate = useNavigate();
@@ -44,12 +47,18 @@ export default function Forum() {
   }, []);
 
   return (
-    <MainSection className="p-2">
-      <div className="flex flex-row justify-between">
-        <h1 className="text-5xl font-bold p-2">Форум</h1>
+    <>
+      <header className="sticky z-30 top-0 px-4 lg:px-6 h-14 flex items-center dark:bg-[#0c1b2a] bg-[#ffbf00]">
+        <Link to={LINKS.home} variant="withIcon">
+          <RocketIcon className="size-6 dark:text-[#ffc107] text-red-800" />
+          <span className="dark:text-white text-[#0c1b2a] ml-2">
+            Capybara Crusaders
+          </span>
+        </Link>
+
         <Button
           variant="acent"
-          className="ml-auto"
+          className="ml-auto mr-6"
           onClick={async () => {
             try {
               await forumApi.logout();
@@ -58,24 +67,32 @@ export default function Forum() {
               toast.error('Ошибка при выходе!');
             }
           }}>
-          Выйти из профиля
+          Выйти из форума
         </Button>
         <ThemeButton />
-        <hr />
-      </div>
-      <ForumCreate setTopics={setTopics} />
-      <div className="flex flex-row gap-4">
-        {topics.length > 0
-          ? topics.map(topic => (
-              <ForumTopic
-                key={topic.id}
-                currentUserId={userId?.id}
-                setTopics={setTopics}
-                {...topic}
-              />
-            ))
-          : 'Здесь пусто... Даже слишком'}
-      </div>
-    </MainSection>
+      </header>
+
+      <MainSection className="p-4 w-full">
+        <div className="flex flex-row">
+          <h1 className="text-5xl font-bold p-2 dark:text-[#ffc107] text-red-700 mb-10">
+            Форум
+          </h1>
+        </div>
+
+        <ForumCreate setTopics={setTopics} />
+        <div className="flex flex-row gap-4 dark:text-white">
+          {topics.length > 0
+            ? topics.map(topic => (
+                <ForumTopic
+                  key={topic.id}
+                  currentUserId={userId?.id}
+                  setTopics={setTopics}
+                  {...topic}
+                />
+              ))
+            : 'Здесь пусто... Даже слишком'}
+        </div>
+      </MainSection>
+    </>
   );
 }

@@ -64,7 +64,7 @@ export default function ForumTopic() {
           <Title>{state.title}</Title>
           <Text>{state.content}</Text>
         </div>
-        <div>
+        <div className="flex flex-row">
           <Button variant="acent" onClick={() => navigate(-1)}>
             {'Назад'}
           </Button>
