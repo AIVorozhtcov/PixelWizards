@@ -17,8 +17,6 @@ export default function Forum() {
   const userId = useAppSelector(selectUserForum);
   const dispatch = useAppDispatch();
 
-  console.log('userId', userId);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -55,6 +53,7 @@ export default function Forum() {
           onClick={async () => {
             try {
               await forumApi.logout();
+              navigate('/forum/login');
             } catch (error) {
               toast.error('Ошибка при выходе!');
             }
