@@ -80,17 +80,19 @@ export default function Forum() {
         </div>
 
         <ForumCreate setTopics={setTopics} />
-        <div className="flex flex-row gap-4 dark:text-white">
-          {topics.length > 0
-            ? topics.map(topic => (
-                <ForumTopic
-                  key={topic.id}
-                  currentUserId={userId?.id}
-                  setTopics={setTopics}
-                  {...topic}
-                />
-              ))
-            : 'Здесь пусто... Даже слишком'}
+        <div className="flex flex-row gap-4">
+          {topics.length > 0 ? (
+            topics.map(topic => (
+              <ForumTopic
+                key={topic.id}
+                currentUserId={userId?.id}
+                setTopics={setTopics}
+                {...topic}
+              />
+            ))
+          ) : (
+            <p className="dark:text-white">Здесь пусто... Даже слишком</p>
+          )}
         </div>
       </MainSection>
     </>
