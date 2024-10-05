@@ -8,9 +8,9 @@ import replyRouter from './routers/reply-router';
 import themeRouter from './routers/theme-router';
 import userThemeRouter from './routers/user-theme-router';
 import authMiddleware from './middlewares/auth-middleware';
+import authForumMiddleware from './middlewares/auth-forum-middleware';
 import cors from 'cors';
 import { MOCK_FORM_DEFAULT_VALUES } from './mockProfileFormDefaultValues';
-import authForumMiddleware from 'middlewares/auth-forum-middleware';
 
 // Инициализация Express приложения
 const app: Application = express();
