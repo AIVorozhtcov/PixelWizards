@@ -13,7 +13,7 @@ export default class Gameover {
     isLastBossВefeated: boolean
   ) {
     this.game = game;
-    this.text = isWin ? 'YOU WIN!' : 'GAME OVER';
+    this.text = isWin ? 'ПОБЕДА' : 'ПОРАЖЕНИЕ';
 
     if (isLastBossВefeated) {
       this.text = 'Вы спасли апельсины и ваших друзей!';

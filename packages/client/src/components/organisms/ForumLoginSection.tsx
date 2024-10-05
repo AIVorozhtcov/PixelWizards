@@ -32,15 +32,15 @@ const ForumLoginSection = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10 flex flex-col">
-      <Subtitle className="text-[#ffc107]" as="h2" variant="h2">
-        Войти в форум
+      <Subtitle className="text-[#ffc107] mb-10" as="h2" variant="h2">
+        Вход в форум
       </Subtitle>
       <Form<LoginFormData>
         zodSchema={LoginValidationSchema}
         onSubmit={handleSubmit}
-        buttonText="Залогинеться"
+        buttonText="Войти"
         buttonVariant="acentNotTransparent"
-        buttonClass="bg-[#ffc107] w-full"
+        buttonClass="bg-[#ffc107] w-full text-[#0c1b2a]"
         formFieldClass="mb-4 w-80"
         labelVariant="basic"
         inputVariant="basic"

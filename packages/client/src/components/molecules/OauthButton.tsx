@@ -1,4 +1,4 @@
-import oauthButtonPicture from '../../../public/oauthButton.webp';
+import oauthButtonPicture from '../../../public/oauthButton.png';
 import generalAPI from '../../api/fetchTransport/generalApi';
 import Button from '../atoms/Button';
 import LINKS from '../../constants/links';

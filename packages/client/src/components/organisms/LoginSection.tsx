@@ -43,12 +43,12 @@ const LoginSection = () => {
   return (
     <div className="max-w-md mx-auto mt-10 flex flex-col">
       <Subtitle className="text-[#ffc107] mb-10" as="h2" variant="h2">
-        Войти
+        Вход
       </Subtitle>
       <Form<LoginFormData>
         zodSchema={LoginValidationSchema}
         onSubmit={handleSubmit}
-        buttonText="Submit"
+        buttonText="Войти"
         buttonVariant="acentNotTransparent"
         buttonClass="bg-[#ffc107] w-full text-[#0c1b2a]"
         formFieldClass="mb-4 w-80"

@@ -43,7 +43,7 @@ const RegistrationSection = () => {
       <Form<RegistrationFormData>
         zodSchema={RegistrationValidationSchema}
         onSubmit={handleSubmit}
-        buttonText="Submit"
+        buttonText="Зарегистрироваться"
         buttonVariant="acentNotTransparent"
         buttonClass="bg-[#ffc107] w-full text-[#0c1b2a]"
         formFieldClass="mb-4 w-80"

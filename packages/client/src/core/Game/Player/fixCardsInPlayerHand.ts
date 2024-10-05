@@ -1,4 +1,4 @@
-import { OmitedCardInHand } from '../Character/types';
+import { CardInHand, OmitedCardInHand } from '../Character/types';
 
 export const fixCardsInPlayerHand: OmitedCardInHand[] = [
   {

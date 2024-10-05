@@ -46,15 +46,15 @@ const RegistrationSection = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10 flex flex-col">
-      <Subtitle className="text-[#ffc107]" as="h2" variant="h2">
+      <Subtitle className="text-[#ffc107] mb-10" as="h2" variant="h2">
         Регистрация
       </Subtitle>
       <Form<RegistrationFormData>
         zodSchema={ForumRegistrationValidationSchema}
         onSubmit={handleSubmit}
-        buttonText="Зарегистрироваться на форум"
+        buttonText="Зарегистрироваться"
         buttonVariant="acentNotTransparent"
-        buttonClass="bg-[#ffc107] w-full"
+        buttonClass="bg-[#ffc107] w-full text-[#0c1b2a]"
         formFieldClass="mb-4 w-80"
         labelVariant="basic"
         inputVariant="basic"
