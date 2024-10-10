@@ -12,7 +12,7 @@ export class Map {
   background = new Image();
   mapHeal = 0;
   numOptionCard = 0;
-  availableEvents = [...AVAILABLE_EVENTS];
+  availableEvents = structuredClone(AVAILABLE_EVENTS);
 
   constructor(
     ctx: CanvasRenderingContext2D,

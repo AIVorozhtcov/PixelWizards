@@ -193,7 +193,7 @@ export class Game {
     }
   }
 
-  private endGame(isWin = false, isLastBossВefeated = false) {
+  private endGame(isWin = false, isLastBossDefeated = false) {
     if (this.gameAnimation) {
       window.cancelAnimationFrame(this.gameAnimation);
       this.gameAnimation = undefined;
@@ -208,7 +208,7 @@ export class Game {
 
     this.setIsGameEnd(true);
 
-    new Gameover(this, isWin, 50, isLastBossВefeated);
+    new Gameover(this, isWin, 50, isLastBossDefeated);
   }
 
   createEnemyByNodeType(nodeType: NodeKeyofType) {
