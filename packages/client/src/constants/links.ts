@@ -12,7 +12,7 @@ const LINKS = {
   forumTopic: '/forum/topic/:id',
   serverErrorPage: '/500',
   test: '/test',
-  selfRedirect: 'http://localhost:3000',
+  selfRedirect: 'http://capybara-pixelwizards-40.ya-praktikum.tech:3000',
 } as const;
 
 export default LINKS;
