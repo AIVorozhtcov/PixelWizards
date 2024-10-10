@@ -37,9 +37,11 @@ export default function Forum() {
 
         setTopics(topics);
       } catch (error) {
-        toast.error(
-          (error as Error).message ?? 'Ошибка верификации пользователя!'
-        );
+        const errorMessage = (error as Error).message;
+
+        if (!errorMessage.includes('Forbidden')) {
+          toast.error(errorMessage ?? 'Ошибка верификации пользователя!');
+        }
         navigate('/forum/login');
       }
     };
