@@ -2,18 +2,22 @@ import { arrayOfGameplayText } from '../../constants/arrayOfGameplayText';
 import Section from '../../templates/Section';
 import InfoBox from '../molecules/InfoBox';
 import IntroductionBlock from '../molecules/IntroductionBlock';
+import SpaceBattle from '../../../public/battles.webp';
 
 export default function GameplaySection() {
   return (
     <Section>
       <IntroductionBlock
-        title="Основные характеристики"
-        subtitle="Механика захватывающего игрового процесса"
-        text="Capibaras vs Sneaks предлагает уникальное сочетание стремительного экшена, стратегических маневров и потрясающих способностей. Управляйте своим пилотировать космический корабль, наносить сокрушительные удары и обходить противников оппонентов на огромных космических полях сражений."
+        title="Key Features"
+        subtitle="Immersive Gameplay Mechanics"
+        text="Capibaras vs Sneaks offers a unique blend of fast-paced action,
+							strategic maneuvers, and awe-inspiring abilities. Pilot your
+							spacecraft, unleash devastating attacks, and outmaneuver your
+							opponents in the vast cosmic battlegrounds."
       />
       <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
         <img
-          src="/battles.webp"
+          src={SpaceBattle}
           width="550"
           height="310"
           alt="Gameplay"

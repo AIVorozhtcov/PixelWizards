@@ -23,7 +23,7 @@ export default function IntroductionBlock({
       )}>
       <div className="space-y-2">
         {title && (
-          <div className="inline-block rounded-lg dark:bg-[#1e293b] bg-[#fcdfdf] px-3 py-1 text-sm dark:text-[#ffc107] text-red-700">
+          <div className="inline-block rounded-lg bg-[#1e293b] px-3 py-1 text-sm text-[#ffc107]">
             {title}
           </div>
         )}

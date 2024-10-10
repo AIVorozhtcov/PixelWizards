@@ -16,10 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "src/App.tsx", "client.d.ts", "cacheServiceWorker.js"],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+  "include": ["src", "src/App.tsx", "client.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

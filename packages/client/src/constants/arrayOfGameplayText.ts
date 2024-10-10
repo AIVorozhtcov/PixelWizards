@@ -1,16 +1,16 @@
-import { createGameplayText } from '../utils/helpers';
+import { InfoBoxProps } from '../components/molecules/InfoBox';
 
-export const arrayOfGameplayText = [
-  createGameplayText(
-    'Разнообразные играбельные персонажи',
-    'Выбирайте из списка уникальных капибар и кроссовок, каждая из которых обладает своими особыми способностями и стилем игры.'
-  ),
-  createGameplayText(
-    'Ошеломляющие сражения',
-    'Исследуйте множество захватывающих космических сред, каждая из которых имеет свои собственные экологические опасности и стратегические элементы.'
-  ),
-  createGameplayText(
-    'Уникальные способности и улучшения',
-    'Разблокируйте и улучшайте широкий спектр разрушительных способностей, от мощных энергетических лучей до иллюзий.'
-  ),
+export const arrayOfGameplayText: InfoBoxProps[] = [
+  {
+    subtitle: 'Diverse Playable Characters',
+    text: 'Choose from a roster of unique capibaras and sneaks, each with their own specialized abilities and playstyles.',
+  },
+  {
+    subtitle: 'Stunning Battlegrounds',
+    text: 'Explore a variety of captivating cosmic environments, each with their own environmental hazards and strategic elements.',
+  },
+  {
+    subtitle: 'Unique Abilities and Upgrades',
+    text: 'Unlock and upgrade a wide array of devastating abilities,from powerful energy beams to mind-bending illusions.',
+  },
 ];

@@ -1,6 +1,5 @@
 import LINKS from '../../constants/links';
 import Section from '../../templates/Section';
-import Image from '../atoms/Image';
 import Link from '../atoms/Link';
 import Text from '../atoms/Text';
 import Title from '../atoms/Title';
@@ -20,7 +19,7 @@ export default function HeroSection() {
           </Link>
         </div>
         <div className="flex justify-center">
-          <Image
+          <img
             src="/heroImage.webp"
             width="550"
             height="550"

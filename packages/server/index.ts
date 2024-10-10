@@ -1,45 +1,20 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
-import bodyParser from 'body-parser';
-import commentRouter from './routers/comment-router';
-import topicRouter from './routers/topic-router';
-import userRouter from './routers/user-router';
-import { dbConnect } from './db';
-import replyRouter from './routers/reply-router';
-import themeRouter from './routers/theme-router';
-import userThemeRouter from './routers/user-theme-router';
-import authMiddleware from './middlewares/auth-middleware';
+import dotenv from 'dotenv';
 import cors from 'cors';
-import { MOCK_FORM_DEFAULT_VALUES } from './mockProfileFormDefaultValues';
+dotenv.config();
 
-// Инициализация Express приложения
-const app: Application = express();
+import express from 'express';
+import { createClientAndConnect } from './db';
 
-// Настройка промежуточного ПО
-app.use(bodyParser.json());
-app.use(cors({ credentials: true, origin: 'http://158.160.21.142:3000' }));
+const app = express();
+app.use(cors());
+const port = Number(process.env.SERVER_PORT) || 3001;
 
-app.get('/user', (_, res) => {
-  res.json(MOCK_FORM_DEFAULT_VALUES);
+createClientAndConnect();
+
+app.get('/', (_, res) => {
+  res.json('👋 Howdy from the server :)');
 });
 
-dbConnect().then(() => {
-  // Настройка маршрутов
-  app.use('/api/users', userRouter);
-  app.use('/api/topics', authMiddleware, topicRouter);
-  app.use('/api/comments', authMiddleware, commentRouter);
-  app.use('/api/replies', authMiddleware, replyRouter);
-  app.use('/api/theme', themeRouter);
-  app.use('/api/user-theme', userThemeRouter);
-
-  // Обработка ошибок
-  app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-    console.error(err.stack);
-    res.status(500).send('Что-то пошло не так!');
-  });
-
-  // Запуск сервера
-  const PORT = process.env.SERVER_PORT || 3001;
-  app.listen(PORT, () => {
-    console.info(`Сервер запущен на порту ${PORT}`);
-  });
+app.listen(port, () => {
+  console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
 });

@@ -1,20 +1,42 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
 
-import gsap from 'gsap'; // <-- import GSAP
+export default function TestComponent({
+  withError = false,
+  withFetchError = false,
+}) {
+  if (withError) throw new Error('Cannot display Component');
 
-export default function App() {
-  const container = useRef(null);
+  const [data, setData] = useState([] as any[]);
+  const { showBoundary } = useErrorBoundary();
 
-  useLayoutEffect(() => {
-    // gsap code here...
-    gsap.to('.box', { rotation: 180 }); // <-- automatically reverted
-  }, []); // <-- scope for selector text (optional)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = withFetchError
+          ? await fetch(
+              'https://jsonplace12412sadasholder.typicode.com/todos?_limit=5'
+            )
+          : await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5');
+
+        const data = await response.json();
+
+        setData(data);
+      } catch (error) {
+        showBoundary(error);
+        throw new Error('Fetch error');
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <div
-      ref={container}
-      className="app h-screen text-black flex justify-center items-center">
-      <div className="box">Hello</div>
+    <div>
+      Component works fine
+      {data.map(item => (
+        <p className="text-blue-500">{item.title}</p>
+      ))}
     </div>
   );
 }

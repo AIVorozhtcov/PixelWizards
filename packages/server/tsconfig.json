@@ -17,24 +17,13 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "importsNotUsedAsValues": "error",
     "lib": ["es2019", "esnext.asynciterable"],
     "types": ["node", "jest"],
     "baseUrl": ".",
     "paths": {
-      "*": ["*"]
+      "*": ["types/*"]
     },
     "outDir": "dist"
-  },
-  "include": [
-    "controllers",
-    "middlewares",
-    "models",
-    "routers",
-    "db.ts",
-    "index.ts",
-    "mockProfileFormDefaultValues.ts"
-, "utils/seedThemes.ts"  ],
-  "exclude": ["node_modules", "dist"]
+  }
 }
