@@ -1,25 +1,22 @@
-import { ImageWithTextProps } from '../components/molecules/ImageWithText';
-import CapitanCapibara from '../../public/capCapibara.webp';
-import Sneak from '../../public/sneakEnemy.webp';
-import Mechanic from '../../public/mechanicCapibara.webp';
+import { createImageWithText } from '../utils/helpers';
 
-export const arrayOfImagesWithText: ImageWithTextProps[] = [
-  {
-    imgSrc: CapitanCapibara,
-    imgAlt: 'Capybara Character',
-    subtitle: 'Captain Capybara',
-    text: 'The fearless leader of the Capybara Crusaders, skilled in both combat and strategy.',
-  },
-  {
-    imgSrc: Sneak,
-    imgAlt: 'Snake Character',
-    subtitle: 'Slithering Serpent',
-    text: 'The cunning and devious leader of the Snake Syndicate, always plotting their next move.',
-  },
-  {
-    imgSrc: Mechanic,
-    imgAlt: 'Mechanic Character',
-    subtitle: 'Gadget Guru',
-    text: 'The brilliant mechanic who keeps the Capybara Crusaders ships and weapons in top shape.',
-  },
+export const arrayOfImagesWithText = [
+  createImageWithText(
+    '/capCapibara.webp',
+    'Капибара',
+    'Капитан Капибара',
+    'Бесстрашный лидер Capybara Crusaders, искусный в бою и стратегии.'
+  ),
+  createImageWithText(
+    '/sneakEnemy.webp',
+    'Змея',
+    'Скользящая змея',
+    'Хитрый и коварный лидер Змеиного синдиката, всегда продумывающий свой следующий шаг.'
+  ),
+  createImageWithText(
+    '/mechanicCapibara.webp',
+    'Механик',
+    'Гуру гаджетов',
+    'Гениальный механик, который поддерживает корабли и оружие крестоносцев Капибары в отличной форме.'
+  ),
 ];

@@ -7,8 +7,12 @@ const LINKS = {
   profile: '/profile',
   leaderboard: '/leaderboard',
   forum: '/forum',
-  topic: '/topic/:id',
+  forumLogin: '/forum/login',
+  forumRegistration: '/forum/registration',
+  forumTopic: '/forum/topic/:id',
   serverErrorPage: '/500',
+  test: '/test',
+  selfRedirect: 'http://capybara-pixelwizards-40.ya-praktikum.tech:3000',
 } as const;
 
 export default LINKS;

@@ -1,54 +1,53 @@
+import { createInput } from '../utils/helpers';
 import FORM_INPUT_NAMES from './formInputNames';
 
+export const REGISTRATION_INPUTS_DATA = [
+  createInput('Имя', FORM_INPUT_NAMES.firstName),
+  createInput('Фамилия', FORM_INPUT_NAMES.secondName),
+  createInput('Логин', FORM_INPUT_NAMES.login),
+  createInput('Почта', FORM_INPUT_NAMES.email, 'email'),
+  createInput('Пароль', FORM_INPUT_NAMES.password, 'password'),
+  createInput('Повторите пароль', FORM_INPUT_NAMES.passwordAgain, 'password'),
+  createInput('Телефон', FORM_INPUT_NAMES.phone, 'tel'),
+];
+
+export const FORUM_REGISTRATION_INPUTS_DATA = [
+  createInput('Логин', FORM_INPUT_NAMES.login),
+  createInput('Пароль', FORM_INPUT_NAMES.password, 'password'),
+  createInput('Повторите пароль', FORM_INPUT_NAMES.passwordAgain, 'password'),
+];
+
 export const PROFILE_INPUTS_DATA = [
-  {
-    label: 'Имя',
-    name: FORM_INPUT_NAMES.firstName,
-    type: 'text',
-  },
-  {
-    label: 'Фамилия',
-    name: FORM_INPUT_NAMES.secondName,
-    type: 'text',
-  },
-  {
-    label: 'Почта',
-    name: FORM_INPUT_NAMES.email,
-    type: 'email',
-  },
-  {
-    label: 'Логин',
-    name: FORM_INPUT_NAMES.login,
-    type: 'text',
-  },
-  {
-    label: 'Никнейм',
-    name: FORM_INPUT_NAMES.displayName,
-    type: 'text',
-  },
-  {
-    label: 'Телефон',
-    name: FORM_INPUT_NAMES.phone,
-    type: 'tel',
-  },
+  createInput('Имя', FORM_INPUT_NAMES.firstName),
+  createInput('Фамилия', FORM_INPUT_NAMES.secondName),
+  createInput('Почта', FORM_INPUT_NAMES.email, 'email'),
+  createInput('Логин', FORM_INPUT_NAMES.login),
+  createInput('Никнейм', FORM_INPUT_NAMES.displayName),
+  createInput('Телефон', FORM_INPUT_NAMES.phone, 'tel'),
+];
+
+export const LOGIN_INPUTS_DATA = [
+  createInput('Логин', FORM_INPUT_NAMES.login),
+  createInput('Пароль', FORM_INPUT_NAMES.password, 'password'),
+];
+
+export const FORUM_CREATE_TOPICS_INPUTS_DATA = [
+  createInput('Заголовок', 'title'),
+  createInput('Контент', 'content', 'textarea'),
+];
+
+export const FORUM_CREATE_COMMENT_INPUTS_DATA = [
+  createInput('Текст комментария', 'content'),
 ];
 
 export const PROFILE_CHANGE_PASSWORD_INPUTS = [
-  {
-    label: 'Старый пароль',
-    name: FORM_INPUT_NAMES.oldPassword,
-    type: 'password',
-  },
-  {
-    label: 'Новый пароль',
-    name: FORM_INPUT_NAMES.newPassword,
-    type: 'password',
-  },
-  {
-    label: 'Повторите новый пароль',
-    type: 'password',
-    name: FORM_INPUT_NAMES.passwordAgain,
-  },
+  createInput('Старый пароль', FORM_INPUT_NAMES.oldPassword, 'password'),
+  createInput('Новый пароль', FORM_INPUT_NAMES.newPassword, 'password'),
+  createInput(
+    'Повторите новый пароль',
+    FORM_INPUT_NAMES.passwordAgain,
+    'password'
+  ),
 ];
 
 export const MOCK_AVATAR_PATH = '/capCapibara.webp';

@@ -1,42 +1,43 @@
 import { useState } from 'react';
-import ProfileAvatar from '../molecules/ProfileAvatar';
-import { FormAvatarType, ProfileModeType } from '../../types/types';
-import ProfileModeManager from './ProfileModeManager';
-import Button from '../atoms/Button';
-import { PROFILE_MODE, PROFILE_POPUP } from '../../constants/profilePageData';
-import Popup from '../molecules/Popup';
-import { updateUserAvatar } from '../../api/userApi';
+import { PROFILE_POPUP } from '../../constants/profilePageData';
+import { FormAvatarType, UserData } from '../../types';
 import { ProfileUpdateAvatarSchema } from '../../types/validationSchemas';
+import Popup from '../molecules/Popup';
+import ProfileAvatar from '../molecules/ProfileAvatar';
+import { toast } from 'sonner';
+import { setUserData } from '../../store/slices/user';
+import { useAppDispatch } from '../../lib/hooks';
+import generalAPI from '../../api/fetchTransport/generalApi';
 
-const ProfileSection = () => {
-  const [mode, setMode] = useState<ProfileModeType>('base');
-  const [isPopupDisplay, setPopupDisplay] = useState<boolean>(false);
-
-  const handleClick = () => setMode(PROFILE_MODE.base);
+const ProfileSection = ({ children }: { children: React.ReactNode }) => {
+  const [isPopupDisplay, setPopupDisplay] = useState(false);
+  const dispatch = useAppDispatch();
 
   return (
     <>
       {isPopupDisplay && (
         <Popup<FormAvatarType>
           handleClick={() => setPopupDisplay(false)}
-          onSubmit={(data: FormAvatarType) => updateUserAvatar(data)}
+          onSubmit={async data => {
+            toast.message('Обновляем аватар...');
+            const user = await generalAPI.updateUserAvatar(data);
+
+            if ('reason' in user) {
+              toast.error('Не удалось обновить аватар. Попробуйте еще раз.');
+              return;
+            }
+
+            dispatch(setUserData(user as UserData));
+            setPopupDisplay(!isPopupDisplay);
+            toast.success('Аватар обновлен!');
+          }}
           zodSchema={ProfileUpdateAvatarSchema}
           popup={PROFILE_POPUP}
         />
       )}
-      {mode !== PROFILE_MODE.base && (
-        <Button
-          variant="red"
-          className="absolute top-4 left-4"
-          onClick={handleClick}>
-          Закрыть
-        </Button>
-      )}
-      <div className="flex flex-col items-center gap-6 max-w-lg min-w-80 my-0 mx-auto">
+      <div className="flex flex-col items-center gap-6 max-w-lg min-w-80 w-full my-0 mx-auto">
         <ProfileAvatar handleClick={() => setPopupDisplay(true)} />
-        <div className="w-full flex flex-col gap-10">
-          <ProfileModeManager mode={mode} setMode={setMode} />
-        </div>
+        {children}
       </div>
     </>
   );

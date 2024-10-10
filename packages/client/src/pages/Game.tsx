@@ -1,11 +1,10 @@
-import GameOverScreen from '../components/organisms/GameOver';
-import StartGameScreen from '../components/organisms/StartGameScreen';
+import MainSection from '../components/atoms/MainSection';
+import GameWrapper from '../templates/Game/GameWrapper';
 
 export default function Game() {
   return (
-    <main className=" bg-[#0c1b2a]">
-      <StartGameScreen />
-      {/* <GameOverScreen /> */}
-    </main>
+    <MainSection className="h-[calc(100%-3.5rem)] overflow-hidden p-0 min-h-0">
+      <GameWrapper />
+    </MainSection>
   );
 }
