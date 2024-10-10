@@ -14,10 +14,15 @@ import { MOCK_FORM_DEFAULT_VALUES } from './mockProfileFormDefaultValues';
 
 // Инициализация Express приложения
 const app: Application = express();
+const origin = [
+  'http://158.160.21.142:3000',
+  'http://capybara-pixelwizards-40.ya-praktikum.tech:3000',
+  'http://localhost:3000',
+];
 
 // Настройка промежуточного ПО
 app.use(bodyParser.json());
-app.use(cors({ credentials: true, origin: 'http://158.160.21.142:3000' }));
+app.use(cors({ credentials: true, origin }));
 
 app.get('/user', (_, res) => {
   res.json(MOCK_FORM_DEFAULT_VALUES);
