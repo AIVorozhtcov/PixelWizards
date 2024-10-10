@@ -5,8 +5,16 @@
 3. Выполните команду `yarn dev`
 3. Выполните команду `yarn dev --scope=client` чтобы запустить только клиент
 4. Выполните команду `yarn dev --scope=server` чтобы запустить только server
+5. Включить Docker
+6. docker-compose build postgres
+7. Запустить контейнер
+
+### Видео-презентация
+[https://drive.google.com/drive/folders/1W1NlVGkzV_VIk4WRwgJ33PORfWZgkoWg](https://drive.google.com/drive/folders/1W1NlVGkzV_VIk4WRwgJ33PORfWZgkoWg)
+Видео - Отчет.mp4
 
 
+==================================================================================================
 ### Как добавить зависимости?
 В этом проекте используется `monorepo` на основе [`lerna`](https://github.com/lerna/lerna)
 
@@ -22,7 +30,6 @@
 
 Если вы хотите добавить dev зависимость, проделайте то же самое, но с флагом `dev`
 ```yarn lerna add {your_dep} --dev --scope server```
-
 
 ### Тесты
 
