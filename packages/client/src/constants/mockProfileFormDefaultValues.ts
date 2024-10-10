@@ -1,4 +1,4 @@
-import { ProfileFormData } from '../types';
+import { ProfileFormData } from '../types/types';
 
 export const MOCK_FORM_DEFAULT_VALUES: ProfileFormData = {
   first_name: 'Иван',

@@ -20,6 +20,5 @@ module.exports = {
     'constructor-super': 'error',
     'no-duplicate-imports': 2,
     'no-duplicate-case': 2,
-    '@typescript-eslint/no-empty-function': 'off'
   },
 };

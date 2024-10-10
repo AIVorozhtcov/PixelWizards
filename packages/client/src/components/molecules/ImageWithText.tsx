@@ -1,7 +1,6 @@
 import { VariantProps, cva } from 'class-variance-authority';
 import InfoBox from './InfoBox';
 import { cn } from './../../lib/utils';
-import { ImageWithTextPropsCustom } from '../../types';
 
 const imageWithTextVariants = cva('flex gap-1', {
   variants: {
@@ -17,10 +16,19 @@ const imageWithTextVariants = cva('flex gap-1', {
   },
 });
 
+export interface ImageWithTextPropsCustom {
+  imgSrc: string;
+  imgAlt: string;
+  subtitle: string;
+  text: string;
+}
+
 interface ImageWithTextProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     ImageWithTextPropsCustom,
-    VariantProps<typeof imageWithTextVariants> {}
+    VariantProps<typeof imageWithTextVariants> {
+  children: React.ReactNode;
+}
 
 export default function ImageWithText({
   imgSrc,

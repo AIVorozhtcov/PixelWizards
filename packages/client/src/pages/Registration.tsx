@@ -1,10 +1,12 @@
-import MainSection from '../components/atoms/MainSection';
+import React from 'react';
 import RegistrationSection from '../components/organisms/RegistrationSection';
 
-export default function Registration() {
+const Registration: React.FC = () => {
   return (
-    <MainSection>
-      <RegistrationSection />
-    </MainSection>
+    <main className="flex flex-col min-h-dvh bg-[#0c1b2a] py-5">
+      <RegistrationSection></RegistrationSection>
+    </main>
   );
-}
+};
+
+export default Registration;

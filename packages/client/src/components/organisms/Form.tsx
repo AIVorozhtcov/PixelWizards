@@ -8,27 +8,26 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodSchema } from 'zod';
 import FormField from '../molecules/FormField';
-import Button, { ButtonVariants } from '../atoms/Button';
-import { FormFields } from '../../types';
-import { VariantProps } from 'class-variance-authority';
+import Button from '../atoms/Button';
 
-interface Field {
-  name: string;
-  label: string;
-  type?: string;
-  className?: string;
-}
-
-interface FormProps<T extends FieldValues>
-  extends Omit<FormFields, 'label' | 'error' | 'name'> {
+interface FormProps<T extends FieldValues> {
   zodSchema: ZodSchema;
   onSubmit: SubmitHandler<T>;
   buttonText: string;
   defaultValues?: DefaultValues<T>;
-  buttonVariant?: VariantProps<ButtonVariants>['variant'];
+  buttonVariant?: 'acent' | 'default' | 'acentNotTransparent' | 'yellow';
   buttonClass?: string;
-  fields: Field[];
-  formClass?: string;
+  labelClass?: string;
+  formFieldClass?: string;
+  labelVariant?: 'default' | 'basic' | 'profile';
+  inputVariant?: 'default' | 'basic' | 'profile' | 'typeFile';
+  inputAcept?: string;
+  fields: {
+    name: keyof T;
+    label: string;
+    type?: string;
+    className?: string;
+  }[];
 }
 
 const Form = <T extends FieldValues>({
@@ -44,7 +43,6 @@ const Form = <T extends FieldValues>({
   labelVariant,
   inputVariant,
   inputAcept,
-  formClass,
 }: FormProps<T>) => {
   const methods = useForm<T>({
     resolver: zodResolver(zodSchema),
@@ -53,10 +51,7 @@ const Form = <T extends FieldValues>({
 
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        noValidate
-        className={formClass}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} noValidate>
         {fields.map(field => (
           <FormField
             key={String(field.name)}

@@ -6,14 +6,15 @@ import IntroductionBlock from '../molecules/IntroductionBlock';
 export default function JoinForumSection() {
   return (
     <Section>
-      <div className="flex items-center justify-center gap-4 mb-10">
+      <div className="flex items-center justify-center gap-4">
         <IntroductionBlock
           className="text-start"
-          subtitle="Присоединяйтесь к космической битве"
-          text="Capibaras vs Sneaks уже доступна на всех основных платформах. Загрузите и играйте сегодня, чтобы испытать на себе, что такое настоящая космическая битва."
+          subtitle="Join the Cosmic Battle"
+          text="Capibaras vs Sneaks is available now on all major platforms.
+							Download and play today to experience the ultimate space battle."
         />
         <Link to={LINKS.forum} variant="acent">
-          Присоединиться к форуму
+          Join forum
         </Link>
       </div>
     </Section>
